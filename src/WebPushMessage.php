@@ -47,7 +47,7 @@ class WebPushMessage
      */
     public static function create($body = '')
     {
-        return static ($body);
+        return new static($body);
     }
 
     /**
