@@ -43,6 +43,7 @@ class WebPushMessage
 
     /**
      * @param string $body
+     * 
      * @return static
      */
     public static function create($body = '')
@@ -56,6 +57,7 @@ class WebPushMessage
     public function __construct($body = '')
     {
         $this->title = '';
+
         $this->body = $body;
     }
 
