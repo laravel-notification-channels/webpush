@@ -14,7 +14,7 @@ First you must install the service provider:
 // config/app.php
 'providers' => [
     ...
-    NotificationChannels\WebPushNotifications\Provider::class,
+    NotificationChannels\WebPush\WebPushServiceProvider::class,
 ];
 ```
 
@@ -27,10 +27,10 @@ Then configure [Google Cloud Messaging](https://console.cloud.google.com) by set
 ],
 ```
 
-You need to add the `NotificationChannels\WebPushNotifications\HasPushSubscriptions` in your `User` model:
+You need to add the `NotificationChannels\WebPush\HasPushSubscriptions` in your `User` model:
 
 ``` php
-use NotificationChannels\WebPushNotifications\HasPushSubscriptions;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Model
 {
@@ -41,7 +41,7 @@ class User extends Model
 Next publish the migration with:
 
 ``` bash
-php artisan vendor:publish --provider="NotificationChannels\WebPushNotifications\Provider" --tag="migrations"
+php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
 ```
 
 After the migration has been published you can create the `push_subscriptions` table by running the migrations:
@@ -56,8 +56,8 @@ Now you can use the channel in your `via()` method inside the notification as we
 
 ``` php
 use Illuminate\Notifications\Notification;
-use NotificationChannels\WebPushNotifications\Message;
-use NotificationChannels\WebPushNotifications\Channel as WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class AccountApproved extends Notification
 {
@@ -68,7 +68,7 @@ class AccountApproved extends Notification
 
     public function toWebPush($notifiable, $notification)
     {
-        return (new WebPushMessage())
+        return WebPushMessage::create()
             // ->id($notification->id)
             ->title('Approved!')
             ->icon('/approved-icon.png')
@@ -107,6 +107,24 @@ For a complete implementation with a Service Worker check this [demo](https://gi
 ## Browser Compatibility
 
 The [Push API](https://developer.mozilla.org/en/docs/Web/API/Push_API) currently works on Chrome and Firefox.
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Testing
+    
+``` bash
+$ composer test
+```
+
+## Security
+
+If you discover any security related issues, please email themsaid@gmail.com instead of using the issue tracker.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 

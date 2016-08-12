@@ -1,22 +1,18 @@
 <?php
 
-namespace NotificationChannels\WebPushNotifications;
+namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\WebPushNotifications\Events\MessageWasSent;
-use NotificationChannels\WebPushNotifications\Events\SendingMessage;
+use NotificationChannels\WebPush\Events\MessageWasSent;
+use NotificationChannels\WebPush\Events\SendingMessage;
 
-class Channel
+class WebPushChannel
 {
-    /**
-     * @var \Minishlink\WebPush\WebPush
-     */
+    /** @var \Minishlink\WebPush\WebPush */
     protected $webPush;
 
     /**
-     * Create a new Web Push channel instance.
-     *
      * @param  \Minishlink\WebPush\WebPush $webPush
      * @return void
      */
@@ -40,7 +36,7 @@ class Channel
             return;
         }
 
-        $subscriptions = $notifiable->routeNotificationFor('WebPushNotifications');
+        $subscriptions = $notifiable->routeNotificationFor('WebPush');
 
         if ($subscriptions->isEmpty()) {
             return;
@@ -59,15 +55,23 @@ class Channel
 
         $response = $this->webPush->flush();
 
-        // Delete the invalid subscriptions.
+        $this->deleteInvalidSubscriptions($response, $subscriptions);
+
+        event(new MessageWasSent($notifiable, $notification));
+    }
+
+    /**
+     * @param $response
+     * @param $subscriptions
+     */
+    protected function deleteInvalidSubscriptions($response, $subscriptions)
+    {
         if (is_array($response)) {
             foreach ($response as $index => $value) {
-                if (! $value['success'] && isset($subscriptions[$index])) {
+                if (!$value['success'] && isset($subscriptions[$index])) {
                     $subscriptions[$index]->delete();
                 }
             }
         }
-
-        event(new MessageWasSent($notifiable, $notification));
     }
 }

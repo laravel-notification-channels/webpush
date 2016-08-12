@@ -1,6 +1,6 @@
 <?php
 
-namespace NotificationChannels\WebPushNotifications;
+namespace NotificationChannels\WebPush;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;

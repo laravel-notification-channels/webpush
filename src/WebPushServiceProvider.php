@@ -1,11 +1,11 @@
 <?php
 
-namespace NotificationChannels\WebPushNotifications;
+namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
 use Illuminate\Support\ServiceProvider;
 
-class Provider extends ServiceProvider
+class WebPushServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,7 +14,7 @@ class Provider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->when(Channel::class)
+        $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
             ->give(function () {
                 return new WebPush([
@@ -42,15 +42,5 @@ class Provider extends ServiceProvider
                     $this->app->databasePath().'/migrations/'.$timestamp.'_create_push_subscriptions_table.php',
             ], 'migrations');
         }
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

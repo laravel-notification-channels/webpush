@@ -1,6 +1,6 @@
 <?php
 
-namespace NotificationChannels\WebPushNotifications;
+namespace NotificationChannels\WebPush;
 
 trait HasPushSubscriptions
 {
@@ -20,34 +20,40 @@ trait HasPushSubscriptions
      * @param  string $endpoint
      * @param  string|null $key
      * @param  string|null $token
-     * @return \Eusebiu\WebPush\PushSubscription
+     *
+     * @return PushSubscription
      */
     public function updatePushSubscription($endpoint, $key = null, $token = null)
     {
         $subscription = PushSubscription::findByEndpoint($endpoint);
 
-        // Check if a subscription exists for the given endpoint.
-        if ($subscription) {
-            // If it belongs to a different user then delete it.
-            if ((int) $subscription->user_id !== (int) $this->getAuthIdentifier()) {
-                $subscription->delete();
-            }
-            // Otherwise update the public key and auth token.
-            else {
-                $subscription->public_key = $key;
-                $subscription->auth_token = $token;
-                $subscription->save();
+        if ($subscription && !$this->subscriptionBelongsToDifferentUser()) {
+            $subscription->public_key = $key;
+            $subscription->auth_token = $token;
+            $subscription->save();
 
-                return $subscription;
-            }
+            return $subscription;
         }
 
-        // Just create a new subscription.
+        if ($subscription && $this->subscriptionBelongsToDifferentUser()) {
+            $subscription->delete();
+        }
+
+
         return $this->pushSubscriptions()->save(new PushSubscription([
             'endpoint' => $endpoint,
             'public_key' => $key,
             'auth_token' => $token,
         ]));
+    }
+
+    /**
+     * @param PushSubscription $subscription
+     * @return bool
+     */
+    public function subscriptionBelongsToDifferentUser($subscription)
+    {
+        return (int)$subscription->user_id !== (int)$this->getAuthIdentifier();
     }
 
     /**
@@ -59,8 +65,8 @@ trait HasPushSubscriptions
     public function deleteSubscription($endpoint)
     {
         $this->pushSubscriptions()
-                ->where('endpoint', $endpoint)
-                ->delete();
+            ->where('endpoint', $endpoint)
+            ->delete();
     }
 
     /**
@@ -68,7 +74,7 @@ trait HasPushSubscriptions
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function routeNotificationForWebPushNotifications()
+    public function routeNotificationForWebPush()
     {
         return $this->pushSubscriptions;
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace NotificationChannels\WebPushNotifications;
+namespace NotificationChannels\WebPush;
 
 use Illuminate\Support\Arr;
 
-class Message
+class WebPushMessage
 {
     /**
      * The notification id.
@@ -42,12 +42,20 @@ class Message
     protected $actions = [];
 
     /**
-     * @param string $title
+     * @param string $body
+     * @return static
+     */
+    public static function create($body = '')
+    {
+        return static ($body);
+    }
+
+    /**
      * @param string $body
      */
-    public function __construct($title = '', $body = '')
+    public function __construct($body = '')
     {
-        $this->title = $title;
+        $this->title = '';
         $this->body = $body;
     }
 

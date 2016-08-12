@@ -16,6 +16,7 @@
         "illuminate/notifications": "^5.3@dev",
         "illuminate/support": "^5.3@dev",
         "illuminate/events": "^5.3@dev",
+        "illuminate/database": "^5.3@dev",
         "minishlink/web-push": "^1.1"
     },
     "require-dev": {
@@ -24,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "NotificationChannels\\WebPushNotifications\\": "src"
+            "NotificationChannels\\WebPush\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "NotificationChannels\\:WebPushNotifications\\Test\\": "tests"
+            "NotificationChannels\\:WebPush\\Test\\": "tests"
         }
     },
     "config": {
