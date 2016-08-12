@@ -1,7 +1,7 @@
 {
-    "name": "laravel-notification-channels/web-push-notifications",
+    "name": "laravel-notification-channels/webpush",
     "description": "Web Push Notifications driver for Laravel.",
-    "homepage": "https://github.com/laravel-notification-channels/web-push-notifications",
+    "homepage": "https://github.com/laravel-notification-channels/webpush",
     "license": "MIT",
     "authors": [
         {
