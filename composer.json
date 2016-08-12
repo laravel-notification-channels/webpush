@@ -1,0 +1,39 @@
+{
+    "name": "laravel-notification-channels/web-push-notifications",
+    "description": "Web Push Notifications driver for Laravel.",
+    "homepage": "https://github.com/laravel-notification-channels/web-push-notifications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cretu Eusebiu",
+            "email": "me@cretueusebiu.com",
+            "homepage": "http://cretueusebiu.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/notifications": "^5.3@dev",
+        "illuminate/support": "^5.3@dev",
+        "illuminate/events": "^5.3@dev",
+        "minishlink/web-push": "^1.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.5",
+        "phpunit/phpunit": "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "NotificationChannels\\WebPushNotifications\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NotificationChannels\\:WebPushNotifications\\Test\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
