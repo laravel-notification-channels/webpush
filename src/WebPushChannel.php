@@ -68,7 +68,7 @@ class WebPushChannel
     {
         if (is_array($response)) {
             foreach ($response as $index => $value) {
-                if (!$value['success'] && isset($subscriptions[$index])) {
+                if (! $value['success'] && isset($subscriptions[$index])) {
                     $subscriptions[$index]->delete();
                 }
             }
