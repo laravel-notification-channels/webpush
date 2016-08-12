@@ -2,8 +2,6 @@
 
 namespace NotificationChannels\WebPush;
 
-use Illuminate\Support\Arr;
-
 class WebPushMessage
 {
     /**
