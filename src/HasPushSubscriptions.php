@@ -27,7 +27,7 @@ trait HasPushSubscriptions
     {
         $subscription = PushSubscription::findByEndpoint($endpoint);
 
-        if ($subscription && !$this->subscriptionBelongsToDifferentUser()) {
+        if ($subscription && ! $this->subscriptionBelongsToDifferentUser()) {
             $subscription->public_key = $key;
             $subscription->auth_token = $token;
             $subscription->save();
@@ -53,7 +53,7 @@ trait HasPushSubscriptions
      */
     public function subscriptionBelongsToDifferentUser($subscription)
     {
-        return (int)$subscription->user_id !== (int)$this->getAuthIdentifier();
+        return (int) $subscription->user_id !== (int) $this->getAuthIdentifier();
     }
 
     /**

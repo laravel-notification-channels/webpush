@@ -18,7 +18,7 @@ class WebPushServiceProvider extends ServiceProvider
             ->needs(WebPush::class)
             ->give(function () {
                 return new WebPush([
-                    'GCM' => config('services.gcm.key')
+                    'GCM' => config('services.gcm.key'),
                 ]);
             });
 
@@ -38,8 +38,7 @@ class WebPushServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' =>
-                    $this->app->databasePath().'/migrations/'.$timestamp.'_create_push_subscriptions_table.php',
+                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => $this->app->databasePath().'/migrations/'.$timestamp.'_create_push_subscriptions_table.php',
             ], 'migrations');
         }
     }
