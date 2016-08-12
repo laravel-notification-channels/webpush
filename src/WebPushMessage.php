@@ -2,8 +2,6 @@
 
 namespace NotificationChannels\WebPush;
 
-use Illuminate\Support\Arr;
-
 class WebPushMessage
 {
     /**
@@ -43,7 +41,7 @@ class WebPushMessage
 
     /**
      * @param string $body
-     * 
+     *
      * @return static
      */
     public static function create($body = '')
