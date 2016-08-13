@@ -26,7 +26,7 @@ First you must install the service provider:
 'providers' => [
     ...
     NotificationChannels\WebPush\WebPushServiceProvider::class,
-];
+],
 ```
 
 Then configure [Google Cloud Messaging](https://console.cloud.google.com) by setting your `key` and `sender_id`:
