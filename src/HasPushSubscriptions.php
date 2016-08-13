@@ -57,12 +57,12 @@ trait HasPushSubscriptions
     }
 
     /**
-     * Delete subscription by endpoint.
+     * Delete push subscription by endpoint.
      *
      * @param  string $endpoint
      * @return void
      */
-    public function deleteSubscription($endpoint)
+    public function deletePushSubscription($endpoint)
     {
         $this->pushSubscriptions()
             ->where('endpoint', $endpoint)

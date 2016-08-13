@@ -103,12 +103,12 @@ The `$key` and `$token` are optional and are used to encrypt your notifications.
 
 ### Delete Subscriptions
 
-To delete a subscription use the `deleteSubscription($endpoint)` method on your user:
+To delete a subscription use the `deletePushSubscription($endpoint)` method on your user:
 
 ``` php
 $user = \App\User::find(1);
 
-$user->deleteSubscription($endpoint);
+$user->deletePushSubscription($endpoint);
 ```
 
 ## Demo
