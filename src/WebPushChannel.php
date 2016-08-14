@@ -61,16 +61,18 @@ class WebPushChannel
     }
 
     /**
-     * @param $response
-     * @param $subscriptions
+     * @param array|bool $response
+     * @param \Illuminate\Database\Eloquent\Collection $subscriptions
      */
     protected function deleteInvalidSubscriptions($response, $subscriptions)
     {
-        if (is_array($response)) {
-            foreach ($response as $index => $value) {
-                if (! $value['success'] && isset($subscriptions[$index])) {
-                    $subscriptions[$index]->delete();
-                }
+        if (! is_array($response)) {
+            return;
+        }
+
+        foreach ($response as $index => $value) {
+            if (! $value['success'] && isset($subscriptions[$index])) {
+                $subscriptions[$index]->delete();
             }
         }
     }
