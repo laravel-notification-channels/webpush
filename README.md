@@ -32,6 +32,7 @@ First you must install the service provider:
 Then configure [Google Cloud Messaging](https://console.cloud.google.com) by setting your `key` and `sender_id`:
 
 ``` php
+// config/services.php
 'gcm' => [
     'key' => '',
     'sender_id' => ',
