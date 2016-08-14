@@ -69,7 +69,7 @@ abstract class TestCase extends Orchestra
         if (File::isDirectory($directory)) {
             File::deleteDirectory($directory);
         }
-        if (!File::exists($directory)) {
+        if (! File::exists($directory)) {
             File::makeDirectory($directory);
         }
     }

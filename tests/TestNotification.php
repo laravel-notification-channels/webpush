@@ -4,7 +4,6 @@ namespace NotificationChannels\WebPush\Test;
 
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushMessage;
-use NotificationChannels\WebPush\WebPushChannel;
 
 class TestNotification extends Notification
 {

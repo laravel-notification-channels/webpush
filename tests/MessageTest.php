@@ -19,9 +19,9 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_can_accept_a_body_when_constructing_a_message()
     {
-       $message = new WebPushMessage('Message body');
+        $message = new WebPushMessage('Message body');
 
-       $this->assertEquals('Message body', $message->toArray()['body']);
+        $this->assertEquals('Message body', $message->toArray()['body']);
     }
 
     /** @test */

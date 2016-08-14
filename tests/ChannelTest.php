@@ -63,7 +63,7 @@ class ChannelTest extends TestCase
             ->once()
             ->andReturn([
                 ['success' => true],
-                ['success' => false]
+                ['success' => false],
             ]);
 
         $this->testUser->updatePushSubscription('valid_endpoint');
