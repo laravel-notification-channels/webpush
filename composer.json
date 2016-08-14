@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "mockery/mockery": "^0.9.5",
-        "phpunit/phpunit": "4.*"
+        "phpunit/phpunit": "4.*",
+        "orchestra/testbench": "^3.3@dev"
     },
     "autoload": {
         "psr-4": {
@@ -30,11 +31,15 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "NotificationChannels\\:WebPush\\Test\\": "tests"
+            "NotificationChannels\\WebPush\\Test\\": "tests"
         }
     },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit"
+    }
 }

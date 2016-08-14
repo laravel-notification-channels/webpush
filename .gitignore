@@ -1,4 +1,5 @@
 /vendor
 build
+tests/temp
 composer.phar
 composer.lock
