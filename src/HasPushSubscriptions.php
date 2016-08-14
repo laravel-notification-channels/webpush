@@ -5,7 +5,7 @@ namespace NotificationChannels\WebPush;
 trait HasPushSubscriptions
 {
     /**
-     * Get the user's push subscriptions.
+     * Get the user's subscriptions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -20,14 +20,13 @@ trait HasPushSubscriptions
      * @param  string $endpoint
      * @param  string|null $key
      * @param  string|null $token
-     *
-     * @return PushSubscription
+     * @return \NotificationChannels\WebPush\PushSubscription
      */
     public function updatePushSubscription($endpoint, $key = null, $token = null)
     {
         $subscription = PushSubscription::findByEndpoint($endpoint);
 
-        if ($subscription && ! $this->subscriptionBelongsToDifferentUser($subscription)) {
+        if ($subscription && $this->pushSubscriptionBelongsToUser($subscription)) {
             $subscription->public_key = $key;
             $subscription->auth_token = $token;
             $subscription->save();
@@ -35,10 +34,9 @@ trait HasPushSubscriptions
             return $subscription;
         }
 
-        if ($subscription && $this->subscriptionBelongsToDifferentUser($subscription)) {
+        if ($subscription && ! $this->pushSubscriptionBelongsToUser($subscription)) {
             $subscription->delete();
         }
-
 
         return $this->pushSubscriptions()->save(new PushSubscription([
             'endpoint' => $endpoint,
@@ -48,16 +46,18 @@ trait HasPushSubscriptions
     }
 
     /**
-     * @param PushSubscription $subscription
+     * Determine if the given subscription belongs to this user.
+     *
+     * @param  \NotificationChannels\WebPush\PushSubscription $subscription
      * @return bool
      */
-    public function subscriptionBelongsToDifferentUser($subscription)
+    public function pushSubscriptionBelongsToUser($subscription)
     {
-        return (int) $subscription->user_id !== (int) $this->getAuthIdentifier();
+        return (int) $subscription->user_id === (int) $this->getAuthIdentifier();
     }
 
     /**
-     * Delete push subscription by endpoint.
+     * Delete subscription by endpoint.
      *
      * @param  string $endpoint
      * @return void
