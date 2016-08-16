@@ -6,6 +6,7 @@
 [![StyleCI](https://styleci.io/repos/65542206/shield)](https://styleci.io/repos/65542206)
 [![SensioLabsInsight](https://img.shields.io/sensiolabs/i/6ac8b6d5-c215-4ba5-9a47-d1b312ec196d.svg?style=flat-square)](https://insight.sensiolabs.com/projects/6ac8b6d5-c215-4ba5-9a47-d1b312ec196d)
 [![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/webpush.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/webpush)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/webpush/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/webpush/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/webpush.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/webpush)
 
 This package makes it easy to send web push notifications with Laravel 5.3.
@@ -114,7 +115,7 @@ $user->deletePushSubscription($endpoint);
 
 ## Demo
 
-For a complete implementation with a Service Worker check this [demo](https://github.com/cretueusebiu/laravel-web-push-demo). 
+For a complete implementation with a Service Worker check this [demo](https://github.com/cretueusebiu/laravel-web-push-demo).
 
 ## Browser Compatibility
 
@@ -125,7 +126,7 @@ The [Push API](https://developer.mozilla.org/en/docs/Web/API/Push_API) currently
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Testing
-    
+
 ``` bash
 $ composer test
 ```
