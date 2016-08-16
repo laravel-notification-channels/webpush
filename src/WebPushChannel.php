@@ -4,8 +4,6 @@ namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\WebPush\Events\MessageWasSent;
-use NotificationChannels\WebPush\Events\SendingMessage;
 
 class WebPushChannel
 {
@@ -30,12 +28,6 @@ class WebPushChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $shouldSendMessage = event(new SendingMessage($notifiable, $notification), [], true) !== false;
-
-        if (! $shouldSendMessage) {
-            return;
-        }
-
         $subscriptions = $notifiable->routeNotificationFor('WebPush');
 
         if ($subscriptions->isEmpty()) {
@@ -56,8 +48,6 @@ class WebPushChannel
         $response = $this->webPush->flush();
 
         $this->deleteInvalidSubscriptions($response, $subscriptions);
-
-        event(new MessageWasSent($notifiable, $notification));
     }
 
     /**
