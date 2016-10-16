@@ -17,7 +17,7 @@ This package makes it easy to send web push notifications with Laravel 5.3.
 You can install the package via composer:
 
 ``` bash
-composer require laravel-notification-channels/web-push-notifications
+composer require laravel-notification-channels/webpush
 ```
 
 First you must install the service provider:
