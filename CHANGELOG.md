@@ -1,7 +1,7 @@
 # Changelog
 
-All Notable changes to `:package_name` will be documented in this file
+All Notable changes to `laravel-notification-channels/webpus` will be documented in this file
 
-## 1.0.0 - 201X-XX-XX
+## 0.2.0 - 2017-01-26
 
-- initial release
+- Added Laravel 5.4 compatibility.
