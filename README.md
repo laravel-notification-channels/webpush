@@ -11,7 +11,6 @@
 
 This package makes it easy to send web push notifications with Laravel.
 
-
 ## Installation
 
 You can install the package via composer:
@@ -30,17 +29,7 @@ First you must install the service provider:
 ],
 ```
 
-Then configure [Google Cloud Messaging](https://console.cloud.google.com) by setting your `key` and `sender_id`:
-
-``` php
-// config/services.php
-'gcm' => [
-    'key' => '',
-    'sender_id' => ',
-],
-```
-
-You need to add the `NotificationChannels\WebPush\HasPushSubscriptions` in your `User` model:
+Add the `NotificationChannels\WebPush\HasPushSubscriptions` trait to your `User` model:
 
 ``` php
 use NotificationChannels\WebPush\HasPushSubscriptions;
@@ -57,11 +46,29 @@ Next publish the migration with:
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
 ```
 
-After the migration has been published you can create the `push_subscriptions` table by running the migrations:
+Run the migrate command to create the necessary table:
 
 ``` bash
 php artisan migrate
 ```
+
+You can also publish the config file with:
+
+``` bash
+php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="config"
+```
+
+Generate the VAPID keys with (required for browser authentication) with:
+
+``` bash
+php artisan webpush:vapid
+```
+
+This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`in your `.env` file.
+
+__These keys must be safely stored and should not change.__
+
+If you still want support [Google Cloud Messaging](https://console.cloud.google.com) set the `GCM_KEY` and `GCM_SENDER_ID` in your `.env` file.
 
 ## Usage
 

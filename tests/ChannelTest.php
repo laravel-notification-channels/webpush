@@ -4,7 +4,7 @@ namespace NotificationChannels\WebPush\Test;
 
 use Mockery;
 use Minishlink\WebPush\WebPush;
-use  NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class ChannelTest extends TestCase
 {

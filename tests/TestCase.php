@@ -3,6 +3,7 @@
 namespace NotificationChannels\WebPush\Test;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use NotificationChannels\WebPush\PushSubscription;
@@ -12,7 +13,7 @@ abstract class TestCase extends Orchestra
     /** @var \NotificationChannels\WebPush\Test\User */
     protected $testUser;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -38,6 +39,17 @@ abstract class TestCase extends Orchestra
         ]);
 
         $app['config']->set('auth.providers.users.model', User::class);
+    }
+
+    /**
+     * @param  \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            \NotificationChannels\WebPush\WebPushServiceProvider::class,
+        ];
     }
 
     /**
@@ -109,5 +121,12 @@ abstract class TestCase extends Orchestra
         $sub->save();
 
         return $sub;
+    }
+
+    protected function seeInConsoleOutput($expectedText)
+    {
+        $consoleOutput = $this->app[Kernel::class]->output();
+
+        $this->assertContains($expectedText, $consoleOutput, "Did not see `{$expectedText}` in console output: `$consoleOutput`");
     }
 }

@@ -51,8 +51,9 @@ class WebPushChannel
     }
 
     /**
-     * @param array|bool $response
-     * @param \Illuminate\Database\Eloquent\Collection $subscriptions
+     * @param  array|bool $response
+     * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
+     * @return void
      */
     protected function deleteInvalidSubscriptions($response, $subscriptions)
     {
