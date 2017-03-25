@@ -35,6 +35,7 @@ class VapidKeysGenerateCommand extends Command
         if ($this->option('show')) {
             $this->line('<comment>VAPID_PUBLIC_KEY='.$keys['publicKey'].'</comment>');
             $this->line('<comment>VAPID_PRIVATE_KEY='.$keys['privateKey'].'</comment>');
+
             return;
         }
 

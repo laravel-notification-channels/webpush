@@ -37,7 +37,7 @@ class VapidKeysGenerateCommandTest extends TestCase
 
         $envContents = file_get_contents($envPath);
 
-        $this->assertRegExp("/^VAPID_PUBLIC_KEY=/m", $envContents);
-        $this->assertRegExp("/^VAPID_PRIVATE_KEY=/m", $envContents);
+        $this->assertRegExp('/^VAPID_PUBLIC_KEY=/m', $envContents);
+        $this->assertRegExp('/^VAPID_PRIVATE_KEY=/m', $envContents);
     }
 }
