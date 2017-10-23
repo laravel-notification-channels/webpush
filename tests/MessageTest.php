@@ -2,9 +2,10 @@
 
 namespace NotificationChannels\WebPush\Test;
 
+use PHPUnit\Framework\TestCase;
 use NotificationChannels\WebPush\WebPushMessage;
 
-class MessageTest extends \PHPUnit_Framework_TestCase
+class MessageTest extends TestCase
 {
     /** @var \NotificationChannels\WebPush\WebPushMessage */
     protected $message;
