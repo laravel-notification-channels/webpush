@@ -19,7 +19,7 @@ You can install the package via composer:
 composer require laravel-notification-channels/webpush
 ```
 
-First you must install the service provider:
+First you must install the service provider (skip for Laravel>=5.5):
 
 ``` php
 // config/app.php

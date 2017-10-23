@@ -32,6 +32,13 @@
             "NotificationChannels\\WebPush\\Test\\": "tests"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NotificationChannels\\WebPush\\WebPushServiceProvider"
+            ]
+        }
+    },
     "config": {
         "sort-packages": true
     },

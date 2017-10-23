@@ -4,6 +4,7 @@ All Notable changes to `laravel-notification-channels/webpush` will be documente
 
 ## 2.0.0 - 2017-10-23
 
+- Added support for package discovery.
 - Removed compatibility with PHP<7 and upgrade deps.
 
 ## 1.0.0 - 2017-03-25
