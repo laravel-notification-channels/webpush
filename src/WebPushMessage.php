@@ -40,6 +40,18 @@ class WebPushMessage
     protected $actions = [];
 
     /**
+     *
+     * @var array
+     */
+   protected $data = [];
+   
+   protected $image = null;
+   protected $badge = null;
+   protected $vibrate = [ ];
+   protected $timestamp = null;
+   protected $tag = null;
+
+    /**
      * @param string $body
      *
      * @return static
@@ -118,9 +130,87 @@ class WebPushMessage
      * @param  string $action
      * @return $this
      */
-    public function action($title, $action)
+    public function action($title, $action, $icon = null, $placeholder = null, $type = "button")
     {
-        $this->actions[] = compact('title', 'action');
+        $this->actions[] = array_filter(compact('title', 'action', 'icon', 'placeholder', 'type'));
+
+        return $this;
+    }
+
+    /**
+     * Set the arbitrary data payload.
+     *
+     * @param  array $value
+     * @return $this
+     */
+    public function data($value)
+    {
+        $this->data = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the badge.
+     *
+     * @param  string $value
+     * @return $this
+     */
+    public function badge($value)
+    {
+        $this->badge = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the image.
+     *
+     * @param  string $value
+     * @return $this
+     */
+    public function image($value)
+    {
+        $this->image = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the vibrate pattern.
+     *
+     * @param  array $value
+     * @return $this
+     */
+    public function vibrate($value)
+    {
+        $this->vibrate = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the timestamp pattern.
+     *
+     * @param  int $value
+     * @return $this
+     */
+    public function timestamp($value)
+    {
+        $this->timestamp = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the tag pattern.
+     *
+     * @param  string $value
+     * @return $this
+     */
+    public function tag($value)
+    {
+        $this->tag = $value;
 
         return $this;
     }
@@ -132,12 +222,21 @@ class WebPushMessage
      */
     public function toArray()
     {
-        return [
+        $rtn = [
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
             'actions' => $this->actions,
             'icon' => $this->icon,
+            'image' => $this->image,
+            'badge' => $this->badge,
+            'vibrate' => $this->vibrate,
+            'timestamp' => $this->timestamp,
+            'tag' => $this->tag,
+            'data' => $this->data,
         ];
+        // remove null values
+        $rtn = array_filter($rtn);
+        return $rtn;
     }
 }
