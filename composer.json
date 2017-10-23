@@ -15,7 +15,7 @@
         "php": ">=5.6.4",
         "illuminate/notifications": "^5.3",
         "illuminate/support": "^5.1",
-        "minishlink/web-push": "^1.4.1"
+        "minishlink/web-push": "^2.0.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.5",
