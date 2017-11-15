@@ -18,23 +18,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_accept_a_body_when_constructing_a_message()
-    {
-        $message = new WebPushMessage('Message body');
-
-        $this->assertEquals('Message body', $message->toArray()['body']);
-    }
-
-    /** @test */
-    public function it_provides_a_create_method()
-    {
-        $message = WebPushMessage::create('Message body');
-
-        $this->assertEquals('Message body', $message->toArray()['body']);
-    }
-
-    /** @test */
-    public function it_can_set_the_title()
+    public function can_set_title()
     {
         $this->message->title('Message title');
 
@@ -42,7 +26,23 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_the_body()
+    public function can_set_an_action()
+    {
+        $this->message->action('Some Action', 'some_action');
+
+        $this->assertEquals([['title' => 'Some Action', 'action' => 'some_action']], $this->message->toArray()['actions']);
+    }
+
+    /** @test */
+    public function can_set_badge()
+    {
+        $this->message->badge('/badge.jpg');
+
+        $this->assertEquals('/badge.jpg', $this->message->toArray()['badge']);
+    }
+
+    /** @test */
+    public function can_set_body()
     {
         $this->message->body('Message body');
 
@@ -50,26 +50,74 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_the_icon()
+    public function can_set_direction()
     {
-        $this->message->icon('Icon');
+        $this->message->dir('rtl');
 
-        $this->assertEquals('Icon', $this->message->toArray()['icon']);
+        $this->assertEquals('rtl', $this->message->toArray()['dir']);
     }
 
     /** @test */
-    public function it_can_set_an_action()
+    public function can_set_icon()
     {
-        $this->message->action('Title', 'Action');
+        $this->message->icon('/icon.jpg');
 
-        $this->assertEquals([['title' => 'Title', 'action' => 'Action']], $this->message->toArray()['actions']);
+        $this->assertEquals('/icon.jpg', $this->message->toArray()['icon']);
     }
 
     /** @test */
-    public function it_can_set_the_id()
+    public function can_set_image()
     {
-        $this->message->id(1);
+        $this->message->image('/image.jpg');
 
-        $this->assertEquals(1, $this->message->toArray()['id']);
+        $this->assertEquals('/image.jpg', $this->message->toArray()['image']);
+    }
+
+    /** @test */
+    public function can_set_lang()
+    {
+        $this->message->lang('en');
+
+        $this->assertEquals('en', $this->message->toArray()['lang']);
+    }
+
+    /** @test */
+    public function can_set_renotify()
+    {
+        $this->message->renotify();
+
+        $this->assertTrue($this->message->toArray()['renotify']);
+    }
+
+    /** @test */
+    public function can_set_requireInteraction()
+    {
+        $this->message->requireInteraction();
+
+        $this->assertTrue($this->message->toArray()['requireInteraction']);
+    }
+
+    /** @test */
+    public function can_set_tag()
+    {
+        $this->message->tag('tag1');
+
+        $this->assertEquals('tag1', $this->message->toArray()['tag']);
+    }
+
+    /** @test */
+    public function can_set_vibration_pattern()
+    {
+        $this->message->vibrate([1, 2, 3]);
+
+        $this->assertEquals([1, 2, 3], $this->message->toArray()['vibrate']);
+    }
+
+    /** @test */
+    public function can_set_arbitrary_data()
+    {
+        $this->message->data(['id' => 1]);
+
+        $this->assertEquals(['id' => 1], $this->message->toArray()['data']);
     }
 }

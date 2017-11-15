@@ -44,6 +44,8 @@ class ChannelTest extends TestCase
         $this->testUser->updatePushSubscription('endpoint', 'key', 'token');
 
         $this->channel->send($this->testUser, new TestNotification);
+
+        $this->assertTrue(true);
     }
 
     /** @test */
@@ -81,6 +83,14 @@ class ChannelTest extends TestCase
      */
     protected function getPayload()
     {
-        return '{"id":1,"title":"Title","body":"Body","actions":[{"title":"Title","action":"Action"}],"icon":"Icon"}';
+        return json_encode([
+            'title' => 'Title',
+            'actions' => [
+                ['title' => 'Title', 'action' => 'Action']
+            ],
+            'body' => 'Body',
+            'icon' => 'Icon',
+            'data' => ['id' => 1],
+        ]);
     }
 }

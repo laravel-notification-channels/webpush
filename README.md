@@ -88,12 +88,20 @@ class AccountApproved extends Notification
 
     public function toWebPush($notifiable, $notification)
     {
-        return WebPushMessage::create()
-            // ->id($notification->id)
+        return (new WebPushMessage)
             ->title('Approved!')
             ->icon('/approved-icon.png')
             ->body('Your account was approved!')
             ->action('View account', 'view_account');
+            // ->data(['id' => $notification->id])
+            // ->badge()
+            // ->dir()
+            // ->image()
+            // ->lang()
+            // ->renotify()
+            // ->requireInteraction()
+            // ->tag()
+            // ->vibrate()
     }
 }
 ```

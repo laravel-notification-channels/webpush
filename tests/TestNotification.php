@@ -16,8 +16,8 @@ class TestNotification extends Notification
      */
     public function toWebPush($notifiable, $notification)
     {
-        return WebPushMessage::create()
-            ->id(1)
+        return (new WebPushMessage)
+            ->data(['id' => 1])
             ->title('Title')
             ->icon('Icon')
             ->body('Body')
