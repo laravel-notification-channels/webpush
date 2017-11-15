@@ -86,7 +86,7 @@ class ChannelTest extends TestCase
         return json_encode([
             'title' => 'Title',
             'actions' => [
-                ['title' => 'Title', 'action' => 'Action']
+                ['title' => 'Title', 'action' => 'Action'],
             ],
             'body' => 'Body',
             'icon' => 'Icon',
