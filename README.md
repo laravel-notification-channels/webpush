@@ -58,7 +58,7 @@ You can also publish the config file with:
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="config"
 ```
 
-Generate the VAPID keys with (required for browser authentication) with:
+Generate the VAPID keys (required for browser authentication) with:
 
 ``` bash
 php artisan webpush:vapid
@@ -138,7 +138,7 @@ The [Push API](https://developer.mozilla.org/en/docs/Web/API/Push_API) currently
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information about what has changed recently.
 
 ## Testing
 
