@@ -260,7 +260,7 @@ class WebPushMessage
             'vibrate',
             'data',
         ])
-        ->mapWithKeys(function ($option) {
+        ->map(function ($option) {
             return [$option => $this->{$option}];
         })
         ->reject(function ($value) {
