@@ -245,27 +245,6 @@ class WebPushMessage
      */
     public function toArray()
     {
-        return collect([
-            'title',
-            'actions',
-            'badge',
-            'body',
-            'dir',
-            'icon',
-            'image',
-            'lang',
-            'renotify',
-            'requireInteraction',
-            'tag',
-            'vibrate',
-            'data',
-        ])
-        ->mapWithKeys(function ($option) {
-            return [$option => $this->{$option}];
-        })
-        ->reject(function ($value) {
-            return is_null($value);
-        })
-        ->toArray();
+        return array_filter(get_object_vars($this));
     }
 }
