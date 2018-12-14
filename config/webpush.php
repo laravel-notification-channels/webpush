@@ -42,6 +42,6 @@ return [
     |
     */
 
-    'log_errors' => env('WEBPUSH_LOG_ERRORS', false),
+    'enable_logging' => env('WEBPUSH_ENABLE_LOG', false),
 
 ];

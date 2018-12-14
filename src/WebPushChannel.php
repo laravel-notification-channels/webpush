@@ -48,7 +48,7 @@ class WebPushChannel
 
         $response = $this->webPush->flush();
 
-        $this->logErrorsInDebug($response);
+        $this->logErrorsInDebug($response, $subscriptions, $payload);
 
         $this->deleteInvalidSubscriptions($response, $subscriptions);
     }
@@ -71,18 +71,23 @@ class WebPushChannel
         }
     }
 
-    protected function logErrorsInDebug($response)
+    protected function logErrorsInDebug($response, $subscriptions, $payload)
     {
-		if(config('webpush.log_errors')){
-			if(!is_array($response)){
-				return;
+		if(config('webpush.enable_logging')){
+			if(is_array($response)){
+				foreach($response as $index => $push){
+					if(!$push['success']){
+						Log::error("[WebPush] Error pushing: {$push['message']}\nEndpoint: {$push['endpoint']}\nPayload: {$payload}");
+					}else{
+						Log::info("[WebPush] Push successful\nEndpoint: {$subscriptions[$index]->endpoint}");
+					}
+				}
+			}elseif(is_bool($response) && $response === true){
+				Log::info('[WebPush] All messages successfully pushed');
+			}elseif(is_bool($response) && $response === false){
+				Log::info('[WebPush] No notifications in the queue');
 			}
 
-			foreach($response as $push){
-				if(!$push['success']){
-					Log::error("[WebPush] Error pushing: {$push['message']}\nEndpoint: {$push['endpoint']}");
-				}
-			}
 		}
     }
 }

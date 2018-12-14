@@ -128,6 +128,10 @@ $user = \App\User::find(1);
 $user->deletePushSubscription($endpoint);
 ```
 
+## Debugging
+
+If you are having trouble sending messages you can enable verbose logging by setting the `WEBPUSH_ENABLE_LOG` to `true`. This can also be set in `config('webpush.enable_logging')`.
+
 ## Demo
 
 For a complete implementation with a Service Worker check this [demo](https://github.com/cretueusebiu/laravel-web-push-demo).
