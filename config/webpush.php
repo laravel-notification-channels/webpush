@@ -33,4 +33,15 @@ return [
         'sender_id' => env('GCM_SENDER_ID'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Log Errors
+    |--------------------------------------------------------------------------
+    |
+    | Logs errors if webpush server reports an error when posting
+    |
+    */
+
+    'log_errors' => env('WEBPUSH_LOG_ERRORS', false),
+
 ];

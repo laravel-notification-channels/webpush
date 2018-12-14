@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Support\Facades\Log;
 use Minishlink\WebPush\WebPush;
 use Illuminate\Notifications\Notification;
 
@@ -47,6 +48,8 @@ class WebPushChannel
 
         $response = $this->webPush->flush();
 
+        $this->logErrorsInDebug($response);
+
         $this->deleteInvalidSubscriptions($response, $subscriptions);
     }
 
@@ -66,5 +69,20 @@ class WebPushChannel
                 $subscriptions[$index]->delete();
             }
         }
+    }
+
+    protected function logErrorsInDebug($response)
+    {
+		if(config('webpush.log_errors')){
+			if(!is_array($response)){
+				return;
+			}
+
+			foreach($response as $push){
+				if(!$push['success']){
+					Log::error("[WebPush] Error pushing: {$push['message']}\nEndpoint: {$push['endpoint']}");
+				}
+			}
+		}
     }
 }
