@@ -46,6 +46,7 @@ class WebPushChannel
         });
 
         $response = $this->webPush->flush();
+        dd($response);
         $this->deleteInvalidSubscriptions($response, $subscriptions);
     }
 
@@ -61,10 +62,7 @@ class WebPushChannel
         }
 
         foreach ($response as $index => $value) {
-            list(
-                'success' => $success, 
-                'statusCode' => $status
-            ) = $value;
+            list($success, $statusCode) = $value;
 
             // Continue when the request was successful
             if ($success) {
@@ -73,7 +71,7 @@ class WebPushChannel
 
             // Remove subscription if the server responded with a 404 or 410 code
             // https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs#http_status_codes
-            if (in_array($status, [404, 410])) {
+            if (in_array($statusCode, [404, 410])) {
                 $subsciption = $subscriptions[$index];
                 $subsciption->delete();
             }
