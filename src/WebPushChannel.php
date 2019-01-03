@@ -61,7 +61,8 @@ class WebPushChannel
         }
 
         foreach ($response as $index => $value) {
-            list($success, $statusCode) = $value;
+            $subsciption = $subscriptions[$index];
+            $success = $value['success'];
 
             // Continue when the request was successful
             if ($success) {
@@ -70,8 +71,8 @@ class WebPushChannel
 
             // Remove subscription if the server responded with a 404 or 410 code
             // https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs#http_status_codes
-            if (in_array($statusCode, [404, 410])) {
-                $subsciption = $subscriptions[$index];
+            $statusCode = $value['statusCode'];
+            if (in_array($statusCode, [403, 404, 410])) {
                 $subsciption->delete();
             }
         }
