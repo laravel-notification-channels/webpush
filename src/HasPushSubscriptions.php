@@ -20,15 +20,17 @@ trait HasPushSubscriptions
      * @param  string $endpoint
      * @param  string|null $key
      * @param  string|null $token
+     * @param  string|null $contentEncoding
      * @return \NotificationChannels\WebPush\PushSubscription
      */
-    public function updatePushSubscription($endpoint, $key = null, $token = null)
+    public function updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)
     {
         $subscription = PushSubscription::findByEndpoint($endpoint);
 
         if ($subscription && $this->pushSubscriptionBelongsToUser($subscription)) {
             $subscription->public_key = $key;
             $subscription->auth_token = $token;
+            $subscription->content_encoding = $contentEncoding;
             $subscription->save();
 
             return $subscription;
@@ -42,6 +44,7 @@ trait HasPushSubscriptions
             'endpoint' => $endpoint,
             'public_key' => $key,
             'auth_token' => $token,
+            'content_encoding' => $contentEncoding,
         ]));
     }
 

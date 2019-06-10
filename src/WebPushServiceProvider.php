@@ -30,7 +30,9 @@ class WebPushServiceProvider extends ServiceProvider
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
             ->give(function () {
-                return new WebPush($this->webPushConfig());
+                $webPush = new WebPush($this->webPushConfig());
+                $webPush->setReuseVAPIDHeaders(true);
+                return $webPush;
             });
 
         if ($this->app->runningInConsole()) {

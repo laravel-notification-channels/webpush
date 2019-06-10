@@ -5,6 +5,7 @@ namespace NotificationChannels\WebPush\Test;
 use Mockery;
 use Minishlink\WebPush\WebPush;
 use NotificationChannels\WebPush\WebPushChannel;
+use Minishlink\WebPush\Subscription;
 
 class ChannelTest extends TestCase
 {
@@ -14,7 +15,7 @@ class ChannelTest extends TestCase
     /** @var \NotificationChannels\WebPush\WebPushChannel */
     protected $channel;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -23,7 +24,7 @@ class ChannelTest extends TestCase
         $this->channel = new WebPushChannel($this->webPush);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
         parent::tearDown();
@@ -32,14 +33,14 @@ class ChannelTest extends TestCase
     /** @test */
     public function it_can_send_a_notification()
     {
+        $subscription = new Subscription('endpoint', 'key', 'token');
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('endpoint', $this->getPayload(), 'key', 'token')
+            ->with($subscription, $this->getPayload())
             ->andReturn(true);
 
         $this->webPush->shouldReceive('flush')
-            ->once()
-            ->andReturn(true);
+            ->once();
 
         $this->testUser->updatePushSubscription('endpoint', 'key', 'token');
 

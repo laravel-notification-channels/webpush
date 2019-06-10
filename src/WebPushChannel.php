@@ -4,6 +4,7 @@ namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
 use Illuminate\Notifications\Notification;
+use Minishlink\WebPush\MessageSentReport;
 
 class WebPushChannel
 {
@@ -37,33 +38,31 @@ class WebPushChannel
         $payload = json_encode($notification->toWebPush($notifiable, $notification)->toArray());
 
         $subscriptions->each(function ($sub) use ($payload) {
-            $this->webPush->sendNotification(
-                $sub->endpoint,
-                $payload,
-                $sub->public_key,
-                $sub->auth_token
-            );
+            $subscription = new \Minishlink\WebPush\Subscription($sub->endpoint, $sub->public_key, $sub->auth_token, $sub->content_encoding);
+            $this->webPush->sendNotification($subscription, $payload);
         });
 
-        $response = $this->webPush->flush();
+        $reports = $this->webPush->flush();
 
-        $this->deleteInvalidSubscriptions($response, $subscriptions);
+        $this->deleteInvalidSubscriptions($reports, $subscriptions);
     }
 
     /**
-     * @param  array|bool $response
+     * @param  \Generator|MessageSentReport $response
      * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
      * @return void
      */
     protected function deleteInvalidSubscriptions($response, $subscriptions)
     {
-        if (! is_array($response)) {
-            return;
-        }
-
-        foreach ($response as $index => $value) {
-            if (! $value['success'] && isset($subscriptions[$index])) {
-                $subscriptions[$index]->delete();
+        foreach ($response as $report) {
+            /** @var MessageSentReport $report */
+            if (! $report->isSuccess()) {
+               $subscriptions->each(function($s) use($report) {
+                    if($s->endpoint === $report->getEndpoint()) {
+                        logger()->warning('deleting subscription cause of ' . $report->getReason());
+                        $s->delete();
+                    }
+                });
             }
         }
     }

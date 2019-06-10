@@ -13,7 +13,7 @@ abstract class TestCase extends Orchestra
     /** @var \NotificationChannels\WebPush\Test\User */
     protected $testUser;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

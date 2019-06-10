@@ -10,7 +10,7 @@ class MessageTest extends TestCase
     /** @var \NotificationChannels\WebPush\WebPushMessage */
     protected $message;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
