@@ -32,6 +32,7 @@ class WebPushServiceProvider extends ServiceProvider
             ->give(function () {
                 $webPush = new WebPush($this->webPushConfig());
                 $webPush->setReuseVAPIDHeaders(true);
+
                 return $webPush;
             });
 

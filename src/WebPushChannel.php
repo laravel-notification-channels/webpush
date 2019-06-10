@@ -3,8 +3,8 @@
 namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
-use Illuminate\Notifications\Notification;
 use Minishlink\WebPush\MessageSentReport;
+use Illuminate\Notifications\Notification;
 
 class WebPushChannel
 {
@@ -57,9 +57,9 @@ class WebPushChannel
         foreach ($response as $report) {
             /** @var MessageSentReport $report */
             if (! $report->isSuccess()) {
-               $subscriptions->each(function($s) use($report) {
-                    if($s->endpoint === $report->getEndpoint()) {
-                        logger()->warning('deleting subscription cause of ' . $report->getReason());
+                $subscriptions->each(function ($s) use ($report) {
+                    if ($s->endpoint === $report->getEndpoint()) {
+                        logger()->warning('deleting subscription cause of '.$report->getReason());
                         $s->delete();
                     }
                 });
