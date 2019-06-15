@@ -33,4 +33,15 @@ return [
         'sender_id' => env('GCM_SENDER_ID'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Customize Subscriber Model
+    |--------------------------------------------------------------------------
+    |
+    | Here you can customize the subscriber model.
+    |
+    */
+    'subscriber_table' => 'users',
+    'subscriber_model' => App\User::class,
+    'subscriber_foreing_key' => 'user_id'
 ];

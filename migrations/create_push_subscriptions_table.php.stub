@@ -14,16 +14,19 @@ class CreatePushSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('push_subscriptions', function (Blueprint $table) {
+            $subscriber_table = config('webpush.subscriber_table', 'users');
+            $subscriber_foreing_key = config('webpush.subscriber_foreing_key', 'user_id');
+
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer($subscriber_foreing_key)->unsigned()->index();
             $table->string('endpoint', 500)->unique();
             $table->string('public_key')->nullable();
             $table->string('auth_token')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign($subscriber_foreing_key)
                     ->references('id')
-                    ->on('users')
+                    ->on($subscriber_table)
                     ->onDelete('cascade');
         });
     }

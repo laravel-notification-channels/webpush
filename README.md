@@ -40,6 +40,27 @@ class User extends Model
 }
 ```
 
+You can also publish the config file with:
+
+``` bash
+php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="config"
+```
+
+**Note:** If you need to use a different model than the users you can customize it by changing the options **subscriber_table**, **subscriber_model** and **subscriber_foreing_key** in the configuration file before executing the migration.
+
+Example
+
+``` php
+[
+    ...
+    'subscriber_table' => 'subscribers',
+    'subscriber_model' => \App\Models\Subscriber::class,
+    'subscriber_foreing_key' => 'subscriber_id'
+]
+```
+
+**Attention:** the new versions of Laravel create the primary keys as bigInteger, if you personalize the subscriber's model you will have to change the data type of foreign key from integer to bigInteger.
+
 Next publish the migration with:
 
 ``` bash
@@ -50,12 +71,6 @@ Run the migrate command to create the necessary table:
 
 ``` bash
 php artisan migrate
-```
-
-You can also publish the config file with:
-
-``` bash
-php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="config"
 ```
 
 Generate the VAPID keys (required for browser authentication) with:

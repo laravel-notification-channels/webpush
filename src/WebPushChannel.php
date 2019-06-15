@@ -29,7 +29,7 @@ class WebPushChannel
     public function send($notifiable, Notification $notification)
     {
         $subscriptions = $notifiable->routeNotificationFor('WebPush');
-
+        
         if (! $subscriptions || $subscriptions->isEmpty()) {
             return;
         }

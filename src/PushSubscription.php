@@ -25,7 +25,8 @@ class PushSubscription extends Model
      */
     public function user()
     {
-        return $this->belongsTo(Config::get('auth.providers.users.model'));
+        $model = Config::get('webpush.subscriber_model', Config::get('auth.providers.users.model'));
+        return $this->belongsTo($model);
     }
 
     /**

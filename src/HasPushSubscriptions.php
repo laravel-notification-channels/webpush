@@ -53,7 +53,9 @@ trait HasPushSubscriptions
      */
     public function pushSubscriptionBelongsToUser($subscription)
     {
-        return (int) $subscription->user_id === (int) $this->getAuthIdentifier();
+        $subscriber_foreing_key = config('webpush.subscriber_foreing_key', 'user_id');
+
+        return $subscription->{$subscriber_foreing_key} === $this->getKey();
     }
 
     /**
