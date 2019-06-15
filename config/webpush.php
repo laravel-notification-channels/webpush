@@ -33,4 +33,25 @@ return [
         'sender_id' => env('GCM_SENDER_ID'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Database Table
+    |--------------------------------------------------------------------------
+    |
+    | If you want to change the name of the subscriptions table
+    |
+    */
+
+    'db_table' => env('WEBPUSH_TABLE', 'push_subscriptions'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database Connection
+    |--------------------------------------------------------------------------
+    |
+    | If you want to change the connection of the subscriptions table
+    |
+    */
+
+    'db_connection' => env('WEBPUSH_CONNECTION'),
 ];
