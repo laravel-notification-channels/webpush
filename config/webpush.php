@@ -42,6 +42,6 @@ return [
     |
     */
 
-    'table_name' => 'push_subscriptions'
+    'table_name' => 'push_subscriptions',
 
 ];
