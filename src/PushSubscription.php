@@ -38,4 +38,14 @@ class PushSubscription extends Model
     {
         return static::where('endpoint', $endpoint)->first();
     }
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return Config::get('webpush.table_name');
+    }
 }

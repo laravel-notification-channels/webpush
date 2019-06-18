@@ -33,4 +33,15 @@ return [
         'sender_id' => env('GCM_SENDER_ID'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Table name
+    |--------------------------------------------------------------------------
+    |
+    | Custom table name for push subscriptions.
+    |
+    */
+
+    'table_name' => 'push_subscriptions'
+
 ];
