@@ -2,8 +2,6 @@
 
 namespace NotificationChannels\WebPush\Test;
 
-use NotificationChannels\WebPush\WebPushMessage;
-
 class TestNotificationWithOptions extends TestNotification
 {
     /**
