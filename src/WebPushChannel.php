@@ -36,9 +36,9 @@ class WebPushChannel
 
         $webPushMessage = $notification->toWebPush($notifiable, $notification);
         $webPushMessageArr = $webPushMessage->toArray();
-        
+
         $options = [];
-        if(isset($webPushMessageArr['options'])) {
+        if (isset($webPushMessageArr['options'])) {
             $options = $webPushMessageArr['options'];
             unset($webPushMessageArr['options']);
         }
