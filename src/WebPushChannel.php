@@ -34,14 +34,24 @@ class WebPushChannel
             return;
         }
 
-        $payload = json_encode($notification->toWebPush($notifiable, $notification)->toArray());
+        $webPushMessage = $notification->toWebPush($notifiable, $notification);
+        $webPushMessageArr = $webPushMessage->toArray();
+        
+        $options = [];
+        if(isset($webPushMessageArr['options'])) {
+            $options = $webPushMessageArr['options'];
+            unset($webPushMessageArr['options']);
+        }
 
-        $subscriptions->each(function ($sub) use ($payload) {
+        $payload = json_encode($webPushMessageArr);
+
+        $subscriptions->each(function ($sub) use ($payload, $options) {
             $this->webPush->sendNotification(
                 $sub->endpoint,
                 $payload,
                 $sub->public_key,
-                $sub->auth_token
+                $sub->auth_token,
+                $options
             );
         });
 

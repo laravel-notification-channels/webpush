@@ -73,6 +73,11 @@ class WebPushMessage
     protected $data;
 
     /**
+     * @var mixed
+     */
+    protected $options;
+
+    /**
      * Set the notification title.
      *
      * @param  string $value
@@ -234,6 +239,19 @@ class WebPushMessage
     public function data($value)
     {
         $this->data = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the notification options.
+     *
+     * @param  mixed $value
+     * @return $this
+     */
+    public function options($value)
+    {
+        $this->options = $value;
 
         return $this;
     }

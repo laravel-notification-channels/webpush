@@ -120,4 +120,12 @@ class MessageTest extends TestCase
 
         $this->assertEquals(['id' => 1], $this->message->toArray()['data']);
     }
+
+    /** @test */
+    public function can_set_options()
+    {
+        $this->message->options(['ttl' => 60]);
+
+        $this->assertEquals(['ttl' => 60], $this->message->toArray()['options']);
+    }
 }

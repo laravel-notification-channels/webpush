@@ -34,7 +34,7 @@ class ChannelTest extends TestCase
     {
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('endpoint', $this->getPayload(), 'key', 'token')
+            ->with('endpoint', $this->getPayload(), 'key', 'token', [])
             ->andReturn(true);
 
         $this->webPush->shouldReceive('flush')
@@ -53,12 +53,12 @@ class ChannelTest extends TestCase
     {
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('valid_endpoint', $this->getPayload(), null, null)
+            ->with('valid_endpoint', $this->getPayload(), null, null, [])
             ->andReturn(true);
 
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('invalid_endpoint', $this->getPayload(), null, null)
+            ->with('invalid_endpoint', $this->getPayload(), null, null, [])
             ->andReturn(true);
 
         $this->webPush->shouldReceive('flush')
@@ -76,6 +76,25 @@ class ChannelTest extends TestCase
         $this->assertFalse($this->testUser->pushSubscriptions()->where('endpoint', 'invalid_endpoint')->exists());
 
         $this->assertTrue($this->testUser->pushSubscriptions()->where('endpoint', 'valid_endpoint')->exists());
+    }
+
+    /** @test */
+    public function it_can_send_a_notification_with_options()
+    {
+        $this->webPush->shouldReceive('sendNotification')
+            ->once()
+            ->with('endpoint', $this->getPayload(), 'key', 'token', ['ttl' => 60])
+            ->andReturn(true);
+
+        $this->webPush->shouldReceive('flush')
+            ->once()
+            ->andReturn(true);
+
+        $this->testUser->updatePushSubscription('endpoint', 'key', 'token');
+
+        $this->channel->send($this->testUser, new TestNotificationWithOptions);
+
+        $this->assertTrue(true);
     }
 
     /**
