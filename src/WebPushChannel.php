@@ -4,7 +4,6 @@ namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
-use Minishlink\WebPush\MessageSentReport;
 use Illuminate\Notifications\Notification;
 
 class WebPushChannel
@@ -64,7 +63,7 @@ class WebPushChannel
                 continue;
             }
 
-            /** @var \Minishlink\WebPush\MessageSentReport $report */
+            /* @var \Minishlink\WebPush\MessageSentReport $report */
             $subscriptions->each(function ($subscription) use ($report) {
                 if ($subscription->endpoint === $report->getEndpoint()) {
                     logger()->warning('deleting subscription cause of '.$report->getReason());
