@@ -35,15 +35,18 @@ class WebPushChannel
             return;
         }
 
-        $payload = json_encode($notification->toWebPush($notifiable, $notification)->toArray());
+        /** @var \NotificationChannels\WebPush\WebPushMessage $webPushMessage */
+        $webPushMessage = $notification->toWebPush($notifiable, $notification);
+        $options = $webPushMessage->getOptions();
+        $payload = json_encode($webPushMessage->toArray());
 
-        $subscriptions->each(function (PushSubscription $pushSubscription) use ($payload) {
+        $subscriptions->each(function (PushSubscription $pushSubscription) use ($payload, $options) {
             $this->webPush->sendNotification(new Subscription(
                 $pushSubscription->endpoint,
                 $pushSubscription->public_key,
                 $pushSubscription->auth_token,
                 $pushSubscription->content_encoding
-            ), $payload);
+            ), $payload, false, $options);
         });
 
         $reports = $this->webPush->flush();

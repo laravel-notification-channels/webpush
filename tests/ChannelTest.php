@@ -8,6 +8,7 @@ use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\WebPushChannel;
+use Generator;
 
 class ChannelTest extends TestCase
 {
@@ -37,7 +38,7 @@ class ChannelTest extends TestCase
     {
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->withArgs(function (Subscription $subscription, string $payload) {
+            ->withArgs(function (Subscription $subscription, string $payload, bool $flush = false, array $options = []) {
                 $this->assertSame($this->getPayload(), $payload);
                 $this->assertInstanceOf(Subscription::class, $subscription);
                 $this->assertEquals('endpoint', $subscription->getEndpoint());
@@ -50,7 +51,10 @@ class ChannelTest extends TestCase
             ->andReturn(true);
 
         $this->webPush->shouldReceive('flush')
-            ->once();
+            ->once()
+            ->andReturn((function () {
+                yield new MessageSentReport(new Request('POST', 'endpoint'), null, true);
+            })());
 
         $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
 
@@ -60,26 +64,48 @@ class ChannelTest extends TestCase
     }
 
     /** @test */
+    public function it_can_send_a_notification_with_options()
+    {
+        $this->webPush->shouldReceive('sendNotification')
+            ->once()
+            ->withArgs(function ($subscription, $payload, $flush, array $options = []) {
+                $this->assertSame(['ttl' => 60], $options);
+                return true;
+            })
+            ->andReturn(true);
+
+        $this->webPush->shouldReceive('flush')
+            ->once()
+            ->andReturn((function () {
+                yield new MessageSentReport(new Request('POST', 'endpoint'), null, true);
+            })());
+
+        $this->testUser->updatePushSubscription('endpoint', 'key', 'token');
+
+        $this->channel->send($this->testUser, new TestNotificationWithOptions);
+
+        $this->assertTrue(true);
+    }
+
+    /** @test */
     public function it_will_delete_invalid_subscriptions()
     {
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            // ->with('valid_endpoint', $this->getPayload(), null, null)
+            // ->with('valid_endpoint', $this->getPayload(), null, null, [])
             ->andReturn(true);
 
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            // ->with('invalid_endpoint', $this->getPayload(), null, null)
+            // ->with('invalid_endpoint', $this->getPayload(), null, null, [])
             ->andReturn(true);
-
-        $reports = function () {
-            yield new MessageSentReport(new Request('POST', 'valid_endpoint'), null, true);
-            yield new MessageSentReport(new Request('POST', 'invalid_endpoint'), null, false);
-        };
 
         $this->webPush->shouldReceive('flush')
             ->once()
-            ->andReturn($reports());
+            ->andReturn((function () {
+                yield new MessageSentReport(new Request('POST', 'valid_endpoint'), null, true);
+                yield new MessageSentReport(new Request('POST', 'invalid_endpoint'), null, false);
+            })());
 
         $this->testUser->updatePushSubscription('valid_endpoint');
         $this->testUser->updatePushSubscription('invalid_endpoint');
