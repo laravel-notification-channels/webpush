@@ -8,7 +8,6 @@ use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\WebPushChannel;
-use Generator;
 
 class ChannelTest extends TestCase
 {
@@ -70,6 +69,7 @@ class ChannelTest extends TestCase
             ->once()
             ->withArgs(function ($subscription, $payload, $flush, array $options = []) {
                 $this->assertSame(['ttl' => 60], $options);
+
                 return true;
             })
             ->andReturn(true);
