@@ -3,8 +3,10 @@
 namespace NotificationChannels\WebPush\Test;
 
 use Mockery;
+use GuzzleHttp\Psr7\Request;
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
+use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\WebPushChannel;
 
 class ChannelTest extends TestCase
@@ -33,16 +35,24 @@ class ChannelTest extends TestCase
     /** @test */
     public function it_can_send_a_notification()
     {
-        $subscription = new Subscription('endpoint', 'key', 'token');
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with($subscription, $this->getPayload())
+            ->withArgs(function (Subscription $subscription, string $payload) {
+                $this->assertSame($this->getPayload(), $payload);
+                $this->assertInstanceOf(Subscription::class, $subscription);
+                $this->assertEquals('endpoint', $subscription->getEndpoint());
+                $this->assertEquals('key', $subscription->getPublicKey());
+                $this->assertEquals('token', $subscription->getAuthToken());
+                $this->assertEquals('aesgcm', $subscription->getContentEncoding());
+
+                return true;
+            })
             ->andReturn(true);
 
         $this->webPush->shouldReceive('flush')
             ->once();
 
-        $this->testUser->updatePushSubscription('endpoint', 'key', 'token');
+        $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
 
         $this->channel->send($this->testUser, new TestNotification);
 
@@ -54,20 +64,22 @@ class ChannelTest extends TestCase
     {
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('valid_endpoint', $this->getPayload(), null, null)
+            // ->with('valid_endpoint', $this->getPayload(), null, null)
             ->andReturn(true);
 
         $this->webPush->shouldReceive('sendNotification')
             ->once()
-            ->with('invalid_endpoint', $this->getPayload(), null, null)
+            // ->with('invalid_endpoint', $this->getPayload(), null, null)
             ->andReturn(true);
+
+        $reports = function () {
+            yield new MessageSentReport(new Request('POST', 'valid_endpoint'), null, true);
+            yield new MessageSentReport(new Request('POST', 'invalid_endpoint'), null, false);
+        };
 
         $this->webPush->shouldReceive('flush')
             ->once()
-            ->andReturn([
-                ['success' => true],
-                ['success' => false],
-            ]);
+            ->andReturn($reports());
 
         $this->testUser->updatePushSubscription('valid_endpoint');
         $this->testUser->updatePushSubscription('invalid_endpoint');
@@ -75,7 +87,6 @@ class ChannelTest extends TestCase
         $this->channel->send($this->testUser, new TestNotification);
 
         $this->assertFalse($this->testUser->pushSubscriptions()->where('endpoint', 'invalid_endpoint')->exists());
-
         $this->assertTrue($this->testUser->pushSubscriptions()->where('endpoint', 'valid_endpoint')->exists());
     }
 
