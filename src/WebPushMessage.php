@@ -2,6 +2,8 @@
 
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Support\Arr;
+
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
  */
@@ -73,9 +75,9 @@ class WebPushMessage
     protected $data;
 
     /**
-     * @var mixed
+     * @var array
      */
-    protected $options;
+    protected $options = [];
 
     /**
      * Set the notification title.
@@ -246,14 +248,26 @@ class WebPushMessage
     /**
      * Set the notification options.
      *
-     * @param  mixed $value
+     * @link https://github.com/web-push-libs/web-push-php#notifications-and-default-options
+     *
+     * @param  array $value
      * @return $this
      */
-    public function options($value)
+    public function options(array $value)
     {
         $this->options = $value;
 
         return $this;
+    }
+
+    /**
+     * Get the notification options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**
@@ -263,6 +277,6 @@ class WebPushMessage
      */
     public function toArray()
     {
-        return array_filter(get_object_vars($this));
+        return Arr::except(array_filter(get_object_vars($this)), ['options']);
     }
 }

@@ -126,6 +126,7 @@ class MessageTest extends TestCase
     {
         $this->message->options(['ttl' => 60]);
 
-        $this->assertEquals(['ttl' => 60], $this->message->toArray()['options']);
+        $this->assertEquals(['ttl' => 60], $this->message->getOptions());
+        $this->assertArrayNotHasKey('options', $this->message->toArray());
     }
 }
