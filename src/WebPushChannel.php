@@ -3,6 +3,7 @@
 namespace NotificationChannels\WebPush;
 
 use Minishlink\WebPush\WebPush;
+use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\MessageSentReport;
 use Illuminate\Notifications\Notification;
 
@@ -37,9 +38,13 @@ class WebPushChannel
 
         $payload = json_encode($notification->toWebPush($notifiable, $notification)->toArray());
 
-        $subscriptions->each(function ($sub) use ($payload) {
-            $subscription = new \Minishlink\WebPush\Subscription($sub->endpoint, $sub->public_key, $sub->auth_token, $sub->content_encoding);
-            $this->webPush->sendNotification($subscription, $payload);
+        $subscriptions->each(function (PushSubscription $pushSubscription) use ($payload) {
+            $this->webPush->sendNotification(new Subscription(
+                $pushSubscription->endpoint,
+                $pushSubscription->public_key,
+                $pushSubscription->auth_token,
+                $pushSubscription->content_encoding
+            ), $payload);
         });
 
         $reports = $this->webPush->flush();
@@ -48,22 +53,24 @@ class WebPushChannel
     }
 
     /**
-     * @param  \Generator|MessageSentReport $response
+     * @param  \Minishlink\WebPush\MessageSentReport[] $reports
      * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
      * @return void
      */
-    protected function deleteInvalidSubscriptions($response, $subscriptions)
+    protected function deleteInvalidSubscriptions($reports, $subscriptions)
     {
-        foreach ($response as $report) {
-            /** @var MessageSentReport $report */
-            if (! $report->isSuccess()) {
-                $subscriptions->each(function ($s) use ($report) {
-                    if ($s->endpoint === $report->getEndpoint()) {
-                        logger()->warning('deleting subscription cause of '.$report->getReason());
-                        $s->delete();
-                    }
-                });
+        foreach ($reports as $report) {
+            if (is_null($report) || $report->isSuccess()) {
+                continue;
             }
+
+            /** @var \Minishlink\WebPush\MessageSentReport $report */
+            $subscriptions->each(function ($subscription) use ($report) {
+                if ($subscription->endpoint === $report->getEndpoint()) {
+                    logger()->warning('deleting subscription cause of '.$report->getReason());
+                    $subscription->delete();
+                }
+            });
         }
     }
 }
