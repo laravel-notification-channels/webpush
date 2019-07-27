@@ -35,6 +35,7 @@ class PushSubscriptionTest extends TestCase
         $this->testUser->updatePushSubscription('endpoint');
         $sub = PushSubscription::findByEndpoint('endpoint');
 
-        $this->assertEquals($this->testUser->id, $sub->user->id);
+        $this->assertEquals($this->testUser->id, $sub->subscribable_id);
+        $this->assertEquals(get_class($this->testUser), $sub->subscribable_type);
     }
 }

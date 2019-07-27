@@ -8,6 +8,8 @@ use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\ReportHandler;
+use GuzzleHttp\Psr7\Response;
 
 class ChannelTest extends TestCase
 {
@@ -23,7 +25,7 @@ class ChannelTest extends TestCase
 
         $this->webPush = Mockery::mock(WebPush::class);
 
-        $this->channel = new WebPushChannel($this->webPush);
+        $this->channel = new WebPushChannel($this->webPush, new ReportHandler);
     }
 
     public function tearDown(): void
@@ -103,8 +105,8 @@ class ChannelTest extends TestCase
         $this->webPush->shouldReceive('flush')
             ->once()
             ->andReturn((function () {
-                yield new MessageSentReport(new Request('POST', 'valid_endpoint'), null, true);
-                yield new MessageSentReport(new Request('POST', 'invalid_endpoint'), null, false);
+                yield new MessageSentReport(new Request('POST', 'valid_endpoint'), new Response(200), true);
+                yield new MessageSentReport(new Request('POST', 'invalid_endpoint'), new Response(404), false);
             })());
 
         $this->testUser->updatePushSubscription('valid_endpoint');

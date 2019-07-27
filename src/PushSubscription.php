@@ -2,7 +2,6 @@
 
 namespace NotificationChannels\WebPush;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 
 class PushSubscription extends Model
@@ -39,13 +38,13 @@ class PushSubscription extends Model
     }
 
     /**
-     * Get the user that owns the subscription.
+     * Get the model related to the subscription.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function user()
+    public function subscribable()
     {
-        return $this->belongsTo(Config::get('auth.providers.users.model'));
+        return $this->morphTo();
     }
 
     /**

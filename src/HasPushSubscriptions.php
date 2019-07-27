@@ -5,17 +5,17 @@ namespace NotificationChannels\WebPush;
 trait HasPushSubscriptions
 {
     /**
-     * Get the user's subscriptions.
+     *  Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function pushSubscriptions()
     {
-        return $this->hasMany(config('webpush.model'));
+        return $this->morphMany(config('webpush.model'), 'subscribable');
     }
 
     /**
-     * Update (or create) user subscription.
+     * Update (or create) subscription.
      *
      * @param  string $endpoint
      * @param  string|null $key
@@ -27,7 +27,7 @@ trait HasPushSubscriptions
     {
         $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
-        if ($subscription && $this->pushSubscriptionBelongsToUser($subscription)) {
+        if ($subscription && $this->ownsPushSubscription($subscription)) {
             $subscription->public_key = $key;
             $subscription->auth_token = $token;
             $subscription->content_encoding = $contentEncoding;
@@ -36,7 +36,7 @@ trait HasPushSubscriptions
             return $subscription;
         }
 
-        if ($subscription && ! $this->pushSubscriptionBelongsToUser($subscription)) {
+        if ($subscription && ! $this->ownsPushSubscription($subscription)) {
             $subscription->delete();
         }
 
@@ -49,14 +49,15 @@ trait HasPushSubscriptions
     }
 
     /**
-     * Determine if the given subscription belongs to this user.
+     * Determine if the model owns the given subscription.
      *
      * @param  \NotificationChannels\WebPush\PushSubscription $subscription
      * @return bool
      */
-    public function pushSubscriptionBelongsToUser($subscription)
+    public function ownsPushSubscription($subscription)
     {
-        return (int) $subscription->user_id === (int) $this->getAuthIdentifier();
+        return (string) $subscription->subscribable_id === (string) $this->getKey() &&
+                        $subscription->subscribable_type === $this->getMorphClass();
     }
 
     /**
@@ -73,7 +74,7 @@ trait HasPushSubscriptions
     }
 
     /**
-     * Get all subscriptions.
+     * Get all of the subscriptions.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */

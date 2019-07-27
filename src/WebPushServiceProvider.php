@@ -36,6 +36,10 @@ class WebPushServiceProvider extends ServiceProvider
                 return $webPush;
             });
 
+        $this->app->when(WebPushChannel::class)
+            ->needs(ReportHandlerInterface::class)
+            ->give(ReportHandler::class);
+
         if ($this->app->runningInConsole()) {
             $this->definePublishing();
         }
@@ -92,7 +96,7 @@ class WebPushServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path("/migrations/{$timestamp}_create_push_subscriptions_table.php"),
+                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path("migrations/{$timestamp}_create_push_subscriptions_table.php"),
             ], 'migrations');
         }
     }

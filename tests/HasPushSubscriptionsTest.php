@@ -49,7 +49,7 @@ class HasPushSubscriptionsTest extends TestCase
     {
         $sub = $this->testUser->updatePushSubscription('foo');
 
-        $this->assertTrue($this->testUser->pushSubscriptionBelongsToUser($sub));
+        $this->assertTrue($this->testUser->ownsPushSubscription($sub));
     }
 
     /** @test */
