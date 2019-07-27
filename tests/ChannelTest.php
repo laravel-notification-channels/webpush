@@ -4,12 +4,12 @@ namespace NotificationChannels\WebPush\Test;
 
 use Mockery;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\MessageSentReport;
-use NotificationChannels\WebPush\WebPushChannel;
 use NotificationChannels\WebPush\ReportHandler;
-use GuzzleHttp\Psr7\Response;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class ChannelTest extends TestCase
 {
