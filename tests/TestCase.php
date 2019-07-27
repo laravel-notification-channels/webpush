@@ -2,11 +2,10 @@
 
 namespace NotificationChannels\WebPush\Test;
 
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
-use NotificationChannels\WebPush\PushSubscription;
 
 abstract class TestCase extends Orchestra
 {
@@ -29,15 +28,6 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        $this->initializeDirectory($this->getTempDirectory());
-
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => $this->getTempDirectory().'/database.sqlite',
-            'prefix' => '',
-        ]);
-
         $app['config']->set('auth.providers.users.model', User::class);
     }
 
@@ -57,9 +47,7 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-        file_put_contents($this->getTempDirectory().'/database.sqlite', null);
-
-        $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
         });
@@ -69,30 +57,6 @@ abstract class TestCase extends Orchestra
         (new \CreatePushSubscriptionsTable())->up();
 
         $this->createUser(['email' => 'test@user.com']);
-    }
-
-    /**
-     * Initialize the directory.
-     *
-     * @param string $directory
-     */
-    protected function initializeDirectory($directory)
-    {
-        if (File::isDirectory($directory)) {
-            File::deleteDirectory($directory);
-        }
-        if (! File::exists($directory)) {
-            File::makeDirectory($directory);
-        }
-    }
-
-    /**
-     * @param  string $suffix
-     * @return string
-     */
-    public function getTempDirectory($suffix = '')
-    {
-        return __DIR__.'/temp'.($suffix == '' ? '' : '/'.$suffix);
     }
 
     /**
@@ -111,18 +75,18 @@ abstract class TestCase extends Orchestra
      */
     public function createSubscription($user, $endpoint = 'endpoint')
     {
-        $sub = $this->app[PushSubscription::class]->forceFill([
+        return $user->pushSubscriptions()->create([
             'user_id' => $user->id,
             'endpoint' => $endpoint,
             'public_key' => 'key',
             'auth_token' => 'token',
         ]);
-
-        $sub->save();
-
-        return $sub;
     }
 
+    /**
+     * @param  string $expectedText
+     * @return void
+     */
     protected function seeInConsoleOutput($expectedText)
     {
         $consoleOutput = $this->app[Kernel::class]->output();

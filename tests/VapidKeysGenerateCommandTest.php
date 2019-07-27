@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\WebPush\Test;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 
 class VapidKeysGenerateCommandTest extends TestCase
@@ -27,6 +28,14 @@ class VapidKeysGenerateCommandTest extends TestCase
     /** @test */
     public function it_can_generate_and_set_vapid_keys()
     {
+        if (File::isDirectory(__DIR__.'/temp')) {
+            File::deleteDirectory(__DIR__.'/temp');
+        }
+
+        if (! File::exists(__DIR__.'/temp')) {
+            File::makeDirectory(__DIR__.'/temp');
+        }
+
         file_put_contents($envPath = __DIR__.'/temp/.env', 'APP_ENV=testing');
         $this->app->useEnvironmentPath(__DIR__.'/temp');
 
