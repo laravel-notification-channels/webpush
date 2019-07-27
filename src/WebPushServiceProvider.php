@@ -92,7 +92,7 @@ class WebPushServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => $this->app->databasePath().'/migrations/'.$timestamp.'_create_push_subscriptions_table.php',
+                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path("/migrations/{$timestamp}_create_push_subscriptions_table.php"),
             ], 'migrations');
         }
     }

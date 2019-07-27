@@ -20,6 +20,25 @@ class PushSubscription extends Model
     ];
 
     /**
+     * Create a new model instance.
+     *
+     * @param  array $attributes
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        if (! isset($this->connection)) {
+            $this->setConnection(config('webpush.database_connection'));
+        }
+
+        if (! isset($this->table)) {
+            $this->setTable(config('webpush.table_name'));
+        }
+
+        parent::__construct($attributes);
+    }
+
+    /**
      * Get the user that owns the subscription.
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable

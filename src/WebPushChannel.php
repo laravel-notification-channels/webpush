@@ -8,7 +8,9 @@ use Illuminate\Notifications\Notification;
 
 class WebPushChannel
 {
-    /** @var \Minishlink\WebPush\WebPush */
+    /**
+     * @var \Minishlink\WebPush\WebPush
+     */
     protected $webPush;
 
     /**

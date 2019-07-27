@@ -11,7 +11,7 @@ trait HasPushSubscriptions
      */
     public function pushSubscriptions()
     {
-        return $this->hasMany(PushSubscription::class);
+        return $this->hasMany(config('webpush.model'));
     }
 
     /**
@@ -25,7 +25,7 @@ trait HasPushSubscriptions
      */
     public function updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)
     {
-        $subscription = PushSubscription::findByEndpoint($endpoint);
+        $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
         if ($subscription && $this->pushSubscriptionBelongsToUser($subscription)) {
             $subscription->public_key = $key;
@@ -40,12 +40,12 @@ trait HasPushSubscriptions
             $subscription->delete();
         }
 
-        return $this->pushSubscriptions()->save(new PushSubscription([
+        return $this->pushSubscriptions()->create([
             'endpoint' => $endpoint,
             'public_key' => $key,
             'auth_token' => $token,
             'content_encoding' => $contentEncoding,
-        ]));
+        ]);
     }
 
     /**
