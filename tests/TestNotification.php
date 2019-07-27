@@ -21,6 +21,7 @@ class TestNotification extends Notification
             ->title('Title')
             ->icon('Icon')
             ->body('Body')
-            ->action('Title', 'Action');
+            ->action('Title', 'Action')
+            ->options(['ttl' => 60]);
     }
 }

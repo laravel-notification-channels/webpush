@@ -18,7 +18,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_title()
+    public function title_can_be_set()
     {
         $this->message->title('Message title');
 
@@ -26,7 +26,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_an_action()
+    public function action_can_be_set()
     {
         $this->message->action('Some Action', 'some_action');
 
@@ -34,7 +34,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_badge()
+    public function badge_can_be_set()
     {
         $this->message->badge('/badge.jpg');
 
@@ -42,7 +42,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_body()
+    public function body_can_be_set()
     {
         $this->message->body('Message body');
 
@@ -50,7 +50,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_direction()
+    public function direction_can_be_set()
     {
         $this->message->dir('rtl');
 
@@ -58,7 +58,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_icon()
+    public function icon_can_be_set()
     {
         $this->message->icon('/icon.jpg');
 
@@ -66,7 +66,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_image()
+    public function image_can_be_set()
     {
         $this->message->image('/image.jpg');
 
@@ -74,7 +74,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_lang()
+    public function lang_can_be_set()
     {
         $this->message->lang('en');
 
@@ -82,7 +82,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_renotify()
+    public function renotify_can_be_set()
     {
         $this->message->renotify();
 
@@ -90,7 +90,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_requireInteraction()
+    public function requireInteraction_can_be_set()
     {
         $this->message->requireInteraction();
 
@@ -98,7 +98,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_tag()
+    public function tag_can_be_set()
     {
         $this->message->tag('tag1');
 
@@ -106,7 +106,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_vibration_pattern()
+    public function vibration_pattern_can_be_set()
     {
         $this->message->vibrate([1, 2, 3]);
 
@@ -114,7 +114,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_arbitrary_data()
+    public function arbitrary_data_can_be_set()
     {
         $this->message->data(['id' => 1]);
 
@@ -122,7 +122,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function can_set_options()
+    public function options_can_be_set()
     {
         $this->message->options(['ttl' => 60]);
 

@@ -4,6 +4,13 @@ namespace NotificationChannels\WebPush;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $endpoint
+ * @property string|null $public_key
+ * @property string|null $auth_token
+ * @property string|null $content_encoding
+ * @property \Illuminate\Database\Eloquent\Model $subscribable
+ */
 class PushSubscription extends Model
 {
     /**
