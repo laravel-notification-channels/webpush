@@ -2,6 +2,14 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 4.0.0 - 2019-07-28
+
+- Upgraded to [minishlink/web-push](https://github.com/web-push-libs/web-push-php/releases) to v5
+- Added `WebPushMessage::options()`
+- Added [ReportHandler](/src/ReportHandler.php) to handle notification sent reports.
+- Added options for customizing the model, table and connection.
+- Added polymorphic relation. `HasPushSubscriptions` can now be used on any model.
+
 ## 3.0.0 - 2017-11-15
 
 - Removed `id` and `create` methods from `WebPushMessage`.
