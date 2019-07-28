@@ -108,12 +108,12 @@ class AccountApproved extends Notification
 
 ### Save/Update Subscriptions
 
-To save or update a subscription use the `updatePushSubscription($endpoint, $key = null, $token = null)` method on your user:
+To save or update a subscription use the `updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)` method on your user:
 
 ``` php
 $user = \App\User::find(1);
 
-$user->updatePushSubscription($endpoint, $key, $token);
+$user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
 ```
 
 The `$key` and `$token` are optional and are used to encrypt your notifications. Only encrypted notifications can have a payload.
