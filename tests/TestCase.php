@@ -16,7 +16,7 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->setUpDatabase($this->app);
+        $this->setUpDatabase();
 
         $this->testUser = User::first();
     }
@@ -25,6 +25,7 @@ abstract class TestCase extends Orchestra
      * Set up the environment.
      *
      * @param \Illuminate\Foundation\Application $app
+     * @return void
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -43,9 +44,9 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @return void
      */
-    protected function setUpDatabase($app)
+    protected function setUpDatabase()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
