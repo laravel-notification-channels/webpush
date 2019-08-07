@@ -92,7 +92,8 @@ class AccountApproved extends Notification
             ->title('Approved!')
             ->icon('/approved-icon.png')
             ->body('Your account was approved!')
-            ->action('View account', 'view_account');
+            ->action('View account', 'view_account')
+            ->options(['TTL' => 1000]);
             // ->data(['id' => $notification->id])
             // ->badge()
             // ->dir()
@@ -105,6 +106,8 @@ class AccountApproved extends Notification
     }
 }
 ```
+
+You can see available options here: https://github.com/web-push-libs/web-push-php/tree/v2.0.1#notifications-and-default-options
 
 ### Save/Update Subscriptions
 
