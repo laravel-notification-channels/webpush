@@ -13,14 +13,14 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/notifications": "^5.3",
-        "illuminate/support": "^5.1",
+        "illuminate/notifications": "^5.3|^6.0",
+        "illuminate/support": "^5.1|^6.0",
         "minishlink/web-push": "^5.0"
     },
     "require-dev": {
         "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "~7.0",
-        "orchestra/testbench": "^3.5"
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
     },
     "autoload": {
         "psr-4": {

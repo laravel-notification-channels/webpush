@@ -92,6 +92,6 @@ abstract class TestCase extends Orchestra
     {
         $consoleOutput = $this->app[Kernel::class]->output();
 
-        $this->assertContains($expectedText, $consoleOutput, "Did not see `{$expectedText}` in console output: `$consoleOutput`");
+        $this->assertStringContainsString($expectedText, $consoleOutput, "Did not see `{$expectedText}` in console output: `$consoleOutput`");
     }
 }
