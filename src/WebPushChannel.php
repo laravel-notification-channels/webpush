@@ -70,6 +70,7 @@ class WebPushChannel
      *
      * @param  \Generator $reports
      * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
+     * @param  \NotificationChannels\WebPush\WebPushMessage $message
      * @return void
      */
     protected function handleReports($reports, $subscriptions, $message)

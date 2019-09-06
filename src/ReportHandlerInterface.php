@@ -9,6 +9,7 @@ interface ReportHandlerInterface
      *
      * @param \Minishlink\WebPush\MessageSentReport $report
      * @param \NotificationChannels\WebPush\PushSubscription $subscription
+     * @param \NotificationChannels\WebPush\WebPushMessage $message
      * @return void
      */
     public function handleReport($report, $subscription, $message);
