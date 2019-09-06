@@ -11,5 +11,5 @@ interface ReportHandlerInterface
      * @param \NotificationChannels\WebPush\PushSubscription $subscription
      * @return void
      */
-    public function handleReport($report, $subscription);
+    public function handleReport($report, $subscription, $message);
 }

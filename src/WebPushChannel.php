@@ -62,7 +62,7 @@ class WebPushChannel
 
         $reports = $this->webPush->flush();
 
-        $this->handleReports($reports, $subscriptions);
+        $this->handleReports($reports, $subscriptions, $message);
     }
 
     /**
@@ -72,12 +72,12 @@ class WebPushChannel
      * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
      * @return void
      */
-    protected function handleReports($reports, $subscriptions)
+    protected function handleReports($reports, $subscriptions, $message)
     {
         /** @var \Minishlink\WebPush\MessageSentReport $report */
         foreach ($reports as $report) {
             if ($report && $subscription = $this->findSubscription($subscriptions, $report)) {
-                $this->reportHandler->handleReport($report, $subscription);
+                $this->reportHandler->handleReport($report, $subscription, $message);
             }
         }
     }
