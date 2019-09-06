@@ -2,6 +2,12 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 5.0.0 - 2019-09-06
+
+- Laravel 6.0 compatibility
+- PHP 7.2 or greater is required
+- Pass `$message` to [ReportHandler](/src/ReportHandler.php)
+
 ## 4.0.0 - 2019-07-28
 
 - Upgraded to [minishlink/web-push](https://github.com/web-push-libs/web-push-php/releases) to v5
