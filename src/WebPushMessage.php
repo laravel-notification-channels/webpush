@@ -97,11 +97,12 @@ class WebPushMessage
      *
      * @param  string $title
      * @param  string $action
+     * @param string $icon
      * @return $this
      */
-    public function action($title, $action)
+    public function action($title, $action, $icon = null)
     {
-        $this->actions[] = compact('title', 'action');
+        $this->actions[] = compact('title', 'action', 'icon');
 
         return $this;
     }
