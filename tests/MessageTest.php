@@ -28,9 +28,11 @@ class MessageTest extends TestCase
     /** @test */
     public function action_can_be_set()
     {
-        $this->message->action('Some Action', 'some_action');
+        $this->message->action('Some Action', 'some_action', '/icon.png');
 
-        $this->assertEquals([['title' => 'Some Action', 'action' => 'some_action']], $this->message->toArray()['actions']);
+        $this->assertEquals(
+            [['title' => 'Some Action', 'action' => 'some_action', 'icon' => '/icon.png']], $this->message->toArray()['actions']
+        );
     }
 
     /** @test */
