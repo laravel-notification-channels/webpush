@@ -2,10 +2,10 @@
 
 namespace NotificationChannels\WebPush;
 
-use Illuminate\Support\Str;
-use Minishlink\WebPush\VAPID;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use Illuminate\Support\Str;
+use Minishlink\WebPush\VAPID;
 
 class VapidKeysGenerateCommand extends Command
 {

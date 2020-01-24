@@ -2,9 +2,9 @@
 
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Minishlink\WebPush\WebPush;
-use Illuminate\Support\ServiceProvider;
 
 class WebPushServiceProvider extends ServiceProvider
 {
