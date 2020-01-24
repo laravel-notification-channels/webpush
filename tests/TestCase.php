@@ -2,9 +2,9 @@
 
 namespace NotificationChannels\WebPush\Test;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra

@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\WebPush\Test;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 class VapidKeysGenerateCommandTest extends TestCase
 {

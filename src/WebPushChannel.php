@@ -2,9 +2,9 @@
 
 namespace NotificationChannels\WebPush;
 
-use Minishlink\WebPush\WebPush;
-use Minishlink\WebPush\Subscription;
 use Illuminate\Notifications\Notification;
+use Minishlink\WebPush\Subscription;
+use Minishlink\WebPush\WebPush;
 
 class WebPushChannel
 {

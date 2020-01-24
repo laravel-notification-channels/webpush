@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\WebPush\Test;
 
-use PHPUnit\Framework\TestCase;
 use NotificationChannels\WebPush\WebPushMessage;
+use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
 {
