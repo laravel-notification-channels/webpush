@@ -39,7 +39,7 @@ class WebPushChannel
     public function send($notifiable, Notification $notification)
     {
         /** @var \Illuminate\Database\Eloquent\Collection $subscriptions */
-        $subscriptions = $notifiable->routeNotificationFor('WebPush');
+        $subscriptions = $notifiable->routeNotificationFor('WebPush', $notification);
 
         if (empty($subscriptions)) {
             return;
