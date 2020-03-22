@@ -39,4 +39,9 @@ return [
      */
     'database_connection' => env('WEBPUSH_DB_CONNECTION', env('DB_CONNECTION', 'mysql')),
 
+    /*
+     * This is the configuration that will be use by Minishlink\WebPush to make http calls.
+     * More specifically, this is the request option for Guzzle Client.
+     */
+    'client_options' => [],
 ];
