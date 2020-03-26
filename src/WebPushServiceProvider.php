@@ -44,6 +44,7 @@ class WebPushServiceProvider extends ServiceProvider
             $this->definePublishing();
         }
     }
+
     /**
      * Get Guzzle Request options from config file and
      * pass to WebPush.
@@ -52,8 +53,10 @@ class WebPushServiceProvider extends ServiceProvider
     protected function clientOptionsConfig()
     {
         $webpush = config('webpush');
+
         return $webpush['client_options'];
     }
+
     /**
      * @return array
      */
