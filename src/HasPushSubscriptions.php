@@ -18,6 +18,7 @@ trait HasPushSubscriptions
      * Update (or create) subscription.
      *
      * @param  string $endpoint
+     * @param  string $endpoint_key
      * @param  string|null $key
      * @param  string|null $token
      * @param  string|null $contentEncoding
@@ -42,6 +43,7 @@ trait HasPushSubscriptions
 
         return $this->pushSubscriptions()->create([
             'endpoint' => $endpoint,
+            'endpoint_key' => md5($endpoint),
             'public_key' => $key,
             'auth_token' => $token,
             'content_encoding' => $contentEncoding,
@@ -69,7 +71,7 @@ trait HasPushSubscriptions
     public function deletePushSubscription($endpoint)
     {
         $this->pushSubscriptions()
-            ->where('endpoint', $endpoint)
+            ->where('endpoint_key', md5($endpoint))
             ->delete();
     }
 
