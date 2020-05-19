@@ -62,6 +62,6 @@ class PushSubscription extends Model
      */
     public static function findByEndpoint($endpoint)
     {
-        return static::where('endpoint', $endpoint)->first();
+        return static::where('endpoint_key', md5($endpoint))->first();
     }
 }
