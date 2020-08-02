@@ -32,9 +32,9 @@ class ChannelTest extends TestCase
     {
         $message = ($notification = new TestNotification)->toWebPush(null, null);
 
-        $this->webPush->shouldReceive('sendNotification')
+        $this->webPush->shouldReceive('queueNotification')
             ->once()
-            ->withArgs(function (Subscription $subscription, string $payload, bool $flush, array $options = []) use ($message) {
+            ->withArgs(function (Subscription $subscription, string $payload, array $options = [], array $auth = []) use ($message) {
                 $this->assertInstanceOf(Subscription::class, $subscription);
                 $this->assertEquals('endpoint', $subscription->getEndpoint());
                 $this->assertEquals('key', $subscription->getPublicKey());
@@ -61,7 +61,7 @@ class ChannelTest extends TestCase
     /** @test */
     public function subscriptions_with_invalid_endpoint_are_deleted()
     {
-        $this->webPush->shouldReceive('sendNotification')
+        $this->webPush->shouldReceive('queueNotification')
             ->times(3);
 
         $this->webPush->shouldReceive('flush')
