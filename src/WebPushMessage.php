@@ -102,7 +102,7 @@ class WebPushMessage
      */
     public function action($title, $action, $icon = null)
     {
-        $this->actions[] = compact('title', 'action', 'icon');
+        $this->actions[] = array_filter(compact('title', 'action', 'icon'));
 
         return $this;
     }
