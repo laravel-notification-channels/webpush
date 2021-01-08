@@ -22,9 +22,9 @@ class ReportHandler implements ReportHandlerInterface
 
         if ($report->isSubscriptionExpired()) {
             $subscription->delete();
-
             return;
         }
+
         Log::warning("Notification failed to sent for subscription {$subscription->endpoint}: {$report->getReason()}");
     }
 }
