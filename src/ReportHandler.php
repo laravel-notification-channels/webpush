@@ -36,6 +36,7 @@ class ReportHandler implements ReportHandlerInterface
     {
         if ($report->isSuccess()) {
             $this->events->dispatch(new NotificationSent($report, $subscription, $message));
+
             return;
         }
 
