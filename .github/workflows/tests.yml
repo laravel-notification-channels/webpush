@@ -1,0 +1,49 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  windows_tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [7.3, 7.4, 8.0]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.php }}-composer-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl
+          coverage: none
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 2
+          max_attempts: 2
+          command: composer install --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
+
+      - name: Run tests
+        run: vendor/bin/phpunit
