@@ -4,35 +4,29 @@ namespace NotificationChannels\WebPush\Test;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Event;
 use Minishlink\WebPush\MessageSentReport;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 use Mockery;
+use NotificationChannels\WebPush\Events\NotificationFailed;
+use NotificationChannels\WebPush\Events\NotificationSent;
 use NotificationChannels\WebPush\ReportHandler;
 use NotificationChannels\WebPush\WebPushChannel;
 
 class ChannelTest extends TestCase
 {
-    /** @var \Mockery\MockInterface */
-    protected $webPush;
-
-    /** @var \NotificationChannels\WebPush\WebPushChannel */
-    protected $channel;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->webPush = Mockery::mock(WebPush::class);
-        $this->channel = new WebPushChannel($this->webPush, new ReportHandler);
-    }
-
     /** @test */
     public function notification_can_be_sent()
     {
+        Event::fake();
+
+        /** @var mixed $webpush */
+        $webpush = Mockery::mock(WebPush::class);
+        $channel = new WebPushChannel($webpush, $this->app->make(ReportHandler::class));
         $message = ($notification = new TestNotification)->toWebPush(null, null);
 
-        $this->webPush->shouldReceive('queueNotification')
+        $webpush->shouldReceive('queueNotification')
             ->once()
             ->withArgs(function (Subscription $subscription, string $payload, array $options = [], array $auth = []) use ($message) {
                 $this->assertInstanceOf(Subscription::class, $subscription);
@@ -47,7 +41,7 @@ class ChannelTest extends TestCase
             })
             ->andReturn(true);
 
-        $this->webPush->shouldReceive('flush')
+        $webpush->shouldReceive('flush')
             ->once()
             ->andReturn((function () {
                 yield new MessageSentReport(new Request('POST', 'endpoint'), null, true);
@@ -55,16 +49,24 @@ class ChannelTest extends TestCase
 
         $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
 
-        $this->channel->send($this->testUser, $notification);
+        $channel->send($this->testUser, $notification);
+
+        Event::assertDispatched(NotificationSent::class);
     }
 
     /** @test */
     public function subscriptions_with_invalid_endpoint_are_deleted()
     {
-        $this->webPush->shouldReceive('queueNotification')
+        Event::fake();
+
+        /** @var mixed $webpush */
+        $webpush = Mockery::mock(WebPush::class);
+        $channel = new WebPushChannel($webpush, $this->app->make(ReportHandler::class));
+
+        $webpush->shouldReceive('queueNotification')
             ->times(3);
 
-        $this->webPush->shouldReceive('flush')
+        $webpush->shouldReceive('flush')
             ->once()
             ->andReturn((function () {
                 yield new MessageSentReport(new Request('POST', 'valid_endpoint'), new Response(200), true);
@@ -76,10 +78,14 @@ class ChannelTest extends TestCase
         $this->testUser->updatePushSubscription('invalid_endpoint1');
         $this->testUser->updatePushSubscription('invalid_endpoint2');
 
-        $this->channel->send($this->testUser, new TestNotification);
+        $channel->send($this->testUser, new TestNotification);
 
         $this->assertTrue($this->testUser->pushSubscriptions()->where('endpoint', 'valid_endpoint')->exists());
         $this->assertFalse($this->testUser->pushSubscriptions()->where('endpoint', 'invalid_endpoint1')->exists());
         $this->assertFalse($this->testUser->pushSubscriptions()->where('endpoint', 'invalid_endpoint2')->exists());
+
+        Event::assertDispatched(NotificationSent::class);
+        Event::assertDispatched(NotificationFailed::class);
+        Event::assertDispatched(NotificationFailed::class);
     }
 }
