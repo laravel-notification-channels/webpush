@@ -41,7 +41,7 @@ class WebPushChannel
         /** @var \Illuminate\Database\Eloquent\Collection $subscriptions */
         $subscriptions = $notifiable->routeNotificationFor('WebPush', $notification);
 
-        if (empty($subscriptions)) {
+        if ($subscriptions->isEmpty()) {
             return;
         }
 
