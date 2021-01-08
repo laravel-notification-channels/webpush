@@ -31,6 +31,11 @@ return [
     'database_connection' => env('WEBPUSH_DB_CONNECTION', env('DB_CONNECTION', 'mysql')),
 
     /**
+     * The Guzzle client options used by Minishlink\WebPush.
+     */
+    'client_options' => [],
+
+    /**
      * Google Cloud Messaging.
      * @deprecated
      */
