@@ -30,10 +30,9 @@ class WebPushServiceProvider extends ServiceProvider
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
             ->give(function () {
-                $webPush = new WebPush($this->webPushConfig(), [], 30, $this->clientOptionsConfig());
-                $webPush->setReuseVAPIDHeaders(true);
-
-                return $webPush;
+                return (new WebPush(
+                    $this->webPushAuth(), [], 30, config('webpush.client_options', [])
+                ))->setReuseVAPIDHeaders(true);
             });
 
         $this->app->when(WebPushChannel::class)
@@ -46,21 +45,11 @@ class WebPushServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get Guzzle Request options from config file and
-     * pass to WebPush.
+     * Ge the authentication details.
+     *
      * @return array
      */
-    protected function clientOptionsConfig()
-    {
-        $webpush = config('webpush');
-
-        return $webpush['client_options'];
-    }
-
-    /**
-     * @return array
-     */
-    protected function webPushConfig()
+    protected function webPushAuth()
     {
         $config = [];
         $webpush = config('webpush');
