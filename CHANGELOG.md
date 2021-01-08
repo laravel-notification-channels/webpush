@@ -2,6 +2,25 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 5.1.0 - 2021-01-08
+
+- Added PHP 8.0 support [#150](https://github.com/laravel-notification-channels/webpush/pull/150)
+- Added `NotificationSent` and `NotificationFailed` [events](/src/Events).
+- Removed `Log::warning` from `ReportHandler`.
+- Switched to GitHub actions. 
+
+## 5.0.3 - 2020-08-19
+
+- Laravel 8.0 compatibility 
+
+## 5.0.2 - 2020-03-05
+
+- Laravel 7.0 compatibility 
+
+## 5.0.1 - 2020-01-24
+
+- Added the icon parameter to the action method.
+
 ## 5.0.0 - 2019-09-06
 
 - Laravel 6.0 compatibility
