@@ -128,10 +128,6 @@ $user = \App\User::find(1);
 $user->deletePushSubscription($endpoint);
 ```
 
-## Demo
-
-For a complete implementation with a Service Worker check this [demo](https://github.com/cretueusebiu/laravel-web-push-demo).
-
 ## Browser Compatibility
 
 See the [Push API](https://caniuse.com/#feat=push-api) browser compatibility.
