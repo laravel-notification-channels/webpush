@@ -65,7 +65,7 @@ This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`in your `.env` f
 
 __These keys must be safely stored and should not change.__
 
-If you still want support [Google Cloud Messaging](https://console.cloud.google.com) set the `GCM_KEY` and `GCM_SENDER_ID` in your `.env` file.
+If you still want support for [Google Cloud Messaging](https://console.cloud.google.com), set the `GCM_KEY` and `GCM_SENDER_ID` in your `.env` file.
 
 ## Usage
 
