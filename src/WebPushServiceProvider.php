@@ -45,7 +45,7 @@ class WebPushServiceProvider extends ServiceProvider
     }
 
     /**
-     * Ge the authentication details.
+     * Get the authentication details.
      *
      * @return array
      */
