@@ -11,9 +11,16 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4, 8.0, 8.1]
+        php: [8.1, 8.0]
+        laravel: [9.*, 8.*]
+        stability: [prefer-lowest, prefer-stable]
+        include:
+          - laravel: 9.*
+            testbench: 7.*
+          - laravel: 8.*
+            testbench: ^6.23
 
-    name: PHP ${{ matrix.php }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -29,7 +36,7 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.php }}-composer-
+            ${{ runner.os }}-P${{ matrix.php }}-L${{ matrix.laravel }}-composer-
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -39,11 +46,9 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        uses: nick-invision/retry@v1
-        with:
-          timeout_minutes: 2
-          max_attempts: 2
-          command: composer install --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Run tests
         run: vendor/bin/phpunit
