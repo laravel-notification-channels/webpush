@@ -2,6 +2,11 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 6.0.0 - 2022-01-26
+
+- Added support for Laravel 9.
+- Dropped support for Laravel < 8 and PHP < 8.
+
 ## 5.1.1 - 2021-01-08
 
 - Fixed action without icon [#130](https://github.com/laravel-notification-channels/webpush/issues/130).
