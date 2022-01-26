@@ -19,8 +19,8 @@ class WebPushChannel
     protected $reportHandler;
 
     /**
-     * @param  \Minishlink\WebPush\WebPush $webPush
-     * @param  \NotificationChannels\WebPush\ReportHandlerInterface $webPush
+     * @param  \Minishlink\WebPush\WebPush  $webPush
+     * @param  \NotificationChannels\WebPush\ReportHandlerInterface  $webPush
      * @return void
      */
     public function __construct(WebPush $webPush, ReportHandlerInterface $reportHandler)
@@ -32,8 +32,8 @@ class WebPushChannel
     /**
      * Send the given notification.
      *
-     * @param  mixed $notifiable
-     * @param  \Illuminate\Notifications\Notification $notification
+     * @param  mixed  $notifiable
+     * @param  \Illuminate\Notifications\Notification  $notification
      * @return void
      */
     public function send($notifiable, Notification $notification)
@@ -68,9 +68,9 @@ class WebPushChannel
     /**
      * Handle the reports.
      *
-     * @param  \Generator $reports
-     * @param  \Illuminate\Database\Eloquent\Collection $subscriptions
-     * @param  \NotificationChannels\WebPush\WebPushMessage $message
+     * @param  \Generator  $reports
+     * @param  \Illuminate\Database\Eloquent\Collection  $subscriptions
+     * @param  \NotificationChannels\WebPush\WebPushMessage  $message
      * @return void
      */
     protected function handleReports($reports, $subscriptions, $message)
@@ -84,8 +84,8 @@ class WebPushChannel
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Collection $subscriptions
-     * @param \Minishlink\WebPush\MessageSentReport $report
+     * @param  \Illuminate\Database\Eloquent\Collection  $subscriptions
+     * @param  \Minishlink\WebPush\MessageSentReport  $report
      * @return void
      */
     protected function findSubscription($subscriptions, $report)

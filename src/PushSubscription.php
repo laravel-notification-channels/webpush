@@ -28,7 +28,7 @@ class PushSubscription extends Model
     /**
      * Create a new model instance.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      * @return void
      */
     public function __construct(array $attributes = [])
@@ -57,7 +57,7 @@ class PushSubscription extends Model
     /**
      * Find a subscription by the given endpint.
      *
-     * @param  string $endpoint
+     * @param  string  $endpoint
      * @return static|null
      */
     public static function findByEndpoint($endpoint)

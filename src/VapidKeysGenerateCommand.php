@@ -49,7 +49,7 @@ class VapidKeysGenerateCommand extends Command
     /**
      * Set the keys in the environment file.
      *
-     * @param  array $keys
+     * @param  array  $keys
      * @return bool
      */
     protected function setKeysInEnvironmentFile($keys)
@@ -68,7 +68,7 @@ class VapidKeysGenerateCommand extends Command
     /**
      * Write a new environment file with the given keys.
      *
-     * @param  array $keys
+     * @param  array  $keys
      * @return void
      */
     protected function writeNewEnvironmentFileWith($keys)
@@ -101,7 +101,7 @@ class VapidKeysGenerateCommand extends Command
     /**
      * Get a regex pattern that will match env $keyName with any key.
      *
-     * @param  string $keyName
+     * @param  string  $keyName
      * @return string
      */
     protected function keyReplacementPattern($keyName)
