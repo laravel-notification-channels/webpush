@@ -16,17 +16,7 @@ You can install the package via composer:
 composer require laravel-notification-channels/webpush
 ```
 
-First you must install the service provider (skip for Laravel>=5.5):
-
-``` php
-// config/app.php
-'providers' => [
-    ...
-    NotificationChannels\WebPush\WebPushServiceProvider::class,
-],
-```
-
-Add the `NotificationChannels\WebPush\HasPushSubscriptions` trait to your `User` model:
+First add the `NotificationChannels\WebPush\HasPushSubscriptions` trait to your `User` model:
 
 ``` php
 use NotificationChannels\WebPush\HasPushSubscriptions;
