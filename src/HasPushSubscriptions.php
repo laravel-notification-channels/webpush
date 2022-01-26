@@ -17,10 +17,10 @@ trait HasPushSubscriptions
     /**
      * Update (or create) subscription.
      *
-     * @param  string $endpoint
-     * @param  string|null $key
-     * @param  string|null $token
-     * @param  string|null $contentEncoding
+     * @param  string  $endpoint
+     * @param  string|null  $key
+     * @param  string|null  $token
+     * @param  string|null  $contentEncoding
      * @return \NotificationChannels\WebPush\PushSubscription
      */
     public function updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)
@@ -51,7 +51,7 @@ trait HasPushSubscriptions
     /**
      * Determine if the model owns the given subscription.
      *
-     * @param  \NotificationChannels\WebPush\PushSubscription $subscription
+     * @param  \NotificationChannels\WebPush\PushSubscription  $subscription
      * @return bool
      */
     public function ownsPushSubscription($subscription)
@@ -63,7 +63,7 @@ trait HasPushSubscriptions
     /**
      * Delete subscription by endpoint.
      *
-     * @param  string $endpoint
+     * @param  string  $endpoint
      * @return void
      */
     public function deletePushSubscription($endpoint)

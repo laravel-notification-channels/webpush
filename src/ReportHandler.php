@@ -16,7 +16,7 @@ class ReportHandler implements ReportHandlerInterface
     /**
      * Create a new report handler.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher $events
+     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @return void
      */
     public function __construct(Dispatcher $events)
@@ -27,9 +27,9 @@ class ReportHandler implements ReportHandlerInterface
     /**
      * Handle a message sent report.
      *
-     * @param \Minishlink\WebPush\MessageSentReport $report
-     * @param \NotificationChannels\WebPush\PushSubscription $subscription
-     * @param \NotificationChannels\WebPush\WebPushMessage $message
+     * @param  \Minishlink\WebPush\MessageSentReport  $report
+     * @param  \NotificationChannels\WebPush\PushSubscription  $subscription
+     * @param  \NotificationChannels\WebPush\WebPushMessage  $message
      * @return void
      */
     public function handleReport($report, $subscription, $message)

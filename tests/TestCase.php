@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
     /**
      * Set up the environment.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -33,7 +33,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -70,8 +70,8 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  \NotificationChannels\WebPush\Test\User $user
-     * @param  string $endpoint
+     * @param  \NotificationChannels\WebPush\Test\User  $user
+     * @param  string  $endpoint
      * @return \NotificationChannels\WebPush\PushSubscription
      */
     public function createSubscription($user, $endpoint = 'endpoint')
@@ -85,7 +85,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  string $expectedText
+     * @param  string  $expectedText
      * @return void
      */
     protected function seeInConsoleOutput($expectedText)

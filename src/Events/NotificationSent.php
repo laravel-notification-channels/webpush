@@ -26,9 +26,9 @@ class NotificationSent
     /**
      * Create a new event instance.
      *
-     * @param \Minishlink\WebPush\MessageSentReport $report
-     * @param \NotificationChannels\WebPush\PushSubscription $subscription
-     * @param \NotificationChannels\WebPush\WebPushMessage $message
+     * @param  \Minishlink\WebPush\MessageSentReport  $report
+     * @param  \NotificationChannels\WebPush\PushSubscription  $subscription
+     * @param  \NotificationChannels\WebPush\WebPushMessage  $message
      * @return void
      */
     public function __construct($report, $subscription, $message)
