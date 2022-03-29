@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 7.0.0 - 2022-03-29
+
+- Upgrade web-push dependency [#172](https://github.com/laravel-notification-channels/webpush/pull/172). 
+
 ## 6.0.0 - 2022-01-26
 
 - Added support for Laravel 9.
