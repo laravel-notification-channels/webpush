@@ -34,6 +34,11 @@ return [
      * The Guzzle client options used by Minishlink\WebPush.
      */
     'client_options' => [],
+    
+    /**
+     * The automatic padding in bytes used by Minishlink\WebPush.
+     */
+    'automatic_padding' => 4078,
 
     /**
      * Google Cloud Messaging.
