@@ -37,6 +37,7 @@ return [
     
     /**
      * The automatic padding in bytes used by Minishlink\WebPush.
+     * Set to false to support Firefox Android with v1 endpoint 
      */
     'automatic_padding' => 4078,
 
