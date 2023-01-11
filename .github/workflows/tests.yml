@@ -22,8 +22,14 @@ jobs:
           - laravel: 8.*
             testbench: ^6.23
         exclude:
+          # Laravel 10 doesn't support PHP 8.0
           - laravel: 10.*
             php: 8.0
+          # Laravel 9 on PHP 8.2 has problems with mistagged dependencies on prefer-lowest
+          - laravel: 9.*
+            php: 8.2
+            stability: prefer-lowest
+          # Laravel 8 doesn't support PHP 8.2
           - laravel: 8.*
             php: 8.2
 
