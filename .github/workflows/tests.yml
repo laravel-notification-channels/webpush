@@ -11,32 +11,41 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1, 8.0]
-        laravel: [9.*, 8.*]
+        php: [8.2, 8.1, 8.0]
+        laravel: [10.*, 9.*, 8.*]
         stability: [prefer-lowest, prefer-stable]
         include:
+          - laravel: 10.*
+            testbench: 8.*
           - laravel: 9.*
-            testbench: 7.*
+            testbench: ^7.19
           - laravel: 8.*
             testbench: ^6.23
+        exclude:
+          # Laravel 10 doesn't support PHP 8.0
+          - laravel: 10.*
+            php: 8.0
+          # Laravel 8 doesn't support PHP 8.2
+          - laravel: 8.*
+            php: 8.2
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Composer cache directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.testbench }}-${{ matrix.stability }}-composer
           restore-keys: |
-            ${{ runner.os }}-P${{ matrix.php }}-L${{ matrix.laravel }}-composer-
+            ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.testbench }}-${{ matrix.stability }}-composer
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
