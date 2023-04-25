@@ -73,7 +73,13 @@ class VapidKeysGenerateCommand extends Command
      */
     protected function writeNewEnvironmentFileWith($keys)
     {
-        $contents = file_get_contents($this->laravel->environmentFilePath());
+        if (method_exists($this->laravel, 'environmentFilePath')) {
+            $path = $this->laravel->environmentFilePath();
+        } else {
+            $path = base_path('.env');
+        }
+
+        $contents =  file_get_contents($path);
 
         if (! Str::contains($contents, 'VAPID_PUBLIC_KEY')) {
             $contents .= PHP_EOL.'VAPID_PUBLIC_KEY=';
@@ -95,7 +101,7 @@ class VapidKeysGenerateCommand extends Command
             $contents
         );
 
-        file_put_contents($this->laravel->environmentFilePath(), $contents);
+        file_put_contents($path, $contents);
     }
 
     /**
