@@ -52,7 +52,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: curl
-          coverage: none
+          coverage: xdebug
 
       - name: Install dependencies
         run: |
