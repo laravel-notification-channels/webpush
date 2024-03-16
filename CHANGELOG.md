@@ -2,6 +2,10 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 8.9.0 - 2024-03-16
+
+- Added support for Laravel 11.
+  
 ## 7.1.0 - 2023-03-14
 
 - Added support for Laravel 10.
