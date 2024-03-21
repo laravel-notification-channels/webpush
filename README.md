@@ -53,6 +53,8 @@ php artisan webpush:vapid
 
 This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`in your `.env` file.
 
+> Note: if targeting Safari or iOS after 2023, you will need to include the `VAPID_SUBJECT` variable as well or Apple will return a `BadJwtToken` error.
+
 __These keys must be safely stored and should not change.__
 
 If you still want support for [Google Cloud Messaging](https://console.cloud.google.com), set the `GCM_KEY` and `GCM_SENDER_ID` in your `.env` file.
