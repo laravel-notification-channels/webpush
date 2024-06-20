@@ -1,13 +1,11 @@
 {
-    "name": "laravel-notification-channels/webpush",
+    "name":"carloeusebi/webpush",
     "description": "Web Push Notifications driver for Laravel.",
-    "homepage": "https://github.com/laravel-notification-channels/webpush",
+    "homepage": "https://github.com/carloeusebi/webpush",
     "license": "MIT",
     "authors": [
         {
-            "name": "Cretu Eusebiu",
-            "email": "me@cretueusebiu.com",
-            "homepage": "http://cretueusebiu.com",
+            "name": "Carlo Eusebi",
             "role": "Developer"
         }
     ],
