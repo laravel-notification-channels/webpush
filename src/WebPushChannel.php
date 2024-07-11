@@ -57,7 +57,7 @@ class WebPushChannel
                     [
                         'endpoint' => $subscription->endpoint,
                         'keys' => json_decode($subscription->keys, true),
-                        'contentEncoding' => $subscription->content_encoding
+                        'contentEncoding' => $subscription->content_encoding,
                     ]
                 ),
                 $payload,

@@ -29,7 +29,7 @@ trait HasPushSubscriptions
         if ($subscription && $this->ownsPushSubscription($subscription)) {
             $subscription->update([
                 'keys' => $keys,
-                'content_encoding' => $contentEncoding
+                'content_encoding' => $contentEncoding,
             ]);
 
             return $subscription;
