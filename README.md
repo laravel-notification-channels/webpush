@@ -33,6 +33,12 @@ Next publish the migration with:
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
 ```
 
+If you are using UUID for primary key of users table you can use:
+
+``` bash
+php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="uuid-migrations"
+```
+
 Run the migrate command to create the necessary table:
 
 ``` bash

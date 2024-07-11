@@ -99,6 +99,10 @@ class WebPushServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path("migrations/{$timestamp}_create_push_subscriptions_table.php"),
             ], 'migrations');
+
+            $this->publishes([
+                __DIR__.'/../migrations/create_push_subscriptions_uuid_table.php.stub' => database_path("migrations/{$timestamp}_create_push_subscriptions_table.php"),
+            ], 'uuid-migrations');
         }
     }
 }
