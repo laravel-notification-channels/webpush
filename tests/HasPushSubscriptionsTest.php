@@ -18,25 +18,23 @@ class HasPushSubscriptionsTest extends TestCase
     /** @test */
     public function subscription_can_be_created()
     {
-        $this->testUser->updatePushSubscription('foo', 'key', 'token', 'aesgcm');
+        $this->testUser->updatePushSubscription('foo', 'keys', 'aesgcm');
         $subscription = $this->testUser->pushSubscriptions()->first();
 
         $this->assertEquals('foo', $subscription->endpoint);
-        $this->assertEquals('key', $subscription->public_key);
-        $this->assertEquals('token', $subscription->auth_token);
+        $this->assertEquals('keys', $subscription->keys);
         $this->assertEquals('aesgcm', $subscription->content_encoding);
     }
 
     /** @test */
     public function exiting_subscription_can_be_updated_by_endpoint()
     {
-        $this->testUser->updatePushSubscription('foo', 'key', 'token');
-        $this->testUser->updatePushSubscription('foo', 'major-key', 'another-token');
+        $this->testUser->updatePushSubscription('foo', 'keys', 'aesgcm');
+        $this->testUser->updatePushSubscription('foo', 'major-keys', 'aesgcm');
         $subscriptions = $this->testUser->pushSubscriptions()->where('endpoint', 'foo')->get();
 
         $this->assertEquals(1, count($subscriptions));
-        $this->assertEquals('major-key', $subscriptions[0]->public_key);
-        $this->assertEquals('another-token', $subscriptions[0]->auth_token);
+        $this->assertEquals('major-keys', $subscriptions[0]->keys);
     }
 
     /** @test */

@@ -31,8 +31,6 @@ class ChannelTest extends TestCase
             ->withArgs(function (Subscription $subscription, string $payload, array $options = [], array $auth = []) use ($message) {
                 $this->assertInstanceOf(Subscription::class, $subscription);
                 $this->assertEquals('endpoint', $subscription->getEndpoint());
-                $this->assertEquals('key', $subscription->getPublicKey());
-                $this->assertEquals('token', $subscription->getAuthToken());
                 $this->assertEquals('aesgcm', $subscription->getContentEncoding());
                 $this->assertSame($message->getOptions(), $options);
                 $this->assertSame(json_encode($message->toArray()), $payload);
@@ -47,7 +45,7 @@ class ChannelTest extends TestCase
                 yield new MessageSentReport(new Request('POST', 'endpoint'), null, true);
             })());
 
-        $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
+        $this->testUser->updatePushSubscription('endpoint', 'keys', 'aesgcm');
 
         $channel->send($this->testUser, $notification);
 

@@ -79,8 +79,7 @@ abstract class TestCase extends Orchestra
         return $user->pushSubscriptions()->create([
             'user_id' => $user->id,
             'endpoint' => $endpoint,
-            'public_key' => 'key',
-            'auth_token' => 'token',
+            'keys' => 'keys',
         ]);
     }
 
