@@ -18,20 +18,19 @@ trait HasPushSubscriptions
      * Update (or create) subscription.
      *
      * @param  string  $endpoint
-     * @param  string|null  $key
-     * @param  string|null  $token
+     * @param  string|null  $keys
      * @param  string|null  $contentEncoding
      * @return \NotificationChannels\WebPush\PushSubscription
      */
-    public function updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)
+    public function updatePushSubscription($endpoint, $keys = null, $contentEncoding = null)
     {
         $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
         if ($subscription && $this->ownsPushSubscription($subscription)) {
-            $subscription->public_key = $key;
-            $subscription->auth_token = $token;
-            $subscription->content_encoding = $contentEncoding;
-            $subscription->save();
+            $subscription->update([
+                'keys' => $keys,
+                'content_encoding' => $contentEncoding,
+            ]);
 
             return $subscription;
         }
@@ -42,8 +41,7 @@ trait HasPushSubscriptions
 
         return $this->pushSubscriptions()->create([
             'endpoint' => $endpoint,
-            'public_key' => $key,
-            'auth_token' => $token,
+            'keys' => $keys,
             'content_encoding' => $contentEncoding,
         ]);
     }
