@@ -5,6 +5,7 @@ namespace NotificationChannels\WebPush;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Minishlink\WebPush\WebPush;
+use Minishlink\WebPush\Encryption;
 
 class WebPushServiceProvider extends ServiceProvider
 {
@@ -31,8 +32,10 @@ class WebPushServiceProvider extends ServiceProvider
             ->needs(WebPush::class)
             ->give(function () {
                 return (new WebPush(
-                    $this->webPushAuth(), [], 30, config('webpush.client_options', [])
-                ))->setReuseVAPIDHeaders(true);
+                        $this->webPushAuth(), [], 30, config('webpush.client_options', [])
+                    ))
+                    ->setReuseVAPIDHeaders(true)
+                    ->setAutomaticPadding(config('webpush.automatic_padding', Encryption::MAX_COMPATIBILITY_PAYLOAD_LENGTH));
             });
 
         $this->app->when(WebPushChannel::class)
