@@ -9,83 +9,40 @@ use Illuminate\Support\Arr;
  */
 class WebPushMessage
 {
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var array
-     */
-    protected $actions = [];
+    protected array $actions = [];
 
-    /**
-     * @var string
-     */
-    protected $badge;
+    protected string $badge;
 
-    /**
-     * @var string
-     */
-    protected $body;
+    protected string $body;
 
-    /**
-     * @var string
-     */
-    protected $dir;
+    protected string $dir;
 
-    /**
-     * @var string
-     */
-    protected $icon;
+    protected string $icon;
 
-    /**
-     * @var string
-     */
-    protected $image;
+    protected string $image;
 
-    /**
-     * @var string
-     */
-    protected $lang;
+    protected string $lang;
 
-    /**
-     * @var bool
-     */
-    protected $renotify;
+    protected bool $renotify;
 
-    /**
-     * @var bool
-     */
-    protected $requireInteraction;
+    protected bool $requireInteraction;
 
-    /**
-     * @var string
-     */
-    protected $tag;
+    protected string $tag;
 
-    /**
-     * @var array
-     */
-    protected $vibrate;
+    protected array $vibrate;
 
-    /**
-     * @var mixed
-     */
-    protected $data;
+    protected mixed $data;
 
-    /**
-     * @var array
-     */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Set the notification title.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function title($value)
+    public function title(string $value): static
     {
         $this->title = $value;
 
@@ -95,14 +52,11 @@ class WebPushMessage
     /**
      * Add a notification action.
      *
-     * @param  string  $title
-     * @param  string  $action
-     * @param  string  $icon
      * @return $this
      */
-    public function action($title, $action, $icon = null)
+    public function action(string $title, string $action, ?string $icon = null): static
     {
-        $this->actions[] = array_filter(compact('title', 'action', 'icon'));
+        $this->actions[] = array_filter(['title' => $title, 'action' => $action, 'icon' => $icon]);
 
         return $this;
     }
@@ -110,10 +64,9 @@ class WebPushMessage
     /**
      * Set the notification badge.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function badge($value)
+    public function badge(string $value): static
     {
         $this->badge = $value;
 
@@ -123,10 +76,9 @@ class WebPushMessage
     /**
      * Set the notification body.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function body($value)
+    public function body(string $value): static
     {
         $this->body = $value;
 
@@ -136,10 +88,9 @@ class WebPushMessage
     /**
      * Set the notification direction.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function dir($value)
+    public function dir(string $value): static
     {
         $this->dir = $value;
 
@@ -149,10 +100,9 @@ class WebPushMessage
     /**
      * Set the notification icon url.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function icon($value)
+    public function icon(string $value): static
     {
         $this->icon = $value;
 
@@ -162,10 +112,9 @@ class WebPushMessage
     /**
      * Set the notification image url.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function image($value)
+    public function image(string $value): static
     {
         $this->image = $value;
 
@@ -175,10 +124,9 @@ class WebPushMessage
     /**
      * Set the notification language.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function lang($value)
+    public function lang(string $value): static
     {
         $this->lang = $value;
 
@@ -186,10 +134,9 @@ class WebPushMessage
     }
 
     /**
-     * @param  bool  $value
      * @return $this
      */
-    public function renotify($value = true)
+    public function renotify(bool $value = true): static
     {
         $this->renotify = $value;
 
@@ -197,10 +144,9 @@ class WebPushMessage
     }
 
     /**
-     * @param  bool  $value
      * @return $this
      */
-    public function requireInteraction($value = true)
+    public function requireInteraction(bool $value = true): static
     {
         $this->requireInteraction = $value;
 
@@ -210,10 +156,9 @@ class WebPushMessage
     /**
      * Set the notification tag.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function tag($value)
+    public function tag(string $value): static
     {
         $this->tag = $value;
 
@@ -223,10 +168,9 @@ class WebPushMessage
     /**
      * Set the notification vibration pattern.
      *
-     * @param  array  $value
      * @return $this
      */
-    public function vibrate($value)
+    public function vibrate(array $value): static
     {
         $this->vibrate = $value;
 
@@ -236,10 +180,9 @@ class WebPushMessage
     /**
      * Set the notification arbitrary data.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function data($value)
+    public function data(mixed $value): static
     {
         $this->data = $value;
 
@@ -251,10 +194,9 @@ class WebPushMessage
      *
      * @link https://github.com/web-push-libs/web-push-php#notifications-and-default-options
      *
-     * @param  array  $value
      * @return $this
      */
-    public function options(array $value)
+    public function options(array $value): static
     {
         $this->options = $value;
 
@@ -263,20 +205,16 @@ class WebPushMessage
 
     /**
      * Get the notification options.
-     *
-     * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
      * Get an array representation of the message.
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return Arr::except(array_filter(get_object_vars($this)), ['options']);
     }

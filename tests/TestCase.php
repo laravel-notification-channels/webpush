@@ -48,20 +48,19 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table): void {
             $table->increments('id');
             $table->string('email');
         });
 
         include_once __DIR__.'/../migrations/create_push_subscriptions_table.php.stub';
 
-        (new \CreatePushSubscriptionsTable())->up();
+        (new \CreatePushSubscriptionsTable)->up();
 
         $this->createUser(['email' => 'test@user.com']);
     }
 
     /**
-     * @param  array  $attributes
      * @return \NotificationChannels\WebPush\Test\User
      */
     public function createUser(array $attributes)
@@ -85,13 +84,12 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  string  $expectedText
      * @return void
      */
-    protected function seeInConsoleOutput($expectedText)
+    protected function seeInConsoleOutput(string $expectedText)
     {
         $consoleOutput = $this->app[Kernel::class]->output();
 
-        $this->assertStringContainsString($expectedText, $consoleOutput, "Did not see `{$expectedText}` in console output: `$consoleOutput`");
+        $this->assertStringContainsString($expectedText, $consoleOutput, sprintf('Did not see `%s` in console output: `%s`', $expectedText, $consoleOutput));
     }
 }

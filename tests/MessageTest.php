@@ -10,7 +10,7 @@ class MessageTest extends TestCase
     /** @var \NotificationChannels\WebPush\WebPushMessage */
     protected $message;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -18,7 +18,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function title_can_be_set()
+    public function title_can_be_set(): void
     {
         $this->message->title('Message title');
 
@@ -26,7 +26,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function action_can_be_set()
+    public function action_can_be_set(): void
     {
         $this->message->action('Some Action', 'some_action');
 
@@ -36,7 +36,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function action_can_be_set_with_icon()
+    public function action_can_be_set_with_icon(): void
     {
         $this->message->action('Some Action', 'some_action', '/icon.png');
 
@@ -46,7 +46,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function badge_can_be_set()
+    public function badge_can_be_set(): void
     {
         $this->message->badge('/badge.jpg');
 
@@ -54,7 +54,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function body_can_be_set()
+    public function body_can_be_set(): void
     {
         $this->message->body('Message body');
 
@@ -62,7 +62,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function direction_can_be_set()
+    public function direction_can_be_set(): void
     {
         $this->message->dir('rtl');
 
@@ -70,7 +70,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function icon_can_be_set()
+    public function icon_can_be_set(): void
     {
         $this->message->icon('/icon.jpg');
 
@@ -78,7 +78,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function image_can_be_set()
+    public function image_can_be_set(): void
     {
         $this->message->image('/image.jpg');
 
@@ -86,7 +86,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function lang_can_be_set()
+    public function lang_can_be_set(): void
     {
         $this->message->lang('en');
 
@@ -94,7 +94,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function renotify_can_be_set()
+    public function renotify_can_be_set(): void
     {
         $this->message->renotify();
 
@@ -102,7 +102,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function requireInteraction_can_be_set()
+    public function require_interaction_can_be_set(): void
     {
         $this->message->requireInteraction();
 
@@ -110,7 +110,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function tag_can_be_set()
+    public function tag_can_be_set(): void
     {
         $this->message->tag('tag1');
 
@@ -118,7 +118,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function vibration_pattern_can_be_set()
+    public function vibration_pattern_can_be_set(): void
     {
         $this->message->vibrate([1, 2, 3]);
 
@@ -126,7 +126,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function arbitrary_data_can_be_set()
+    public function arbitrary_data_can_be_set(): void
     {
         $this->message->data(['id' => 1]);
 
@@ -134,7 +134,7 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function options_can_be_set()
+    public function options_can_be_set(): void
     {
         $this->message->options(['ttl' => 60]);
 

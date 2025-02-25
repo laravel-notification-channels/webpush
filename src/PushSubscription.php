@@ -3,20 +3,20 @@
 namespace NotificationChannels\WebPush;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
+ * @property int|string $subscribable_id
+ * @property class-string $subscribable_type
  * @property string $endpoint
  * @property string|null $public_key
  * @property string|null $auth_token
  * @property string|null $content_encoding
- * @property \Illuminate\Database\Eloquent\Model $subscribable
  */
 class PushSubscription extends Model
 {
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'endpoint',
@@ -28,16 +28,15 @@ class PushSubscription extends Model
     /**
      * Create a new model instance.
      *
-     * @param  array  $attributes
      * @return void
      */
     public function __construct(array $attributes = [])
     {
-        if (! isset($this->connection)) {
+        if ($this->connection === null) {
             $this->setConnection(config('webpush.database_connection'));
         }
 
-        if (! isset($this->table)) {
+        if ($this->table === null) {
             $this->setTable(config('webpush.table_name'));
         }
 
@@ -46,22 +45,17 @@ class PushSubscription extends Model
 
     /**
      * Get the model related to the subscription.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function subscribable()
+    public function subscribable(): MorphTo
     {
         return $this->morphTo();
     }
 
     /**
-     * Find a subscription by the given endpint.
-     *
-     * @param  string  $endpoint
-     * @return static|null
+     * Find a subscription by the given endpoint.
      */
-    public static function findByEndpoint($endpoint)
+    public static function findByEndpoint(string $endpoint): ?static
     {
-        return static::where('endpoint', $endpoint)->first();
+        return static::firstWhere('endpoint', $endpoint);
     }
 }
