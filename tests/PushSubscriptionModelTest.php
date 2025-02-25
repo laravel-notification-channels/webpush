@@ -11,14 +11,12 @@ class PushSubscriptionModelTest extends TestCase
     {
         $subscription = new PushSubscription([
             'endpoint' => 'endpoint',
-            'public_key' => 'key',
-            'auth_token' => 'token',
+            'keys' => 'keys',
             'content_encoding' => 'aesgcm',
         ]);
 
         $this->assertEquals('endpoint', $subscription->endpoint);
-        $this->assertEquals('key', $subscription->public_key);
-        $this->assertEquals('token', $subscription->auth_token);
+        $this->assertEquals('keys', $subscription->keys);
         $this->assertEquals('aesgcm', $subscription->content_encoding);
     }
 

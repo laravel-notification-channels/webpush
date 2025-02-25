@@ -52,12 +52,17 @@ class WebPushChannel
 
         /** @var \NotificationChannels\WebPush\PushSubscription $subscription */
         foreach ($subscriptions as $subscription) {
-            $this->webPush->queueNotification(new Subscription(
-                $subscription->endpoint,
-                $subscription->public_key,
-                $subscription->auth_token,
-                $subscription->content_encoding
-            ), $payload, $options);
+            $this->webPush->queueNotification(
+                Subscription::create(
+                    [
+                        'endpoint' => $subscription->endpoint,
+                        'keys' => json_decode($subscription->keys, true),
+                        'contentEncoding' => $subscription->content_encoding,
+                    ]
+                ),
+                $payload,
+                $options
+            );
         }
 
         $reports = $this->webPush->flush();
