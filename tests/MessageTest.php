@@ -7,8 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
 {
-    /** @var \NotificationChannels\WebPush\WebPushMessage */
-    protected $message;
+    protected WebPushMessage $message;
 
     protected function setUp(): void
     {
