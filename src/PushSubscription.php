@@ -28,6 +28,7 @@ class PushSubscription extends Model
     /**
      * Create a new model instance.
      *
+     * @param  array<string, mixed>  $attributes
      * @return void
      */
     public function __construct(array $attributes = [])
@@ -45,6 +46,8 @@ class PushSubscription extends Model
 
     /**
      * Get the model related to the subscription.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo<\Illuminate\Database\Eloquent\Model, $this>
      */
     public function subscribable(): MorphTo
     {

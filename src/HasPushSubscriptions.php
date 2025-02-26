@@ -67,7 +67,7 @@ trait HasPushSubscriptions
     /**
      * Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<\NotificationChannels\WebPush\PushSubscription>
+     * @return \Illuminate\Database\Eloquent\Collection<array-key, \NotificationChannels\WebPush\PushSubscription>
      */
     public function routeNotificationForWebPush(): Collection
     {

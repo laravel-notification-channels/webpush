@@ -46,6 +46,8 @@ class VapidKeysGenerateCommand extends Command
 
     /**
      * Set the keys in the environment file.
+     *
+     * @param  array{'publicKey': string, 'privateKey': string}  $keys
      */
     protected function setKeysInEnvironmentFile(array $keys): bool
     {
@@ -62,6 +64,8 @@ class VapidKeysGenerateCommand extends Command
 
     /**
      * Write a new environment file with the given keys.
+     *
+     * @param  array{'publicKey': string, 'privateKey': string}  $keys
      */
     protected function writeNewEnvironmentFileWith(array $keys): void
     {

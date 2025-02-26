@@ -11,3 +11,9 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: tests/User.php
+
+		-
+			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:morphMany\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: tests/User.php

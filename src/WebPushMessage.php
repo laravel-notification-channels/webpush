@@ -11,6 +11,9 @@ class WebPushMessage
 {
     protected string $title;
 
+    /**
+     * @var array<array-key, array{'title': string, 'action': string, 'icon'?: string}>
+     */
     protected array $actions = [];
 
     protected string $badge;
@@ -31,10 +34,16 @@ class WebPushMessage
 
     protected string $tag;
 
+    /**
+     * @var array<int>
+     */
     protected array $vibrate;
 
     protected mixed $data;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $options = [];
 
     /**
@@ -168,6 +177,7 @@ class WebPushMessage
     /**
      * Set the notification vibration pattern.
      *
+     * @param  array<int>  $value
      * @return $this
      */
     public function vibrate(array $value): static
@@ -194,6 +204,7 @@ class WebPushMessage
      *
      * @link https://github.com/web-push-libs/web-push-php#notifications-and-default-options
      *
+     * @param  array<string, mixed>  $value
      * @return $this
      */
     public function options(array $value): static
@@ -205,6 +216,8 @@ class WebPushMessage
 
     /**
      * Get the notification options.
+     *
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -213,6 +226,8 @@ class WebPushMessage
 
     /**
      * Get an array representation of the message.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

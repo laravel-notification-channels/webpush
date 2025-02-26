@@ -9,6 +9,6 @@ parameters:
         - tests
         - migrations/create_push_subscriptions_table.php.stub
 
-    level: 5
+    level: 6
 
     tmpDir: .phpstan.cache

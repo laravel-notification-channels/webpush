@@ -40,6 +40,8 @@ class WebPushServiceProvider extends ServiceProvider
 
     /**
      * Get the authentication details.
+     *
+     * @return array<string, mixed>
      */
     protected function webPushAuth(): array
     {

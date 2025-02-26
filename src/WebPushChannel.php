@@ -14,14 +14,17 @@ class WebPushChannel
     /**
      * @return void
      */
-    public function __construct(protected WebPush $webPush, protected ReportHandlerInterface $reportHandler) {}
+    public function __construct(protected WebPush $webPush, protected ReportHandlerInterface $reportHandler)
+    {
+        //
+    }
 
     /**
      * Send the given notification.
      */
     public function send(mixed $notifiable, Notification $notification): void
     {
-        /** @var \Illuminate\Database\Eloquent\Collection $subscriptions */
+        /** @var \Illuminate\Database\Eloquent\Collection<array-key, PushSubscription> $subscriptions */
         $subscriptions = $notifiable->routeNotificationFor('WebPush', $notification);
 
         if ($subscriptions->isEmpty()) {

@@ -34,7 +34,7 @@ abstract class TestCase extends Orchestra
 
     /**
      * @param  \Illuminate\Foundation\Application  $app
-     * @return array
+     * @return array<array-key, class-string>
      */
     protected function getPackageProviders($app)
     {
@@ -61,6 +61,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
+     * @param  array<string, mixed>  $attributes
      * @return \NotificationChannels\WebPush\Test\User
      */
     public function createUser(array $attributes)
