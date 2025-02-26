@@ -17,7 +17,7 @@ use NotificationChannels\WebPush\WebPushChannel;
 class ChannelTest extends TestCase
 {
     /** @test */
-    public function notification_can_be_sent()
+    public function notification_can_be_sent(): void
     {
         Event::fake();
 
@@ -28,7 +28,7 @@ class ChannelTest extends TestCase
 
         $webpush->shouldReceive('queueNotification')
             ->once()
-            ->withArgs(function (Subscription $subscription, string $payload, array $options = [], array $auth = []) use ($message) {
+            ->withArgs(function (Subscription $subscription, string $payload, array $options = [], array $auth = []) use ($message): true {
                 $this->assertInstanceOf(Subscription::class, $subscription);
                 $this->assertEquals('endpoint', $subscription->getEndpoint());
                 $this->assertEquals('key', $subscription->getPublicKey());
@@ -55,7 +55,7 @@ class ChannelTest extends TestCase
     }
 
     /** @test */
-    public function subscriptions_with_invalid_endpoint_are_deleted()
+    public function subscriptions_with_invalid_endpoint_are_deleted(): void
     {
         Event::fake();
 

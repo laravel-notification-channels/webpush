@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 class VapidKeysGenerateCommandTest extends TestCase
 {
     /** @test */
-    public function it_can_generate_and_show_vapid_keys1()
+    public function it_can_generate_and_show_vapid_keys1(): void
     {
         $exitCode = Artisan::call('webpush:vapid', ['--show' => true]);
 
@@ -17,7 +17,7 @@ class VapidKeysGenerateCommandTest extends TestCase
     }
 
     /** @test */
-    public function it_can_generate_and_show_vapid_keys2()
+    public function it_can_generate_and_show_vapid_keys2(): void
     {
         $exitCode = Artisan::call('webpush:vapid', ['--show' => true]);
 
@@ -26,7 +26,7 @@ class VapidKeysGenerateCommandTest extends TestCase
     }
 
     /** @test */
-    public function it_can_generate_and_set_vapid_keys()
+    public function it_can_generate_and_set_vapid_keys(): void
     {
         if (File::isDirectory(__DIR__.'/temp')) {
             File::deleteDirectory(__DIR__.'/temp');

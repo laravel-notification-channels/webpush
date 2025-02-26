@@ -8,7 +8,8 @@ use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasPushSubscriptions;
+    use HasPushSubscriptions;
+    use Notifiable;
 
     public $timestamps = false;
 

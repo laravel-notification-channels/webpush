@@ -9,12 +9,8 @@ class TestNotification extends Notification
 {
     /**
      * Get the web push representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @param  mixed  $notification
-     * @return \NotificationChannels\WebPush\WebPushMessage
      */
-    public function toWebPush($notifiable, $notification)
+    public function toWebPush(mixed $notifiable, mixed $notification): WebPushMessage
     {
         return (new WebPushMessage)
             ->data(['id' => 1])
