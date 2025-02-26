@@ -13,7 +13,10 @@ class ReportHandler implements ReportHandlerInterface
      *
      * @return void
      */
-    public function __construct(protected \Illuminate\Contracts\Events\Dispatcher $events) {}
+    public function __construct(protected \Illuminate\Contracts\Events\Dispatcher $events)
+    {
+        //
+    }
 
     /**
      * Handle a message sent report.

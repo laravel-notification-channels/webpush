@@ -16,5 +16,8 @@ class NotificationFailed
      *
      * @return void
      */
-    public function __construct(public MessageSentReport $report, public PushSubscription $subscription, public WebPushMessage $message) {}
+    public function __construct(public MessageSentReport $report, public PushSubscription $subscription, public WebPushMessage $message)
+    {
+        //
+    }
 }
