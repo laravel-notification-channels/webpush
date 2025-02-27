@@ -4,10 +4,11 @@ namespace NotificationChannels\WebPush\Test;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Framework\Attributes\Test;
 
 class VapidKeysGenerateCommandTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_generate_and_show_vapid_keys1(): void
     {
         $exitCode = Artisan::call('webpush:vapid', ['--show' => true]);
@@ -16,7 +17,7 @@ class VapidKeysGenerateCommandTest extends TestCase
         $this->seeInConsoleOutput('VAPID_PUBLIC_KEY=');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_generate_and_show_vapid_keys2(): void
     {
         $exitCode = Artisan::call('webpush:vapid', ['--show' => true]);
@@ -25,7 +26,7 @@ class VapidKeysGenerateCommandTest extends TestCase
         $this->seeInConsoleOutput('VAPID_PRIVATE_KEY=');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_generate_and_set_vapid_keys(): void
     {
         if (File::isDirectory(__DIR__.'/temp')) {

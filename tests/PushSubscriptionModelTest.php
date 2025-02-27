@@ -3,10 +3,11 @@
 namespace NotificationChannels\WebPush\Test;
 
 use NotificationChannels\WebPush\PushSubscription;
+use PHPUnit\Framework\Attributes\Test;
 
 class PushSubscriptionModelTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function attributes_are_fillable(): void
     {
         $subscription = new PushSubscription([
@@ -22,7 +23,7 @@ class PushSubscriptionModelTest extends TestCase
         $this->assertEquals('aesgcm', $subscription->content_encoding);
     }
 
-    /** @test */
+    #[Test]
     public function subscription_can_be_found_by_endpoint(): void
     {
         $this->testUser->updatePushSubscription('endpoint');
@@ -31,7 +32,7 @@ class PushSubscriptionModelTest extends TestCase
         $this->assertEquals('endpoint', $subscription->endpoint);
     }
 
-    /** @test */
+    #[Test]
     public function subscription_has_owner_model(): void
     {
         $this->testUser->updatePushSubscription('endpoint');

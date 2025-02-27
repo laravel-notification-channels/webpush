@@ -3,6 +3,7 @@
 namespace NotificationChannels\WebPush\Test;
 
 use NotificationChannels\WebPush\WebPushMessage;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
@@ -16,7 +17,7 @@ class MessageTest extends TestCase
         $this->message = new WebPushMessage;
     }
 
-    /** @test */
+    #[Test]
     public function title_can_be_set(): void
     {
         $this->message->title('Message title');
@@ -24,7 +25,7 @@ class MessageTest extends TestCase
         $this->assertEquals('Message title', $this->message->toArray()['title']);
     }
 
-    /** @test */
+    #[Test]
     public function action_can_be_set(): void
     {
         $this->message->action('Some Action', 'some_action');
@@ -34,7 +35,7 @@ class MessageTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function action_can_be_set_with_icon(): void
     {
         $this->message->action('Some Action', 'some_action', '/icon.png');
@@ -44,7 +45,7 @@ class MessageTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function badge_can_be_set(): void
     {
         $this->message->badge('/badge.jpg');
@@ -52,7 +53,7 @@ class MessageTest extends TestCase
         $this->assertEquals('/badge.jpg', $this->message->toArray()['badge']);
     }
 
-    /** @test */
+    #[Test]
     public function body_can_be_set(): void
     {
         $this->message->body('Message body');
@@ -60,7 +61,7 @@ class MessageTest extends TestCase
         $this->assertEquals('Message body', $this->message->toArray()['body']);
     }
 
-    /** @test */
+    #[Test]
     public function direction_can_be_set(): void
     {
         $this->message->dir('rtl');
@@ -68,7 +69,7 @@ class MessageTest extends TestCase
         $this->assertEquals('rtl', $this->message->toArray()['dir']);
     }
 
-    /** @test */
+    #[Test]
     public function icon_can_be_set(): void
     {
         $this->message->icon('/icon.jpg');
@@ -76,7 +77,7 @@ class MessageTest extends TestCase
         $this->assertEquals('/icon.jpg', $this->message->toArray()['icon']);
     }
 
-    /** @test */
+    #[Test]
     public function image_can_be_set(): void
     {
         $this->message->image('/image.jpg');
@@ -84,7 +85,7 @@ class MessageTest extends TestCase
         $this->assertEquals('/image.jpg', $this->message->toArray()['image']);
     }
 
-    /** @test */
+    #[Test]
     public function lang_can_be_set(): void
     {
         $this->message->lang('en');
@@ -92,7 +93,7 @@ class MessageTest extends TestCase
         $this->assertEquals('en', $this->message->toArray()['lang']);
     }
 
-    /** @test */
+    #[Test]
     public function renotify_can_be_set(): void
     {
         $this->message->renotify();
@@ -100,7 +101,7 @@ class MessageTest extends TestCase
         $this->assertTrue($this->message->toArray()['renotify']);
     }
 
-    /** @test */
+    #[Test]
     public function require_interaction_can_be_set(): void
     {
         $this->message->requireInteraction();
@@ -108,7 +109,7 @@ class MessageTest extends TestCase
         $this->assertTrue($this->message->toArray()['requireInteraction']);
     }
 
-    /** @test */
+    #[Test]
     public function tag_can_be_set(): void
     {
         $this->message->tag('tag1');
@@ -116,7 +117,7 @@ class MessageTest extends TestCase
         $this->assertEquals('tag1', $this->message->toArray()['tag']);
     }
 
-    /** @test */
+    #[Test]
     public function vibration_pattern_can_be_set(): void
     {
         $this->message->vibrate([1, 2, 3]);
@@ -124,7 +125,7 @@ class MessageTest extends TestCase
         $this->assertEquals([1, 2, 3], $this->message->toArray()['vibrate']);
     }
 
-    /** @test */
+    #[Test]
     public function arbitrary_data_can_be_set(): void
     {
         $this->message->data(['id' => 1]);
@@ -132,7 +133,7 @@ class MessageTest extends TestCase
         $this->assertEquals(['id' => 1], $this->message->toArray()['data']);
     }
 
-    /** @test */
+    #[Test]
     public function options_can_be_set(): void
     {
         $this->message->options(['ttl' => 60]);

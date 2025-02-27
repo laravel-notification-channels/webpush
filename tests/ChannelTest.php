@@ -13,10 +13,11 @@ use NotificationChannels\WebPush\Events\NotificationFailed;
 use NotificationChannels\WebPush\Events\NotificationSent;
 use NotificationChannels\WebPush\ReportHandler;
 use NotificationChannels\WebPush\WebPushChannel;
+use PHPUnit\Framework\Attributes\Test;
 
 class ChannelTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function notification_can_be_sent(): void
     {
         Event::fake();
@@ -54,7 +55,7 @@ class ChannelTest extends TestCase
         Event::assertDispatched(NotificationSent::class);
     }
 
-    /** @test */
+    #[Test]
     public function subscriptions_with_invalid_endpoint_are_deleted(): void
     {
         Event::fake();

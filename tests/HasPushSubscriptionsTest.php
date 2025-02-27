@@ -2,9 +2,11 @@
 
 namespace NotificationChannels\WebPush\Test;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class HasPushSubscriptionsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function model_has_subscriptions(): void
     {
         $this->createSubscription($this->testUser, 'foo');
@@ -15,7 +17,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertTrue($this->testUser->pushSubscriptions()->where('endpoint', 'bar')->exists());
     }
 
-    /** @test */
+    #[Test]
     public function subscription_can_be_created(): void
     {
         $this->testUser->updatePushSubscription('foo', 'key', 'token', 'aesgcm');
@@ -27,7 +29,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertEquals('aesgcm', $subscription->content_encoding);
     }
 
-    /** @test */
+    #[Test]
     public function exiting_subscription_can_be_updated_by_endpoint(): void
     {
         $this->testUser->updatePushSubscription('foo', 'key', 'token');
@@ -40,7 +42,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertEquals('another-token', $subscriptions[0]->auth_token);
     }
 
-    /** @test */
+    #[Test]
     public function determinte_if_model_owns_subscription(): void
     {
         $subscription = $this->testUser->updatePushSubscription('foo');
@@ -48,7 +50,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertTrue($this->testUser->ownsPushSubscription($subscription));
     }
 
-    /** @test */
+    #[Test]
     public function subscription_owned_by_another_model_is_deleted_and_saved_for_the_new_model(): void
     {
         $otherUser = $this->createUser(['email' => 'other@user.com']);
@@ -60,7 +62,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertEquals(1, count($this->testUser->pushSubscriptions));
     }
 
-    /** @test */
+    #[Test]
     public function subscription_can_be_deleted_by_endpoint(): void
     {
         $this->testUser->updatePushSubscription('foo');
