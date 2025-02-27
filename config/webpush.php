@@ -36,6 +36,12 @@ return [
     'client_options' => [],
 
     /**
+     * The automatic padding in bytes used by Minishlink\WebPush.
+     * Set to false to support Firefox Android with v1 endpoint.
+     */
+    'automatic_padding' => env('WEBPUSH_AUTOMATIC_PADDING', true),
+
+    /**
      * Google Cloud Messaging.
      *
      * @deprecated

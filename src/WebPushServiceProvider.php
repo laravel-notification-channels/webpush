@@ -25,9 +25,13 @@ class WebPushServiceProvider extends ServiceProvider
     {
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
-            ->give(fn (): WebPush => (new WebPush(
-                $this->webPushAuth(), [], 30, config('webpush.client_options', [])
-            ))->setReuseVAPIDHeaders(true));
+            ->give(function () {
+                return (new WebPush(
+                    $this->webPushAuth(), [], 30, config('webpush.client_options', [])
+                ))
+                    ->setReuseVAPIDHeaders(true)
+                    ->setAutomaticPadding(config('webpush.automatic_padding'));
+            });
 
         $this->app->when(WebPushChannel::class)
             ->needs(ReportHandlerInterface::class)
