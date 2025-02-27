@@ -53,9 +53,8 @@ abstract class TestCase extends Orchestra
             $table->string('email');
         });
 
-        include_once __DIR__.'/../migrations/create_push_subscriptions_table.php.stub';
-
-        (new \CreatePushSubscriptionsTable)->up();
+        $migration = require __DIR__.'/../migrations/create_push_subscriptions_table.php.stub';
+        $migration->up();
 
         $this->createUser(['email' => 'test@user.com']);
     }
