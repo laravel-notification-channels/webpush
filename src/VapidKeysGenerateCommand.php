@@ -25,10 +25,8 @@ class VapidKeysGenerateCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $keys = VAPID::createVapidKeys();
 
@@ -49,14 +47,13 @@ class VapidKeysGenerateCommand extends Command
     /**
      * Set the keys in the environment file.
      *
-     * @param  array  $keys
-     * @return bool
+     * @param  array{'publicKey': string, 'privateKey': string}  $keys
      */
-    protected function setKeysInEnvironmentFile($keys)
+    protected function setKeysInEnvironmentFile(array $keys): bool
     {
         $currentKeys = $this->laravel['config']['webpush.vapid'];
 
-        if (strlen($currentKeys['public_key']) !== 0 && (! $this->confirmToProceed())) {
+        if (strlen((string) $currentKeys['public_key']) !== 0 && (! $this->confirmToProceed())) {
             return false;
         }
 
@@ -68,10 +65,9 @@ class VapidKeysGenerateCommand extends Command
     /**
      * Write a new environment file with the given keys.
      *
-     * @param  array  $keys
-     * @return void
+     * @param  array{'publicKey': string, 'privateKey': string}  $keys
      */
-    protected function writeNewEnvironmentFileWith($keys)
+    protected function writeNewEnvironmentFileWith(array $keys): void
     {
         $contents = file_get_contents($this->laravel->environmentFilePath());
 
@@ -100,22 +96,15 @@ class VapidKeysGenerateCommand extends Command
 
     /**
      * Get a regex pattern that will match env $keyName with any key.
-     *
-     * @param  string  $keyName
-     * @return string
      */
-    protected function keyReplacementPattern($keyName)
+    protected function keyReplacementPattern(string $keyName): string
     {
         $key = $this->laravel['config']['webpush.vapid'];
 
-        if ($keyName === 'VAPID_PUBLIC_KEY') {
-            $key = $key['public_key'];
-        } else {
-            $key = $key['private_key'];
-        }
+        $key = $keyName === 'VAPID_PUBLIC_KEY' ? $key['public_key'] : $key['private_key'];
 
         $escaped = preg_quote('='.$key, '/');
 
-        return "/^{$keyName}{$escaped}/m";
+        return sprintf('/^%s%s/m', $keyName, $escaped);
     }
 }

@@ -5,7 +5,7 @@ namespace NotificationChannels\WebPush\Test;
 class HasPushSubscriptionsTest extends TestCase
 {
     /** @test */
-    public function model_has_subscriptions()
+    public function model_has_subscriptions(): void
     {
         $this->createSubscription($this->testUser, 'foo');
         $this->createSubscription($this->testUser, 'bar');
@@ -16,7 +16,7 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     /** @test */
-    public function subscription_can_be_created()
+    public function subscription_can_be_created(): void
     {
         $this->testUser->updatePushSubscription('foo', 'key', 'token', 'aesgcm');
         $subscription = $this->testUser->pushSubscriptions()->first();
@@ -28,10 +28,11 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     /** @test */
-    public function exiting_subscription_can_be_updated_by_endpoint()
+    public function exiting_subscription_can_be_updated_by_endpoint(): void
     {
         $this->testUser->updatePushSubscription('foo', 'key', 'token');
         $this->testUser->updatePushSubscription('foo', 'major-key', 'another-token');
+
         $subscriptions = $this->testUser->pushSubscriptions()->where('endpoint', 'foo')->get();
 
         $this->assertEquals(1, count($subscriptions));
@@ -40,7 +41,7 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     /** @test */
-    public function determinte_if_model_owns_subscription()
+    public function determinte_if_model_owns_subscription(): void
     {
         $subscription = $this->testUser->updatePushSubscription('foo');
 
@@ -48,10 +49,11 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     /** @test */
-    public function subscription_owned_by_another_model_is_deleted_and_saved_for_the_new_model()
+    public function subscription_owned_by_another_model_is_deleted_and_saved_for_the_new_model(): void
     {
         $otherUser = $this->createUser(['email' => 'other@user.com']);
         $otherUser->updatePushSubscription('foo');
+
         $this->testUser->updatePushSubscription('foo');
 
         $this->assertEquals(0, count($otherUser->pushSubscriptions));
@@ -59,7 +61,7 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     /** @test */
-    public function subscription_can_be_deleted_by_endpoint()
+    public function subscription_can_be_deleted_by_endpoint(): void
     {
         $this->testUser->updatePushSubscription('foo');
         $this->testUser->deletePushSubscription('foo');

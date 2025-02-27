@@ -11,10 +11,8 @@ class WebPushServiceProvider extends ServiceProvider
 {
     /**
      * Register the application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->commands([VapidKeysGenerateCommand::class]);
 
@@ -23,10 +21,8 @@ class WebPushServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
@@ -50,9 +46,9 @@ class WebPushServiceProvider extends ServiceProvider
     /**
      * Get the authentication details.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function webPushAuth()
+    protected function webPushAuth(): array
     {
         $config = [];
         $webpush = config('webpush');
@@ -67,7 +63,7 @@ class WebPushServiceProvider extends ServiceProvider
             return $config;
         }
 
-        $config['VAPID'] = compact('publicKey', 'privateKey');
+        $config['VAPID'] = ['publicKey' => $publicKey, 'privateKey' => $privateKey];
         $config['VAPID']['subject'] = $webpush['vapid']['subject'];
 
         if (empty($config['VAPID']['subject'])) {
@@ -100,7 +96,7 @@ class WebPushServiceProvider extends ServiceProvider
             $timestamp = date('Y_m_d_His', time());
 
             $this->publishes([
-                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path("migrations/{$timestamp}_create_push_subscriptions_table.php"),
+                __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => database_path(sprintf('migrations/%s_create_push_subscriptions_table.php', $timestamp)),
             ], 'migrations');
         }
     }

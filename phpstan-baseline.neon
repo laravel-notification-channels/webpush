@@ -1,0 +1,19 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method NotificationChannels\\WebPush\\PushSubscription\:\:findByEndpoint\(\) should return static\(NotificationChannels\\WebPush\\PushSubscription\)\|null but returns NotificationChannels\\WebPush\\PushSubscription\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/PushSubscription.php
+
+		-
+			message: '#^Method NotificationChannels\\WebPush\\Test\\User\:\:pushSubscriptions\(\) should return Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<NotificationChannels\\WebPush\\PushSubscription, \$this\(NotificationChannels\\WebPush\\Test\\User\)\> but returns Illuminate\\Database\\Eloquent\\Relations\\MorphMany\<Illuminate\\Database\\Eloquent\\Model, \$this\(NotificationChannels\\WebPush\\Test\\User\)\>\.$#'
+			identifier: return.type
+			count: 1
+			path: tests/User.php
+
+		-
+			message: '#^Unable to resolve the template type TRelatedModel in call to method Illuminate\\Database\\Eloquent\\Model\:\:morphMany\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: tests/User.php

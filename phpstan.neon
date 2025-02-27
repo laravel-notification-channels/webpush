@@ -1,0 +1,14 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    - ./phpstan-baseline.neon
+
+parameters:
+
+    paths:
+        - src
+        - tests
+        - migrations/create_push_subscriptions_table.php.stub
+
+    level: 6
+
+    tmpDir: .phpstan.cache

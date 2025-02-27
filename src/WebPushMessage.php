@@ -2,90 +2,59 @@
 
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
 /**
+ * @implements \Illuminate\Contracts\Support\Arrayable<string, mixed>
+ *
  * @link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
  */
-class WebPushMessage
+class WebPushMessage implements Arrayable
 {
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
     /**
-     * @var array
+     * @var array<array-key, array{'title': string, 'action': string, 'icon'?: string}>
      */
-    protected $actions = [];
+    protected array $actions = [];
+
+    protected string $badge;
+
+    protected string $body;
+
+    protected string $dir;
+
+    protected string $icon;
+
+    protected string $image;
+
+    protected string $lang;
+
+    protected bool $renotify;
+
+    protected bool $requireInteraction;
+
+    protected string $tag;
 
     /**
-     * @var string
+     * @var array<int>
      */
-    protected $badge;
+    protected array $vibrate;
+
+    protected mixed $data;
 
     /**
-     * @var string
+     * @var array<string, mixed>
      */
-    protected $body;
-
-    /**
-     * @var string
-     */
-    protected $dir;
-
-    /**
-     * @var string
-     */
-    protected $icon;
-
-    /**
-     * @var string
-     */
-    protected $image;
-
-    /**
-     * @var string
-     */
-    protected $lang;
-
-    /**
-     * @var bool
-     */
-    protected $renotify;
-
-    /**
-     * @var bool
-     */
-    protected $requireInteraction;
-
-    /**
-     * @var string
-     */
-    protected $tag;
-
-    /**
-     * @var array
-     */
-    protected $vibrate;
-
-    /**
-     * @var mixed
-     */
-    protected $data;
-
-    /**
-     * @var array
-     */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Set the notification title.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function title($value)
+    public function title(string $value): static
     {
         $this->title = $value;
 
@@ -95,14 +64,11 @@ class WebPushMessage
     /**
      * Add a notification action.
      *
-     * @param  string  $title
-     * @param  string  $action
-     * @param  string  $icon
      * @return $this
      */
-    public function action($title, $action, $icon = null)
+    public function action(string $title, string $action, ?string $icon = null): static
     {
-        $this->actions[] = array_filter(compact('title', 'action', 'icon'));
+        $this->actions[] = array_filter(['title' => $title, 'action' => $action, 'icon' => $icon]);
 
         return $this;
     }
@@ -110,10 +76,9 @@ class WebPushMessage
     /**
      * Set the notification badge.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function badge($value)
+    public function badge(string $value): static
     {
         $this->badge = $value;
 
@@ -123,10 +88,9 @@ class WebPushMessage
     /**
      * Set the notification body.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function body($value)
+    public function body(string $value): static
     {
         $this->body = $value;
 
@@ -136,10 +100,9 @@ class WebPushMessage
     /**
      * Set the notification direction.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function dir($value)
+    public function dir(string $value): static
     {
         $this->dir = $value;
 
@@ -149,10 +112,9 @@ class WebPushMessage
     /**
      * Set the notification icon url.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function icon($value)
+    public function icon(string $value): static
     {
         $this->icon = $value;
 
@@ -162,10 +124,9 @@ class WebPushMessage
     /**
      * Set the notification image url.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function image($value)
+    public function image(string $value): static
     {
         $this->image = $value;
 
@@ -175,10 +136,9 @@ class WebPushMessage
     /**
      * Set the notification language.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function lang($value)
+    public function lang(string $value): static
     {
         $this->lang = $value;
 
@@ -186,10 +146,9 @@ class WebPushMessage
     }
 
     /**
-     * @param  bool  $value
      * @return $this
      */
-    public function renotify($value = true)
+    public function renotify(bool $value = true): static
     {
         $this->renotify = $value;
 
@@ -197,10 +156,9 @@ class WebPushMessage
     }
 
     /**
-     * @param  bool  $value
      * @return $this
      */
-    public function requireInteraction($value = true)
+    public function requireInteraction(bool $value = true): static
     {
         $this->requireInteraction = $value;
 
@@ -210,10 +168,9 @@ class WebPushMessage
     /**
      * Set the notification tag.
      *
-     * @param  string  $value
      * @return $this
      */
-    public function tag($value)
+    public function tag(string $value): static
     {
         $this->tag = $value;
 
@@ -223,10 +180,10 @@ class WebPushMessage
     /**
      * Set the notification vibration pattern.
      *
-     * @param  array  $value
+     * @param  array<int>  $value
      * @return $this
      */
-    public function vibrate($value)
+    public function vibrate(array $value): static
     {
         $this->vibrate = $value;
 
@@ -236,10 +193,9 @@ class WebPushMessage
     /**
      * Set the notification arbitrary data.
      *
-     * @param  mixed  $value
      * @return $this
      */
-    public function data($value)
+    public function data(mixed $value): static
     {
         $this->data = $value;
 
@@ -251,10 +207,10 @@ class WebPushMessage
      *
      * @link https://github.com/web-push-libs/web-push-php#notifications-and-default-options
      *
-     * @param  array  $value
+     * @param  array<string, mixed>  $value
      * @return $this
      */
-    public function options(array $value)
+    public function options(array $value): static
     {
         $this->options = $value;
 
@@ -264,9 +220,9 @@ class WebPushMessage
     /**
      * Get the notification options.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -274,9 +230,9 @@ class WebPushMessage
     /**
      * Get an array representation of the message.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray()
+    public function toArray(): array
     {
         return Arr::except(array_filter(get_object_vars($this)), ['options']);
     }

@@ -2,6 +2,13 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 10.0.0 - 2025-02-26
+- Adds support for Laravel 12, drops support for Laravel 9 and 10, drops support for PHP 8.1 [#208](https://github.com/laravel-notification-channels/webpush/pull/208)
+- Adds native types [#209](https://github.com/laravel-notification-channels/webpush/pull/209) - if you override functions or implement interfaces of this package, please note that you might need to change method signatures
+
+## 9.0.0 - 2024-07-10
+- Update web-push library to v9
+
 ## 8.0.0 - 2024-03-16
 
 - Added support for Laravel 11.

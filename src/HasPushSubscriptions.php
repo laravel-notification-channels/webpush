@@ -2,28 +2,25 @@
 
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 trait HasPushSubscriptions
 {
     /**
      *  Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<PushSubscription, $this>
      */
-    public function pushSubscriptions()
+    public function pushSubscriptions(): MorphMany
     {
         return $this->morphMany(config('webpush.model'), 'subscribable');
     }
 
     /**
      * Update (or create) subscription.
-     *
-     * @param  string  $endpoint
-     * @param  string|null  $key
-     * @param  string|null  $token
-     * @param  string|null  $contentEncoding
-     * @return \NotificationChannels\WebPush\PushSubscription
      */
-    public function updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)
+    public function updatePushSubscription(string $endpoint, ?string $key = null, ?string $token = null, ?string $contentEncoding = null): PushSubscription
     {
         $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
@@ -50,11 +47,8 @@ trait HasPushSubscriptions
 
     /**
      * Determine if the model owns the given subscription.
-     *
-     * @param  \NotificationChannels\WebPush\PushSubscription  $subscription
-     * @return bool
      */
-    public function ownsPushSubscription($subscription)
+    public function ownsPushSubscription(PushSubscription $subscription): bool
     {
         return (string) $subscription->subscribable_id === (string) $this->getKey() &&
                         $subscription->subscribable_type === $this->getMorphClass();
@@ -62,11 +56,8 @@ trait HasPushSubscriptions
 
     /**
      * Delete subscription by endpoint.
-     *
-     * @param  string  $endpoint
-     * @return void
      */
-    public function deletePushSubscription($endpoint)
+    public function deletePushSubscription(string $endpoint): void
     {
         $this->pushSubscriptions()
             ->where('endpoint', $endpoint)
@@ -76,9 +67,9 @@ trait HasPushSubscriptions
     /**
      * Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection<array-key, \NotificationChannels\WebPush\PushSubscription>
      */
-    public function routeNotificationForWebPush()
+    public function routeNotificationForWebPush(): Collection
     {
         return $this->pushSubscriptions;
     }
