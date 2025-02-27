@@ -2,6 +2,9 @@
 
 All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
 
+## 10.1.0 - 2025-02-27
+- Allow to set WebPush automatic padding in config [#176](https://github.com/laravel-notification-channels/webpush/pull/176)
+
 ## 10.0.0 - 2025-02-26
 - Adds support for Laravel 12, drops support for Laravel 9 and 10, drops support for PHP 8.1 [#208](https://github.com/laravel-notification-channels/webpush/pull/208)
 - Adds native types [#209](https://github.com/laravel-notification-channels/webpush/pull/209) - if you override functions or implement interfaces of this package, please note that you might need to change method signatures
