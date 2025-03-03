@@ -1,4 +1,4 @@
-# Web push notifications channel for Laravel
+# Web Push Notifications Channel for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/webpush.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/webpush)
 ![Build Status](https://github.com/laravel-notification-channels/webpush/workflows/tests/badge.svg)
@@ -10,15 +10,15 @@ This package makes it easy to send web push notifications with Laravel.
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
-``` bash
+```bash
 composer require laravel-notification-channels/webpush
 ```
 
-First add the `NotificationChannels\WebPush\HasPushSubscriptions` trait to your `User` model:
+First, add the `NotificationChannels\WebPush\HasPushSubscriptions` trait to your `User` model:
 
-``` php
+```php
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Model
@@ -27,43 +27,41 @@ class User extends Model
 }
 ```
 
-Next publish the migration with:
+Next, publish the migration with:
 
-``` bash
+```bash
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="migrations"
 ```
 
 Run the migrate command to create the necessary table:
 
-``` bash
+```bash
 php artisan migrate
 ```
 
 You can also publish the config file with:
 
-``` bash
+```bash
 php artisan vendor:publish --provider="NotificationChannels\WebPush\WebPushServiceProvider" --tag="config"
 ```
 
 Generate the VAPID keys (required for browser authentication) with:
 
-``` bash
+```bash
 php artisan webpush:vapid
 ```
 
-This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`in your `.env` file.
+This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` in your `.env` file. You need the `VAPID_PUBLIC_KEY` as `applicationServerKey` when using the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API).
 
-> Note: if targeting Safari or iOS after 2023, you will need to include the `VAPID_SUBJECT` variable as well or Apple will return a `BadJwtToken` error.
+> **Note:** If targeting Safari or iOS after 2023, you will need to include the `VAPID_SUBJECT` variable as well, or Apple will return a `BadJwtToken` error.
 
 __These keys must be safely stored and should not change.__
 
-If you still want support for [Google Cloud Messaging](https://console.cloud.google.com), set the `GCM_KEY` and `GCM_SENDER_ID` in your `.env` file.
-
 ## Usage
 
-Now you can use the channel in your `via()` method inside the notification as well as send a web push notification:
+Now you can use the channel in your `via()` method inside the notification and send a web push notification:
 
-``` php
+```php
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -100,21 +98,23 @@ You can find the available options [here](https://github.com/web-push-libs/web-p
 
 ### Save/Update Subscriptions
 
-To save or update a subscription use the `updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)` method on your user:
+To save or update a subscription, use the `updatePushSubscription($endpoint, $key = null, $token = null, $contentEncoding = null)` method on your user:
 
-``` php
+```php
 $user = \App\User::find(1);
 
 $user->updatePushSubscription($endpoint, $key, $token, $contentEncoding);
 ```
 
-The `$key` and `$token` are optional and are used to encrypt your notifications. Only encrypted notifications can have a payload.
+The `$key` and `$token` are optional and are used to encrypt your notifications. However, all major browsers require encryption when sending notifications.
+
+When using the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API), `$key` is the value of the `getKey('p256dh')` method, and `$token` is the value of the `getKey('auth')` method of the `PushSubscription` interface.
 
 ### Delete Subscriptions
 
-To delete a subscription use the `deletePushSubscription($endpoint)` method on your user:
+To delete a subscription, use the `deletePushSubscription($endpoint)` method on your user:
 
-``` php
+```php
 $user = \App\User::find(1);
 
 $user->deletePushSubscription($endpoint);
@@ -130,13 +130,13 @@ Please see [CHANGELOG](CHANGELOG.md) for more information about what has changed
 
 ## Testing
 
-``` bash
-$ composer test
+```bash
+composer test
 ```
 
 ## Security
 
-If you discover any security related issues, please email themsaid@gmail.com instead of using the issue tracker.
+If you discover any security-related issues, please email themsaid@gmail.com instead of using the issue tracker.
 
 ## Contributing
 
