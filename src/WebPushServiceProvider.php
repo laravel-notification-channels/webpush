@@ -54,10 +54,6 @@ class WebPushServiceProvider extends ServiceProvider
         $publicKey = $webpush['vapid']['public_key'];
         $privateKey = $webpush['vapid']['private_key'];
 
-        if (! empty($webpush['gcm']['key'])) {
-            $config['GCM'] = $webpush['gcm']['key'];
-        }
-
         if (empty($publicKey) || empty($privateKey)) {
             return $config;
         }

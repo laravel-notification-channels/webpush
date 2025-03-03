@@ -41,14 +41,4 @@ return [
      */
     'automatic_padding' => env('WEBPUSH_AUTOMATIC_PADDING', true),
 
-    /**
-     * Google Cloud Messaging.
-     *
-     * @deprecated
-     */
-    'gcm' => [
-        'key' => env('GCM_KEY'),
-        'sender_id' => env('GCM_SENDER_ID'),
-    ],
-
 ];
