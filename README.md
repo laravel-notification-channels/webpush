@@ -8,6 +8,16 @@
 
 This package makes it easy to send web push notifications with Laravel.
 
+## Features
+
+- **Easy integration with Laravel notifications:** Seamlessly integrates with Laravel's notification system, allowing you to send web push notifications using familiar notification channels.
+- **Multiple browser support:** Works with all major browsers that implement the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API), including Chrome, Firefox, Edge, and Safari.
+- **VAPID support:** Easily generate and manage VAPID keys for secure browser authentication.
+- **Flexible message options:** Customize notifications with title, body, icon, actions, TTL, and more. Supports advanced options like vibration, badge, image, and custom data payloads.
+- **Subscription management:** Convenient methods to save, update, and delete push subscriptions directly on your notifiable models.
+- **Automatic expired subscription cleanup:** When sending a push message to an expired subscription, the package detects expired endpoints (using the `expired` flag of `Minishlink\WebPush\MessageSentReport`). This package will automatically delete expired subscriptions.
+- **Configurable and extendable:** Publish and customize the package's config file to fit your application's needs.
+
 ## Installation
 
 You can install the package via Composer:
@@ -53,7 +63,10 @@ php artisan webpush:vapid
 
 This command will set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` in your `.env` file. You need the `VAPID_PUBLIC_KEY` as `applicationServerKey` when using the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API).
 
-> **Note:** If targeting Safari or iOS after 2023, you will need to include the `VAPID_SUBJECT` variable as well, or Apple will return a `BadJwtToken` error.
+> **Note for Safari:**
+> - If targeting Safari or iOS (especially after 2023), you **must** include the `VAPID_SUBJECT` variable in your `.env` file. This should be a valid URL (e.g. `https://example.com`) or a `mailto:` address (e.g. `mailto:admin@example.com`).
+> - Apple will reject requests with a `BadJwtToken` error if `VAPID_SUBJECT` is missing or invalid.
+> - The domain in `VAPID_SUBJECT` must be a valid, existing top-level domain (TLD).
 
 __These keys must be safely stored and should not change.__
 
