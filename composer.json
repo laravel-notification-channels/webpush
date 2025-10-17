@@ -23,10 +23,10 @@
         "minishlink/web-push": "^9.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.21",
+        "larastan/larastan": "^3.1",
+        "laravel/pint": "^1.25",
         "mockery/mockery": "^1.0",
         "orchestra/testbench": "^9.2|^10.0",
-        "larastan/larastan": "^3.1",
         "phpunit/phpunit": "^10.5|^11.5.3",
         "rector/rector": "^2.0"
     },

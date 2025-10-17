@@ -89,13 +89,12 @@ class WebPushServiceProvider extends ServiceProvider
             __DIR__.'/../config/webpush.php' => config_path('webpush.php'),
         ], 'config');
 
-
         $this->publishes([
             __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => $this->getMigrationFileName('create_push_subscriptions_table.php'),
         ], 'migrations');
     }
 
-        /**
+    /**
      * Returns existing migration file if found, else uses the current timestamp.
      */
     protected function getMigrationFileName(string $migrationFileName): string

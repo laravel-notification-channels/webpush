@@ -38,7 +38,7 @@ class WebPushServiceProviderTest extends TestCase
         $migrationsPath = $this->app->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
 
         // Remove any existing matching migrations in the database/migrations folder for a clean test
-        $existing = glob($migrationsPath.'*_' . 'create_push_subscriptions_table.php');
+        $existing = glob($migrationsPath.'*_'.'create_push_subscriptions_table.php');
         foreach ($existing as $file) {
             @unlink($file);
         }
@@ -50,7 +50,7 @@ class WebPushServiceProviderTest extends TestCase
 
         $this->assertEquals(0, $exit);
 
-        $found = glob($migrationsPath.'*_' . 'create_push_subscriptions_table.php');
+        $found = glob($migrationsPath.'*_'.'create_push_subscriptions_table.php');
 
         $this->assertNotEmpty($found, 'No migration was published to the database/migrations path');
 
@@ -74,11 +74,11 @@ class WebPushServiceProviderTest extends TestCase
         }
 
         // Ensure no existing matching migrations are present before the test
-        $existing = glob($migrationsPath . '*_create_push_subscriptions_table.php');
+        $existing = glob($migrationsPath.'*_create_push_subscriptions_table.php');
         foreach ($existing as $file) {
             @unlink($file);
         }
-        
+
         // Create a fake existing migration file in the app migrations directory that should be detected and reused
         $existingFilename = $migrationsPath.'2020_01_01_000000_create_push_subscriptions_table.php';
         file_put_contents($existingFilename, "<?php\n// existing migration\n");
@@ -101,7 +101,7 @@ class WebPushServiceProviderTest extends TestCase
         $this->assertEquals(0, $exit);
 
         // After publishing, ensure no additional migration with a different timestamp suffix was created
-        $found = glob($migrationsPath.'*_' . 'create_push_subscriptions_table.php');
+        $found = glob($migrationsPath.'*_'.'create_push_subscriptions_table.php');
 
         // There should be exactly one matching migration (the existing one we created)
         $this->assertCount(1, $found, 'A duplicate migration file was created instead of reusing the existing one');
