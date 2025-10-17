@@ -27,13 +27,11 @@ class WebPushServiceProvider extends ServiceProvider
     {
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
-            ->give(function () {
-                return (new WebPush(
-                    $this->webPushAuth(), [], 30, config('webpush.client_options', [])
-                ))
-                    ->setReuseVAPIDHeaders(true)
-                    ->setAutomaticPadding(config('webpush.automatic_padding'));
-            });
+            ->give(fn (): \Minishlink\WebPush\WebPush => (new WebPush(
+                $this->webPushAuth(), [], 30, config('webpush.client_options', [])
+            ))
+                ->setReuseVAPIDHeaders(true)
+                ->setAutomaticPadding(config('webpush.automatic_padding')));
 
         $this->app->when(WebPushChannel::class)
             ->needs(ReportHandlerInterface::class)
@@ -105,7 +103,7 @@ class WebPushServiceProvider extends ServiceProvider
 
         return Collection::make([$this->app->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR])
             ->flatMap(fn ($path) => $filesystem->glob($path.'*_'.$migrationFileName))
-            ->push($this->app->databasePath()."/migrations/{$timestamp}_{$migrationFileName}")
+            ->push($this->app->databasePath().sprintf('/migrations/%s_%s', $timestamp, $migrationFileName))
             ->first();
     }
 }

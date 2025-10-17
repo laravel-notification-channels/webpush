@@ -89,7 +89,6 @@ class WebPushServiceProviderTest extends TestCase
         $provider = new \NotificationChannels\WebPush\WebPushServiceProvider($this->app);
         $ref = new \ReflectionClass($provider);
         $method = $ref->getMethod('definePublishing');
-        $method->setAccessible(true);
         $method->invoke($provider);
 
         // Run vendor:publish which should reuse the existing filename rather than create a new one
@@ -129,7 +128,6 @@ class WebPushServiceProviderTest extends TestCase
 
         $ref = new \ReflectionClass($provider);
         $method = $ref->getMethod('getMigrationFileName');
-        $method->setAccessible(true);
 
         $result = $method->invokeArgs($provider, ['create_push_subscriptions_table.php']);
 
