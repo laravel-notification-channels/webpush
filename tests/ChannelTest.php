@@ -56,6 +56,44 @@ class ChannelTest extends TestCase
     }
 
     #[Test]
+    public function declarative_notification_can_be_sent(): void
+    {
+        Event::fake();
+
+        /** @var mixed $webpush */
+        $webpush = Mockery::mock(WebPush::class);
+        $channel = new WebPushChannel($webpush, $this->app->make(ReportHandler::class));
+        $message = ($notification = new TestDeclarativeNotification)->toWebPush(null, null);
+
+        $webpush->shouldReceive('queueNotification')
+            ->once()
+            ->withArgs(function (Subscription $subscription, string $payload, array $options, array $auth = []) use ($message): true {
+                $this->assertInstanceOf(Subscription::class, $subscription);
+                $this->assertEquals('endpoint', $subscription->getEndpoint());
+                $this->assertEquals('key', $subscription->getPublicKey());
+                $this->assertEquals('token', $subscription->getAuthToken());
+                $this->assertEquals('aesgcm', $subscription->getContentEncoding());
+                $this->assertSame($message->getOptions(), $options);
+                $this->assertSame(json_encode($message->toArray()), $payload);
+
+                return true;
+            })
+            ->andReturn(true);
+
+        $webpush->shouldReceive('flush')
+            ->once()
+            ->andReturn((function () {
+                yield new MessageSentReport(new Request('POST', 'endpoint'), null, true);
+            })());
+
+        $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
+
+        $channel->send($this->testUser, $notification);
+
+        Event::assertDispatched(NotificationSent::class);
+    }
+
+    #[Test]
     public function subscriptions_with_invalid_endpoint_are_deleted(): void
     {
         Event::fake();
