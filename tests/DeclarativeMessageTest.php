@@ -3,9 +3,9 @@
 namespace NotificationChannels\WebPush\Test;
 
 use NotificationChannels\WebPush\DeclarativeWebPushMessage;
+use NotificationChannels\WebPush\Exceptions\MessageValidationFailed;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use NotificationChannels\WebPush\Exceptions\MessageValidationFailed;
 
 class DeclarativeMessageTest extends TestCase
 {

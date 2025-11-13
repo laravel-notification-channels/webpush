@@ -56,7 +56,7 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
      * @var array<string, mixed>
      */
     protected array $options = [
-        'contentType' => 'application/json'
+        'contentType' => 'application/json',
     ];
 
     /**
@@ -167,7 +167,7 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
 
     /**
      * Set the navigation target upon activation.
-     * 
+     *
      * @return $this
      */
     public function navigate(string $value): static
@@ -221,7 +221,7 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
 
     /**
      * Set the timestamp associated with the notification.
-     * 
+     *
      * @return $this
      */
     public function timestamp(int $value): static
@@ -288,15 +288,18 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
      */
     public function toArray(): array
     {
-        if (empty($this->title))
+        if (empty($this->title)) {
             throw MessageValidationFailed::titleRequired();
-        if (empty($this->navigate))
+        }
+
+        if (empty($this->navigate)) {
             throw MessageValidationFailed::navigateRequired();
+        }
 
         return Arr::whereNotNull([
             'web_push' => 8030,
             'notification' => Arr::except(array_filter(get_object_vars($this)), ['mutable', 'options']),
-            'mutable' => $this->mutable ?? null
+            'mutable' => $this->mutable ?? null,
         ]);
     }
 }
