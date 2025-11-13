@@ -2,7 +2,6 @@
 
 namespace NotificationChannels\WebPush;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 
 /**
@@ -10,7 +9,7 @@ use Illuminate\Support\Arr;
  *
  * @link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
  */
-class WebPushMessage implements Arrayable
+class WebPushMessage implements WebPushMessageInterface
 {
     protected string $title;
 
