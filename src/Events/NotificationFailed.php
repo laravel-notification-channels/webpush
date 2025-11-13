@@ -5,7 +5,7 @@ namespace NotificationChannels\WebPush\Events;
 use Illuminate\Queue\SerializesModels;
 use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\PushSubscription;
-use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushMessageInterface;
 
 class NotificationFailed
 {
@@ -16,7 +16,7 @@ class NotificationFailed
      *
      * @return void
      */
-    public function __construct(public MessageSentReport $report, public PushSubscription $subscription, public WebPushMessage $message)
+    public function __construct(public MessageSentReport $report, public PushSubscription $subscription, public WebPushMessageInterface $message)
     {
         //
     }

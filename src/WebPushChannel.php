@@ -31,7 +31,7 @@ class WebPushChannel
             return;
         }
 
-        /** @var \NotificationChannels\WebPush\WebPushMessage $message */
+        /** @var \NotificationChannels\WebPush\WebPushMessageInterface $message */
         // @phpstan-ignore-next-line
         $message = $notification->toWebPush($notifiable, $notification);
         $payload = json_encode($message->toArray());
@@ -57,7 +57,7 @@ class WebPushChannel
      *
      * @param  \Illuminate\Database\Eloquent\Collection<array-key, PushSubscription>  $subscriptions
      */
-    protected function handleReports(Generator $reports, Collection $subscriptions, WebPushMessage $message): void
+    protected function handleReports(Generator $reports, Collection $subscriptions, WebPushMessageInterface $message): void
     {
         foreach ($reports as $report) {
             /** @var \Minishlink\WebPush\MessageSentReport $report */
