@@ -134,6 +134,7 @@ class AccountApproved extends Notification
             // ->dir()
             // ->image()
             // ->lang()
+            // ->mutable()
             // ->renotify()
             // ->requireInteraction()
             // ->silent()
