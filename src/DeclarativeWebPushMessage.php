@@ -200,7 +200,7 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
     /**
      * @return $this
      */
-    public function silent(bool $value = true): static 
+    public function silent(bool $value = true): static
     {
         $this->silent = $value;
 
@@ -288,8 +288,10 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
      */
     public function toArray(): array
     {
-        if (empty($this->title)) throw MessageValidationFailed::titleRequired();
-        if (empty($this->navigate)) throw MessageValidationFailed::navigateRequired();
+        if (empty($this->title))
+            throw MessageValidationFailed::titleRequired();
+        if (empty($this->navigate))
+            throw MessageValidationFailed::navigateRequired();
 
         return Arr::whereNotNull([
             'web_push' => 8030,

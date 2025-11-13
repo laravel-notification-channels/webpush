@@ -36,7 +36,7 @@ class DeclarativeMessageTest extends TestCase
         $this->expectException(MessageValidationFailed::class);
 
         $this->expectExceptionMessage('title');
-        
+
         $this->message->toArray();
     }
 
@@ -58,7 +58,7 @@ class DeclarativeMessageTest extends TestCase
         $this->expectException(MessageValidationFailed::class);
 
         $this->expectExceptionMessage('navigate');
-        
+
         $this->message->toArray();
     }
 
@@ -170,7 +170,7 @@ class DeclarativeMessageTest extends TestCase
         $this->assertEquals('tag1', $this->message->toArray()['notification']['tag']);
     }
 
-     #[Test]
+    #[Test]
     public function timestamp_can_be_set(): void
     {
         $this->message->timestamp(1763059844);

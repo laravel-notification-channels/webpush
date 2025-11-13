@@ -4,7 +4,7 @@ namespace NotificationChannels\WebPush\Exceptions;
 
 use Exception;
 
-class MessageValidationFailed extends \Exception 
+class MessageValidationFailed extends \Exception
 {
     public static function titleRequired(): static
     {
