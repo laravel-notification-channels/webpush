@@ -3,18 +3,19 @@
 namespace NotificationChannels\WebPush;
 
 use Illuminate\Support\Arr;
+use NotificationChannels\WebPush\Exceptions\MessageValidationFailed;
 
 /**
  * @implements \Illuminate\Contracts\Support\Arrayable<string, mixed>
  *
- * @link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
+ * @link https://www.w3.org/TR/push-api/#members
  */
-class WebPushMessage implements WebPushMessageInterface
+class DeclarativeWebPushMessage implements WebPushMessageInterface
 {
     protected string $title;
 
     /**
-     * @var array<array-key, array{'title': string, 'action': string, 'icon'?: string}>
+     * @var array<array-key, array{'title': string, 'action': string, 'navigate': string, 'icon'?: string}>
      */
     protected array $actions = [];
 
@@ -30,11 +31,19 @@ class WebPushMessage implements WebPushMessageInterface
 
     protected string $lang;
 
+    protected bool $mutable;
+
+    protected string $navigate;
+
     protected bool $renotify;
 
     protected bool $requireInteraction;
 
+    protected bool $silent;
+
     protected string $tag;
+
+    protected int $timestamp;
 
     /**
      * @var array<int>
@@ -46,7 +55,9 @@ class WebPushMessage implements WebPushMessageInterface
     /**
      * @var array<string, mixed>
      */
-    protected array $options = [];
+    protected array $options = [
+        'contentType' => 'application/json',
+    ];
 
     /**
      * Set the notification title.
@@ -65,9 +76,9 @@ class WebPushMessage implements WebPushMessageInterface
      *
      * @return $this
      */
-    public function action(string $title, string $action, ?string $icon = null): static
+    public function action(string $title, string $action, string $navigate, ?string $icon = null): static
     {
-        $this->actions[] = array_filter(['title' => $title, 'action' => $action, 'icon' => $icon]);
+        $this->actions[] = array_filter(['title' => $title, 'action' => $action, 'navigate' => $navigate, 'icon' => $icon]);
 
         return $this;
     }
@@ -147,6 +158,28 @@ class WebPushMessage implements WebPushMessageInterface
     /**
      * @return $this
      */
+    public function mutable(bool $value = true): static
+    {
+        $this->mutable = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the navigation target upon activation.
+     *
+     * @return $this
+     */
+    public function navigate(string $value): static
+    {
+        $this->navigate = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function renotify(bool $value = true): static
     {
         $this->renotify = $value;
@@ -165,6 +198,16 @@ class WebPushMessage implements WebPushMessageInterface
     }
 
     /**
+     * @return $this
+     */
+    public function silent(bool $value = true): static
+    {
+        $this->silent = $value;
+
+        return $this;
+    }
+
+    /**
      * Set the notification tag.
      *
      * @return $this
@@ -172,6 +215,18 @@ class WebPushMessage implements WebPushMessageInterface
     public function tag(string $value): static
     {
         $this->tag = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set the timestamp associated with the notification.
+     *
+     * @return $this
+     */
+    public function timestamp(int $value): static
+    {
+        $this->timestamp = $value;
 
         return $this;
     }
@@ -233,6 +288,18 @@ class WebPushMessage implements WebPushMessageInterface
      */
     public function toArray(): array
     {
-        return Arr::except(array_filter(get_object_vars($this)), ['options']);
+        if (empty($this->title)) {
+            throw MessageValidationFailed::titleRequired();
+        }
+
+        if (empty($this->navigate)) {
+            throw MessageValidationFailed::navigateRequired();
+        }
+
+        return Arr::whereNotNull([
+            'web_push' => 8030,
+            'notification' => Arr::except(array_filter(get_object_vars($this)), ['mutable', 'options']),
+            'mutable' => $this->mutable ?? null,
+        ]);
     }
 }

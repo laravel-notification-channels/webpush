@@ -72,7 +72,7 @@ __These keys must be safely stored and should not change.__
 
 ## Usage
 
-Now you can use the channel in your `via()` method inside the notification and send a web push notification:
+Now you can use the channel in your `via()` method inside the notification and send a generic web push notification:
 
 ```php
 use Illuminate\Notifications\Notification;
@@ -103,6 +103,49 @@ class AccountApproved extends Notification
             // ->requireInteraction()
             // ->tag()
             // ->vibrate()
+    }
+}
+```
+
+### Declarative Web Push messages
+
+> **Note:** The specification for Declarative Web Push messages is still evolving and may change in the future. Browser support for this functionality is currently limited and may vary across platforms.
+
+This package also supports [Declarative Web Push messages](https://www.w3.org/TR/push-api/#declarative-push-message), which aim to reduce the complexity of using push on the web in general and address some challenges of generic web push notifications like privacy concerns & battery life on mobile by making a client-side service worker optional while remaining fully backwards compatible:
+
+```php
+use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\DeclarativeWebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [WebPushChannel::class];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new DeclarativeWebPushMessage)
+            ->title('Approved!')
+            ->icon('/approved-icon.png')
+            ->body('Your account was approved!')
+            ->action('View account', 'view_account', 'https://myapp.com/accounts')
+            ->navigate('https://myapp.com');
+            // ->data(['id' => $notification->id])
+            // ->badge()
+            // ->dir()
+            // ->image()
+            // ->lang()
+            // ->mutable()
+            // ->renotify()
+            // ->requireInteraction()
+            // ->silent()
+            // ->tag()
+            // ->timestamp()
+            // ->vibrate()
+            // ->options(['TTL' => 1000, 'contentType' => 'application/json'])
     }
 }
 ```

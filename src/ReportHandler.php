@@ -21,7 +21,7 @@ class ReportHandler implements ReportHandlerInterface
     /**
      * Handle a message sent report.
      */
-    public function handleReport(MessageSentReport $report, PushSubscription $subscription, WebPushMessage $message): void
+    public function handleReport(MessageSentReport $report, PushSubscription $subscription, WebPushMessageInterface $message): void
     {
         if ($report->isSuccess()) {
             $this->events->dispatch(new NotificationSent($report, $subscription, $message));
