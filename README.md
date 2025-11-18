@@ -107,6 +107,10 @@ class AccountApproved extends Notification
 }
 ```
 
+### Declarative Web Push messages
+
+> **Note:** The specification for Declarative Web Push messages is still evolving and may change in the future. Browser support for this functionality is currently limited and may vary across platforms.
+
 This package also supports [Declarative Web Push messages](https://www.w3.org/TR/push-api/#declarative-push-message), which aim to reduce the complexity of using push on the web in general and address some challenges of generic web push notifications like privacy concerns & battery life on mobile by making a client-side service worker optional while remaining fully backwards compatible:
 
 ```php
