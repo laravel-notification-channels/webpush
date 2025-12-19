@@ -12,45 +12,45 @@ use NotificationChannels\WebPush\Exceptions\MessageValidationFailed;
  */
 class DeclarativeWebPushMessage implements WebPushMessageInterface
 {
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * @var array<array-key, array{'title': string, 'action': string, 'navigate': string, 'icon'?: string}>
      */
     protected array $actions = [];
 
-    protected string $badge;
+    protected ?string $badge = null;
 
-    protected string $body;
+    protected ?string $body = null;
 
-    protected string $dir;
+    protected ?string $dir = null;
 
-    protected string $icon;
+    protected ?string $icon = null;
 
-    protected string $image;
+    protected ?string $image = null;
 
-    protected string $lang;
+    protected ?string $lang = null;
 
-    protected bool $mutable;
+    protected ?bool $mutable = null;
 
-    protected string $navigate;
+    protected ?string $navigate = null;
 
-    protected bool $renotify;
+    protected ?bool $renotify = null;
 
-    protected bool $requireInteraction;
+    protected ?bool $requireInteraction = null;
 
-    protected bool $silent;
+    protected ?bool $silent = null;
 
-    protected string $tag;
+    protected ?string $tag = null;
 
-    protected int $timestamp;
+    protected ?int $timestamp = null;
 
     /**
      * @var array<int>
      */
-    protected array $vibrate;
+    protected array $vibrate = [];
 
-    protected mixed $data;
+    protected mixed $data = null;
 
     /**
      * @var array<string, mixed>
