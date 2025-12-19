@@ -288,11 +288,11 @@ class DeclarativeWebPushMessage implements WebPushMessageInterface
      */
     public function toArray(): array
     {
-        if (empty($this->title)) {
+        if (blank($this->title)) {
             throw MessageValidationFailed::titleRequired();
         }
 
-        if (empty($this->navigate)) {
+        if (blank($this->navigate)) {
             throw MessageValidationFailed::navigateRequired();
         }
 
