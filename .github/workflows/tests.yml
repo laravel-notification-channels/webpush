@@ -12,29 +12,33 @@ jobs:
       fail-fast: true
       matrix:
         php: [8.5, 8.4, 8.3, 8.2]
-        laravel: ['11.*', '12.*']
+        laravel: ['11.*', '12.*', '13.*']
         stability: [prefer-lowest, prefer-stable]
         exclude:
           - php: 8.5
             laravel: 11.*
+          - php: 8.2
+            laravel: 13.*
         include:
           - laravel: 11.*
             testbench: ^9.2
           - laravel: 12.*
-            testbench: 10.*
+            testbench: ^10.0
+          - laravel: 13.*
+            testbench: ^11.0
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get Composer cache directory
         id: composer-cache
         run: |
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.testbench }}-${{ matrix.stability }}-composer
