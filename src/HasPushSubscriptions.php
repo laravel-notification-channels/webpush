@@ -22,6 +22,8 @@ trait HasPushSubscriptions
      */
     public function updatePushSubscription(string $endpoint, ?string $key = null, ?string $token = null, ?string $contentEncoding = null): PushSubscription
     {
+        $contentEncoding ??= 'aes128gcm';
+
         $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
         if ($subscription && $this->ownsPushSubscription($subscription)) {

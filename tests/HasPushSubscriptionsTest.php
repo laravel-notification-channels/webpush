@@ -43,6 +43,15 @@ class HasPushSubscriptionsTest extends TestCase
     }
 
     #[Test]
+    public function subscription_defaults_to_aes128gcm_when_content_encoding_is_null(): void
+    {
+        $this->testUser->updatePushSubscription('foo', 'key', 'token');
+        $subscription = $this->testUser->pushSubscriptions()->first();
+
+        $this->assertEquals('aes128gcm', $subscription->content_encoding);
+    }
+
+    #[Test]
     public function determinte_if_model_owns_subscription(): void
     {
         $subscription = $this->testUser->updatePushSubscription('foo');
