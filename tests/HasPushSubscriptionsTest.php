@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\WebPush\Test;
 
+use Minishlink\WebPush\ContentEncoding;
 use PHPUnit\Framework\Attributes\Test;
 
 class HasPushSubscriptionsTest extends TestCase
@@ -26,7 +27,7 @@ class HasPushSubscriptionsTest extends TestCase
         $this->assertEquals('foo', $subscription->endpoint);
         $this->assertEquals('key', $subscription->public_key);
         $this->assertEquals('token', $subscription->auth_token);
-        $this->assertEquals('aesgcm', $subscription->content_encoding);
+        $this->assertEquals(ContentEncoding::aesgcm, $subscription->content_encoding);
     }
 
     #[Test]

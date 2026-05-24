@@ -4,6 +4,7 @@ namespace NotificationChannels\WebPush;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Minishlink\WebPush\ContentEncoding;
 
 trait HasPushSubscriptions
 {
@@ -20,8 +21,12 @@ trait HasPushSubscriptions
     /**
      * Update (or create) subscription.
      */
-    public function updatePushSubscription(string $endpoint, ?string $key = null, ?string $token = null, ?string $contentEncoding = null): PushSubscription
+    public function updatePushSubscription(string $endpoint, ?string $key = null, ?string $token = null, ContentEncoding|string|null $contentEncoding = null): PushSubscription
     {
+        if (is_string($contentEncoding)) {
+            $contentEncoding = ContentEncoding::from($contentEncoding);
+        }
+
         $subscription = app(config('webpush.model'))->findByEndpoint($endpoint);
 
         if ($subscription && $this->ownsPushSubscription($subscription)) {
