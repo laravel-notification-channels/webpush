@@ -5,6 +5,7 @@ namespace NotificationChannels\WebPush;
 use Generator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notification;
+use Minishlink\WebPush\ContentEncoding;
 use Minishlink\WebPush\MessageSentReport;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
@@ -43,7 +44,7 @@ class WebPushChannel
                 $subscription->endpoint,
                 $subscription->public_key,
                 $subscription->auth_token,
-                $subscription->content_encoding
+                $subscription->content_encoding ?? ContentEncoding::aes128gcm
             ), $payload, $options);
         }
 
