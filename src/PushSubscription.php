@@ -4,6 +4,7 @@ namespace NotificationChannels\WebPush;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Minishlink\WebPush\ContentEncoding;
 
 /**
  * @property int|string $subscribable_id
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $endpoint
  * @property string|null $public_key
  * @property string|null $auth_token
- * @property string|null $content_encoding
+ * @property ContentEncoding|null $content_encoding
  */
 class PushSubscription extends Model
 {
@@ -23,6 +24,10 @@ class PushSubscription extends Model
         'public_key',
         'auth_token',
         'content_encoding',
+    ];
+
+    protected $casts = [
+        'content_encoding' => ContentEncoding::class,
     ];
 
     /**
