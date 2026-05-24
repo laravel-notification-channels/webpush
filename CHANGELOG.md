@@ -1,6 +1,7 @@
 # Changelog
 
-All Notable changes to `laravel-notification-channels/webpush` will be documented in this file
+## 10.3.0 and higher
+From this release on, the changelog is kept at the [Github Release Page](https://github.com/laravel-notification-channels/webpush/releases).
 
 ## 10.2.0 - 2025-03-03
 - Remove Google Cloud Messaging (GCM) configuration. This service does not exist anymore and web-push-php doesn't have support for it's successor (Firebase Cloud Messaging) either, so this isn't a breaking change.
