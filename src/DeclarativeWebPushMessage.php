@@ -6,8 +6,6 @@ use Illuminate\Support\Arr;
 use NotificationChannels\WebPush\Exceptions\MessageValidationFailed;
 
 /**
- * @implements \Illuminate\Contracts\Support\Arrayable<string, mixed>
- *
  * @link https://www.w3.org/TR/push-api/#members
  */
 class DeclarativeWebPushMessage implements WebPushMessageInterface

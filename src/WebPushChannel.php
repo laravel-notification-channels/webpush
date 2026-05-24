@@ -12,9 +12,6 @@ use Minishlink\WebPush\WebPush;
 
 class WebPushChannel
 {
-    /**
-     * @return void
-     */
     public function __construct(protected WebPush $webPush, protected ReportHandlerInterface $reportHandler)
     {
         //
@@ -25,20 +22,20 @@ class WebPushChannel
      */
     public function send(mixed $notifiable, Notification $notification): void
     {
-        /** @var \Illuminate\Database\Eloquent\Collection<array-key, PushSubscription> $subscriptions */
+        /** @var Collection<array-key, PushSubscription> $subscriptions */
         $subscriptions = $notifiable->routeNotificationFor('WebPush', $notification);
 
         if ($subscriptions->isEmpty()) {
             return;
         }
 
-        /** @var \NotificationChannels\WebPush\WebPushMessageInterface $message */
+        /** @var WebPushMessageInterface $message */
         // @phpstan-ignore-next-line
         $message = $notification->toWebPush($notifiable, $notification);
         $payload = json_encode($message->toArray());
         $options = $message->getOptions();
 
-        /** @var \NotificationChannels\WebPush\PushSubscription $subscription */
+        /** @var PushSubscription $subscription */
         foreach ($subscriptions as $subscription) {
             $this->webPush->queueNotification(new Subscription(
                 $subscription->endpoint,
@@ -56,12 +53,12 @@ class WebPushChannel
     /**
      * Handle the reports.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection<array-key, PushSubscription>  $subscriptions
+     * @param  Collection<array-key, PushSubscription>  $subscriptions
      */
     protected function handleReports(Generator $reports, Collection $subscriptions, WebPushMessageInterface $message): void
     {
         foreach ($reports as $report) {
-            /** @var \Minishlink\WebPush\MessageSentReport $report */
+            /** @var MessageSentReport $report */
             $subscription = $this->findSubscription($subscriptions, $report);
 
             if (filled($subscription)) {
@@ -71,7 +68,7 @@ class WebPushChannel
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<array-key, PushSubscription>  $subscriptions
+     * @param  Collection<array-key, PushSubscription>  $subscriptions
      */
     protected function findSubscription(Collection $subscriptions, MessageSentReport $report): ?PushSubscription
     {

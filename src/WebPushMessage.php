@@ -5,8 +5,6 @@ namespace NotificationChannels\WebPush;
 use Illuminate\Support\Arr;
 
 /**
- * @implements \Illuminate\Contracts\Support\Arrayable<string, mixed>
- *
  * @link https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
  */
 class WebPushMessage implements WebPushMessageInterface

@@ -2,15 +2,15 @@
 
 namespace NotificationChannels\WebPush\Exceptions;
 
-class MessageValidationFailed extends \Exception
+final class MessageValidationFailed extends \Exception
 {
-    public static function titleRequired(): static
+    public static function titleRequired(): self
     {
-        return new static('"title" must be set for Declarative Web Push messages');
+        return new self('"title" must be set for Declarative Web Push messages');
     }
 
-    public static function navigateRequired(): static
+    public static function navigateRequired(): self
     {
-        return new static('"navigate" must be set for Declarative Web Push messages');
+        return new self('"navigate" must be set for Declarative Web Push messages');
     }
 }

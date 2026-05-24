@@ -4,12 +4,15 @@ namespace NotificationChannels\WebPush\Test;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
+use NotificationChannels\WebPush\PushSubscription;
+use NotificationChannels\WebPush\WebPushServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
-    /** @var \NotificationChannels\WebPush\Test\User */
+    /** @var User */
     protected $testUser;
 
     protected function setUp(): void
@@ -24,7 +27,7 @@ abstract class TestCase extends Orchestra
     /**
      * Set up the environment.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -33,13 +36,13 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array<array-key, class-string>
      */
     protected function getPackageProviders($app)
     {
         return [
-            \NotificationChannels\WebPush\WebPushServiceProvider::class,
+            WebPushServiceProvider::class,
         ];
     }
 
@@ -61,7 +64,7 @@ abstract class TestCase extends Orchestra
 
     /**
      * @param  array<string, mixed>  $attributes
-     * @return \NotificationChannels\WebPush\Test\User
+     * @return User
      */
     public function createUser(array $attributes)
     {
@@ -69,9 +72,9 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  \NotificationChannels\WebPush\Test\User  $user
+     * @param  User  $user
      * @param  string  $endpoint
-     * @return \NotificationChannels\WebPush\PushSubscription
+     * @return PushSubscription
      */
     public function createSubscription($user, $endpoint = 'endpoint')
     {

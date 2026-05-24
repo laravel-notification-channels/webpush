@@ -10,7 +10,7 @@ trait HasPushSubscriptions
     /**
      *  Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<PushSubscription, $this>
+     * @return MorphMany<PushSubscription, $this>
      */
     public function pushSubscriptions(): MorphMany
     {
@@ -67,7 +67,7 @@ trait HasPushSubscriptions
     /**
      * Get all of the subscriptions.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<array-key, \NotificationChannels\WebPush\PushSubscription>
+     * @return Collection<array-key, PushSubscription>
      */
     public function routeNotificationForWebPush(): Collection
     {

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NotificationChannels\WebPush;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Minishlink\WebPush\MessageSentReport;
 use NotificationChannels\WebPush\Events\NotificationFailed;
 use NotificationChannels\WebPush\Events\NotificationSent;
@@ -10,10 +13,8 @@ class ReportHandler implements ReportHandlerInterface
 {
     /**
      * Create a new report handler.
-     *
-     * @return void
      */
-    public function __construct(protected \Illuminate\Contracts\Events\Dispatcher $events)
+    public function __construct(protected Dispatcher $events)
     {
         //
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NotificationChannels\WebPush\Events;
 
 use Illuminate\Queue\SerializesModels;
@@ -13,8 +15,6 @@ class NotificationFailed
 
     /**
      * Create a new event instance.
-     *
-     * @return void
      */
     public function __construct(public MessageSentReport $report, public PushSubscription $subscription, public WebPushMessageInterface $message)
     {

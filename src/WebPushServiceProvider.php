@@ -27,7 +27,7 @@ class WebPushServiceProvider extends ServiceProvider
     {
         $this->app->when(WebPushChannel::class)
             ->needs(WebPush::class)
-            ->give(fn (): \Minishlink\WebPush\WebPush => (new WebPush(
+            ->give(fn (): WebPush => (new WebPush(
                 $this->webPushAuth(), [], 30, config('webpush.client_options', [])
             ))
                 ->setReuseVAPIDHeaders(true)

@@ -4,6 +4,7 @@ namespace NotificationChannels\WebPush\Test;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use NotificationChannels\WebPush\WebPushServiceProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 class WebPushServiceProviderTest extends TestCase
@@ -19,7 +20,7 @@ class WebPushServiceProviderTest extends TestCase
         }
 
         $exit = Artisan::call('vendor:publish', [
-            '--provider' => \NotificationChannels\WebPush\WebPushServiceProvider::class,
+            '--provider' => WebPushServiceProvider::class,
             '--tag' => 'config',
         ]);
 
@@ -44,7 +45,7 @@ class WebPushServiceProviderTest extends TestCase
         }
 
         $exit = Artisan::call('vendor:publish', [
-            '--provider' => \NotificationChannels\WebPush\WebPushServiceProvider::class,
+            '--provider' => WebPushServiceProvider::class,
             '--tag' => 'migrations',
         ]);
 
@@ -86,14 +87,14 @@ class WebPushServiceProviderTest extends TestCase
         // Recompute the provider's publishes mapping so it detects the migration file we just created.
         // The service provider computes the destination filename during boot, so we need to refresh it
         // after creating the fake file to ensure vendor:publish reuses the existing file.
-        $provider = new \NotificationChannels\WebPush\WebPushServiceProvider($this->app);
+        $provider = new WebPushServiceProvider($this->app);
         $ref = new \ReflectionClass($provider);
         $method = $ref->getMethod('definePublishing');
         $method->invoke($provider);
 
         // Run vendor:publish which should reuse the existing filename rather than create a new one
         $exit = Artisan::call('vendor:publish', [
-            '--provider' => \NotificationChannels\WebPush\WebPushServiceProvider::class,
+            '--provider' => WebPushServiceProvider::class,
             '--tag' => 'migrations',
         ]);
 
@@ -124,7 +125,7 @@ class WebPushServiceProviderTest extends TestCase
         file_put_contents($existingFilename, "<?php\n// existing migration\n");
 
         // Instantiate provider and call protected method getMigrationFileName via reflection
-        $provider = new \NotificationChannels\WebPush\WebPushServiceProvider($this->app);
+        $provider = new WebPushServiceProvider($this->app);
 
         $ref = new \ReflectionClass($provider);
         $method = $ref->getMethod('getMigrationFileName');
