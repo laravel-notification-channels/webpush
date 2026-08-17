@@ -131,6 +131,7 @@ class WebPushServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../migrations/create_push_subscriptions_table.php.stub' => $this->getMigrationFileName('create_push_subscriptions_table.php'),
+            __DIR__.'/../migrations/increase_push_subscriptions_endpoint_length.php.stub' => $this->getMigrationFileName('increase_push_subscriptions_endpoint_length.php'),
         ], 'migrations');
     }
 

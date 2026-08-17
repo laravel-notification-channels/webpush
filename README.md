@@ -49,6 +49,8 @@ Run the migrate command to create the necessary table:
 php artisan migrate
 ```
 
+> **Upgrading existing installations:** If you installed this package before endpoint URLs were widened to 1024 characters, publish migrations again and run `php artisan migrate` to apply `increase_push_subscriptions_endpoint_length`. Some push services (for example Microsoft WNS) may generate endpoints longer than 500 characters.
+
 You can also publish the config file with:
 
 ```bash

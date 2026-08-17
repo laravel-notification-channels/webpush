@@ -17,6 +17,16 @@ use Minishlink\WebPush\ContentEncoding;
 class PushSubscription extends Model
 {
     /**
+     * Maximum length of a push service endpoint URL.
+     *
+     * Microsoft WNS and some other push services may exceed 500 characters.
+     * ASCII charset keeps the unique index within MySQL/MariaDB prefix limits.
+     *
+     * @see https://github.com/laravel-notification-channels/webpush/issues/222
+     */
+    public const ENDPOINT_MAX_LENGTH = 1024;
+
+    /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [

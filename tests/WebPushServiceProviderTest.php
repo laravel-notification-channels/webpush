@@ -57,11 +57,12 @@ class WebPushServiceProviderTest extends TestCase
         $migrationsPath = $this->application->databasePath().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
 
         // Remove any existing matching migrations in the database/migrations folder for a clean test
-        $existing = glob($migrationsPath.'*_'.'create_push_subscriptions_table.php');
-        if (is_array($existing)) {
-            foreach ($existing as $file) {
-                @unlink($file);
-            }
+        foreach (glob($migrationsPath.'*_create_push_subscriptions_table.php') ?: [] as $file) {
+            @unlink($file);
+        }
+
+        foreach (glob($migrationsPath.'*_increase_push_subscriptions_endpoint_length.php') ?: [] as $file) {
+            @unlink($file);
         }
 
         $exit = Artisan::call('vendor:publish', [
@@ -71,15 +72,17 @@ class WebPushServiceProviderTest extends TestCase
 
         $this->assertEquals(0, $exit);
 
-        $found = glob($migrationsPath.'*_'.'create_push_subscriptions_table.php');
+        $createMigrations = glob($migrationsPath.'*_create_push_subscriptions_table.php');
+        $upgradeMigrations = glob($migrationsPath.'*_increase_push_subscriptions_endpoint_length.php');
 
-        $this->assertNotEmpty($found, 'No migration was published to the database/migrations path');
+        $this->assertNotEmpty($createMigrations, 'No create migration was published to the database/migrations path');
+        $this->assertNotEmpty($upgradeMigrations, 'No endpoint upgrade migration was published to the database/migrations path');
 
-        // Ensure exactly one migration file exists and has the expected suffix
-        $this->assertStringEndsWith('_create_push_subscriptions_table.php', basename($found[0]));
+        $this->assertStringEndsWith('_create_push_subscriptions_table.php', basename($createMigrations[0]));
+        $this->assertStringEndsWith('_increase_push_subscriptions_endpoint_length.php', basename($upgradeMigrations[0]));
 
         // Cleanup
-        foreach ($found as $file) {
+        foreach (array_merge($createMigrations, $upgradeMigrations) as $file) {
             @unlink($file);
         }
     }
