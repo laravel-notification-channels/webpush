@@ -50,7 +50,10 @@ class ChannelTest extends TestCase
 
         $this->testUser->updatePushSubscription('endpoint', 'key', 'token', 'aesgcm');
 
-        $channel->send($this->testUser, $notification);
+        $reports = $channel->send($this->testUser, $notification);
+
+        $this->assertCount(1, $reports);
+        $this->assertTrue($reports[0]->isSuccess());
 
         Event::assertDispatched(NotificationSent::class);
     }
@@ -116,7 +119,12 @@ class ChannelTest extends TestCase
         $this->testUser->updatePushSubscription('invalid_endpoint1');
         $this->testUser->updatePushSubscription('invalid_endpoint2');
 
-        $channel->send($this->testUser, new TestNotification);
+        $reports = $channel->send($this->testUser, new TestNotification);
+
+        $this->assertCount(3, $reports);
+        $this->assertTrue($reports[0]->isSuccess());
+        $this->assertFalse($reports[1]->isSuccess());
+        $this->assertFalse($reports[2]->isSuccess());
 
         $this->assertTrue($this->testUser->pushSubscriptions()->where('endpoint', 'valid_endpoint')->exists());
         $this->assertFalse($this->testUser->pushSubscriptions()->where('endpoint', 'invalid_endpoint1')->exists());
@@ -125,5 +133,17 @@ class ChannelTest extends TestCase
         Event::assertDispatched(NotificationSent::class);
         Event::assertDispatched(NotificationFailed::class);
         Event::assertDispatched(NotificationFailed::class);
+    }
+
+    #[Test]
+    public function no_reports_are_returned_without_subscriptions(): void
+    {
+        /** @var WebPush&MockInterface $webpush */
+        $webpush = Mockery::mock(WebPush::class);
+        $channel = new WebPushChannel($webpush, $this->application->make(ReportHandler::class));
+
+        $reports = $channel->send($this->testUser, new TestNotification);
+
+        $this->assertSame([], $reports);
     }
 }
