@@ -19,18 +19,20 @@ class WebPushChannel
 
     /**
      * Send the given notification.
+     *
+     * @return array<int, MessageSentReport>
      */
-    public function send(mixed $notifiable, Notification $notification): void
+    public function send(mixed $notifiable, Notification $notification): array
     {
         if (! is_object($notifiable) || ! method_exists($notifiable, 'routeNotificationFor')) {
-            return;
+            return [];
         }
 
         /** @var Collection<array-key, PushSubscription> $subscriptions */
         $subscriptions = $notifiable->routeNotificationFor('WebPush', $notification);
 
         if ($subscriptions->isEmpty()) {
-            return;
+            return [];
         }
 
         /** @var WebPushMessageInterface $message */
@@ -51,16 +53,19 @@ class WebPushChannel
 
         $reports = $this->webPush->flush();
 
-        $this->handleReports($reports, $subscriptions, $message);
+        return $this->handleReports($reports, $subscriptions, $message);
     }
 
     /**
      * Handle the reports.
      *
      * @param  Collection<array-key, PushSubscription>  $subscriptions
+     * @return array<int, MessageSentReport>
      */
-    protected function handleReports(Generator $reports, Collection $subscriptions, WebPushMessageInterface $message): void
+    protected function handleReports(Generator $reports, Collection $subscriptions, WebPushMessageInterface $message): array
     {
+        $handledReports = [];
+
         foreach ($reports as $report) {
             /** @var MessageSentReport $report */
             $subscription = $this->findSubscription($subscriptions, $report);
@@ -68,7 +73,11 @@ class WebPushChannel
             if (filled($subscription)) {
                 $this->reportHandler->handleReport($report, $subscription, $message);
             }
+
+            $handledReports[] = $report;
         }
+
+        return $handledReports;
     }
 
     /**
